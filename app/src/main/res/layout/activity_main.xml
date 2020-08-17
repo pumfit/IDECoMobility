@@ -33,7 +33,6 @@
                     android:id="@+id/textView1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="8dp"
                     android:layout_weight="1"
                     android:text="@string/start"
                     android:textStyle="bold"
@@ -41,7 +40,7 @@
 
                 <EditText
                     android:id="@+id/editText1"
-                    android:layout_width="wrap_content"
+                     android:layout_width="wrap_content"
                     android:layout_height="36dp"
                     android:ems="15"
                     android:layout_weight="1"
@@ -66,7 +65,7 @@
                     android:layout_weight="1"
                     android:textColor="@color/white"
                     android:textStyle="bold"
-                    android:layout_marginHorizontal="8dp"
+
                     android:text="@string/end" />
 
                 <EditText
@@ -87,7 +86,7 @@
         <Button
             android:id="@+id/button"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginVertical="8dp"
             android:layout_weight="1"
             android:text="Button" />
