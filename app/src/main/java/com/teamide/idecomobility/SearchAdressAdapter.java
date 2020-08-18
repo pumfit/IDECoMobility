@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class SearchAdressAdapter extends RecyclerView.Adapter<SearchAdressAdapter.ViewHolder>{
-    private ArrayList<Address> myDataList = null;
+    private ArrayList<SearchAddress> myDataList = null;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView mainAdress;
@@ -28,7 +28,7 @@ public class SearchAdressAdapter extends RecyclerView.Adapter<SearchAdressAdapte
         }
     }
 
-    SearchAdressAdapter(ArrayList<Address> dataList)
+    SearchAdressAdapter(ArrayList<SearchAddress> dataList)
     {
         myDataList = dataList;
     }
