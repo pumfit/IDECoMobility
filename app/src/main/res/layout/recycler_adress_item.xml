@@ -23,8 +23,8 @@
             android:id="@+id/subTitleTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:text="subtitle" />
+            android:text="subtitle"
+            android:textSize="12dp" />
 
     </LinearLayout>
 

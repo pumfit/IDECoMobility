@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         EditText startText = (EditText) findViewById(R.id.addressSearchEditText);
+        startText.setInputType(0);
 
         startText.setOnClickListener(
                 new View.OnClickListener() {
@@ -26,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
 
+        Intent intent = getIntent();
+        startText.setText(intent.getStringExtra("startAddress"));
     }
 
 }
