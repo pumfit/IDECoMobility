@@ -1,8 +1,10 @@
 package com.teamide.idecomobility;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,39 +16,25 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
 public class SearchActivity extends Activity {
 
-    private Geocoder geocoder = null;
+    private GpsTracker gpsTracker;
     public ArrayList<SearchAddress> dataList;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        geocoder = new Geocoder(this);
         dataList = new ArrayList<SearchAddress>();
 
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.adressRecyclerView1);
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(manager); // LayoutManager 등록
         recyclerView.setAdapter(new SearchAddressAdapter(dataList));  // Adapter 등록
-
     }
-
-//    private ArrayList<SearchAddress> getData(String address) {
-//        AddressParsing addressParsing = new AddressParsing(address);
-//        ArrayList<SearchAddress> list = new ArrayList<>();
-//        try {
-//            list = addressParsing.execute().get();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        } catch (ExecutionException e) {
-//            e.printStackTrace();
-//        }
-//        return list;
-//    }
 
     public void onClickedSearch(View v)
     {
@@ -55,12 +43,12 @@ public class SearchActivity extends Activity {
         }
         EditText startText = (EditText) findViewById(R.id.addressSearchEditText3);
         String startAdress = startText.getText().toString();
-
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
         List<Address> addressList = null;
 
         try {
-            Log.d("ad", startAdress);
-            addressList = geocoder.getFromLocationName(startAdress, 10); // 최대 검색 결과 개수
+            addressList = geocoder.getFromLocationName(startAdress, 5); // 최대 검색 결과 개수
+            Log.d("ad", "검색 결과 개수"+String.valueOf(addressList.size()));
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -70,25 +58,29 @@ public class SearchActivity extends Activity {
         }
 
         try {
-            // 콤마를 기준으로 split
-            for (int i =0;i<addressList.size();i++)
+            if(addressList.size()==0)
             {
-                String []splitStr = addressList.get(i).toString().split(",");
-                String address = splitStr[0].substring(splitStr[0].indexOf("\"") + 1,splitStr[0].length() - 2); // 주소
-                Log.d("ad",address);
-                String latitude = splitStr[10].substring(splitStr[10].indexOf("=") + 1); // 위도
-                String longitude = splitStr[12].substring(splitStr[12].indexOf("=") + 1); // 경도
-
-                Log.d("ad",latitude);
-                Log.d("ad",longitude);
-
-                dataList.add(new SearchAddress(startAdress,address,"10km"));
+                Log.d("ad","검색결과없음");
+            }else
+            {
+                Location location2 = new Location("current location");
+                gpsTracker = new GpsTracker(SearchActivity.this);
+                double latitude = gpsTracker.getLatitude();
+                double longitude = gpsTracker.getLongitude();
+                location2.setLatitude(latitude);
+                location2.setLongitude(longitude);
+                for (int i =0;i<addressList.size();i++)
+                {
+                    Address ad = addressList.get(i);
+                    String address = ad.getAddressLine(0).toString()+"\n";
+                    Location location = new Location("seaech location");
+                    location.setLatitude(ad.getLatitude());
+                    location.setLongitude(ad.getLongitude());
+                    double distance = location.distanceTo(location2)/1000;
+                    Log.d("ad",String.valueOf(distance));
+                    dataList.add(new SearchAddress(startAdress,address,String.format("%.1f", distance)+"Km"));//현재 위치와의 거리
+                }
             }
-
-            RecyclerView recyclerView = (RecyclerView)findViewById(R.id.adressRecyclerView1);
-            LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false);
-            recyclerView.setLayoutManager(manager);
-            recyclerView.setAdapter(new SearchAddressAdapter(dataList));
         }
         catch (IndexOutOfBoundsException e) {
             e.getStackTrace();
@@ -98,12 +90,4 @@ public class SearchActivity extends Activity {
             e.getStackTrace();
         }
     }
-//        EditText startText = (EditText) findViewById(R.id.addressSearchEditText3);
-//        String startAdress = startText.getText().toString();
-//        dataList = getData(startAdress);
-//
-//        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.adressRecyclerView1);
-//        LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false);
-//        recyclerView.setLayoutManager(manager);
-//        recyclerView.setAdapter(new SearchAddressAdapter(dataList));
 }

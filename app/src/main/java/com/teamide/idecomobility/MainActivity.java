@@ -11,6 +11,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -23,14 +24,12 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-    String startAddress = null;
-    String endAddress = null;
-
     private GpsTracker gpsTracker;
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     String[] REQUIRED_PERMISSIONS  = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
-
+    //GPS
+    InfoAddress infoAddress = new InfoAddress();//받아올 정보 class객체
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,14 +52,13 @@ public class MainActivity extends AppCompatActivity {
 
         gpsTracker = new GpsTracker(MainActivity.this);
 
-        double latitude = gpsTracker.getLatitude();
+        double latitude = gpsTracker.getLatitude();//현위치 위도 경도 좌표 여기서
         double longitude = gpsTracker.getLongitude();
 
         String address = getCurrentAddress(latitude, longitude);
-        startText.setText(address);
-        Log.d("ad","현재위치"+latitude+longitude);
+        infoAddress.curruntAddress=address;
 
-        startText.setOnClickListener(
+        startText.setOnClickListener(//에디트텍스트버튼클릭시
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -70,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
 
-        endText.setOnClickListener(
+        endText.setOnClickListener(//에디트텍스트버튼클릭시
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -80,24 +78,31 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
 
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-
-        EditText startText = (EditText) findViewById(R.id.addressSearchEditText1);
-        EditText endText = (EditText) findViewById(R.id.addressSearchEditText2);
-
         Intent intent = getIntent();
+        if(!(intent.getStringExtra("startAddress")==null))
+        {
+            infoAddress.startAddress = intent.getStringExtra("startAddress");
+            //startText.setText(startAddress);
+        }
+        else if(!(intent.getStringExtra("endAddress")==null))
+        {
+            infoAddress.endAddress = intent.getStringExtra("endAddress");
+            //endText.setText(endAddress);
+        }
 
-        startAddress = intent.getStringExtra("startAddress");
-        endAddress = intent.getStringExtra("endAddress");
+        if(infoAddress.startAddress==null)
+        {
+            startText.setText(infoAddress.getCurruntAddress());
+            endText.setText(infoAddress.getEndAddress());
+        }
+        else
+        {
+            startText.setText(infoAddress.getStartAddress());
+            endText.setText(infoAddress.getEndAddress());
+        }
 
-        Log.d("ad",startAddress+endAddress);
-        startText.setText(startAddress);
-        endText.setText(endAddress);
     }
+
 
     public boolean checkLocationServicesStatus() {
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -122,8 +127,6 @@ public class MainActivity extends AppCompatActivity {
             // 2. 이미 퍼미션을 가지고 있다면
             // ( 안드로이드 6.0 이하 버전은 런타임 퍼미션이 필요없기 때문에 이미 허용된 걸로 인식합니다.)
             // 3.  위치 값을 가져올 수 있음
-
-
 
         } else {  //2. 퍼미션 요청을 허용한 적이 없다면 퍼미션 요청이 필요합니다. 2가지 경우(3-1, 4-1)가 있습니다.
 
@@ -157,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
             addresses = geocoder.getFromLocation(
                     latitude,
                     longitude,
-                    7);
+                    5);
         } catch (IOException ioException) {
             //네트워크 문제
             Toast.makeText(this, "GPS 서비스 사용불가", Toast.LENGTH_LONG).show();
@@ -177,6 +180,49 @@ public class MainActivity extends AppCompatActivity {
 //https://webnautes.tistory.com/1315
     }
 
+    public void onClickedSearch(View v) { //정보보낼곳
+        Intent intent = new Intent(getApplicationContext(),RouteResultActivity.class);
+        //intent.putExtra("infoAdress", (Parcelable) infoAddress);
+        startActivity(intent);
+    }
 
+    public class InfoAddress
+    {
+        private String curruntAddress;
+        private String startAddress;
+        private String endAddress;
+
+        public String getCurruntAddress() {
+            return curruntAddress;
+        }
+
+        public void setCurruntAddress(String curruntAddress) {
+            this.curruntAddress = curruntAddress;
+        }
+
+        public String getStartAddress() {
+            return startAddress;
+        }
+
+        public void setStartAddress(String startAddress) {
+            this.startAddress = startAddress;
+        }
+
+        public String getEndAddress() {
+            return endAddress;
+        }
+
+        public void setEndAddress(String endAddress) {
+            this.endAddress = endAddress;
+        }
+
+        public InfoAddress(String curruntAddress, String startAddress, String endAddress) {
+            this.curruntAddress = curruntAddress;
+            this.startAddress = startAddress;
+            this.endAddress = endAddress;
+        }
+
+        public InfoAddress(){}
+    }
 
 }

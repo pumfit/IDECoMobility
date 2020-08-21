@@ -4,12 +4,13 @@ public class SearchAddress {
     private String mainAdress;
     private String fullAdress;
     private String distance;
+    //private double la
 
     public SearchAddress(String mainAdress, String fullAdress, String distance)
     {
-        this.mainAdress = mainAdress;
-        this.fullAdress = fullAdress;
-        this.distance = distance;
+        this.mainAdress = mainAdress;//검색값
+        this.fullAdress = fullAdress;//실제 풀 주소명
+        this.distance = distance;//distance
     }
 
     public String getMainAdress() {

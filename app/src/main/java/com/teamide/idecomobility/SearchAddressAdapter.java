@@ -39,6 +39,7 @@ public class SearchAddressAdapter extends RecyclerView.Adapter<SearchAddressAdap
                     int pos = getAdapterPosition() ;
                     intent.putExtra("startAddress",myDataList.get(pos).getFullAdress());
                     context.startActivity(intent);
+
                 }
             });
         }

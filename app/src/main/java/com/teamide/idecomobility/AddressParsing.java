@@ -56,11 +56,11 @@ public class AddressParsing extends AsyncTask<Object, Object, ArrayList<SearchAd
                     Log.d("ad", latitude);
                     Log.d("ad", longitude);
 
-                    dataList.add(new SearchAddress(searchaddress, address, "10km"));
+//                    dataList.add(new SearchAddress(searchaddress, address, "10km"));
                 }
             }else
             {
-                dataList.add(new SearchAddress("검색결과없음", "알수없음", "10km"));
+     //           dataList.add(new SearchAddress("검색결과없음", "알수없음", "10km"));
             }
 
 
