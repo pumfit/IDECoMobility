@@ -6,4 +6,5 @@
     <color name="colorBlueMain">#0085FF</color>
     <color name="colorBluePrimary">#0062BD</color>
     <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
 </resources>

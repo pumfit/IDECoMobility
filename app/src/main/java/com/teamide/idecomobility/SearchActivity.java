@@ -81,6 +81,10 @@ public class SearchActivity extends Activity {
                     dataList.add(new SearchAddress(startAdress,address,String.format("%.1f", distance)+"Km"));//현재 위치와의 거리
                 }
             }
+            RecyclerView recyclerView = (RecyclerView)findViewById(R.id.adressRecyclerView1);
+            LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false);
+            recyclerView.setLayoutManager(manager); // LayoutManager 등록
+            recyclerView.setAdapter(new SearchAddressAdapter(dataList));  // Adapter 등록
         }
         catch (IndexOutOfBoundsException e) {
             e.getStackTrace();

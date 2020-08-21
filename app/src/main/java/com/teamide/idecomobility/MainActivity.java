@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.LocationManager;
@@ -14,12 +15,15 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+
+import static android.graphics.drawable.Drawable.*;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -30,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     String[] REQUIRED_PERMISSIONS  = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
     //GPS
     InfoAddress infoAddress = new InfoAddress();//받아올 정보 class객체
+    boolean[] isServiceNeed = new  boolean[4];//순서대로 휠체어 리프트,엘리베이터,저상버스,무장애 정류소
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         double longitude = gpsTracker.getLongitude();
 
         String address = getCurrentAddress(latitude, longitude);
-        infoAddress.curruntAddress=address;
+        infoAddress.setCurruntAddress(address);
 
         startText.setOnClickListener(//에디트텍스트버튼클릭시
                 new View.OnClickListener() {
@@ -81,16 +86,16 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if(!(intent.getStringExtra("startAddress")==null))
         {
-            infoAddress.startAddress = intent.getStringExtra("startAddress");
+            infoAddress.setStartAddress(intent.getStringExtra("startAddress"));
             //startText.setText(startAddress);
         }
         else if(!(intent.getStringExtra("endAddress")==null))
         {
-            infoAddress.endAddress = intent.getStringExtra("endAddress");
+            infoAddress.setEndAddress(intent.getStringExtra("endAddress"));
             //endText.setText(endAddress);
         }
 
-        if(infoAddress.startAddress==null)
+        if(infoAddress.getStartAddress()==null)
         {
             startText.setText(infoAddress.getCurruntAddress());
             endText.setText(infoAddress.getEndAddress());
@@ -186,43 +191,80 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public class InfoAddress
+    public void onClickedwheelchairlift(View v)
     {
-        private String curruntAddress;
-        private String startAddress;
-        private String endAddress;
-
-        public String getCurruntAddress() {
-            return curruntAddress;
+        if(isServiceNeed[0]==false)
+        {
+            isServiceNeed[0] = true;
+            Button setWheelchairlift = findViewById(R.id.button5);
+            setWheelchairlift.setBackground(ContextCompat.getDrawable(this, R.drawable.radius_filled));
+            setWheelchairlift.setTextColor(ContextCompat.getColor(this,R.color.white));
+        }
+        else
+        {
+            isServiceNeed[0] = false;
+            Button setWheelchairlift = findViewById(R.id.button5);
+            setWheelchairlift.setBackground(ContextCompat.getDrawable(this, R.drawable.radius));
+            setWheelchairlift.setTextColor(ContextCompat.getColor(this,R.color.black));
         }
 
-        public void setCurruntAddress(String curruntAddress) {
-            this.curruntAddress = curruntAddress;
+    }
+
+    public void onClickedElevator(View v)
+    {
+        if(isServiceNeed[1]==false)
+        {
+            isServiceNeed[1] = true;
+            Button setWheelchairlift = findViewById(R.id.button6);
+            setWheelchairlift.setBackground(ContextCompat.getDrawable(this, R.drawable.radius_filled));
+            setWheelchairlift.setTextColor(ContextCompat.getColor(this,R.color.white));
+        }
+        else
+        {
+            isServiceNeed[1] = false;
+            Button setWheelchairlift = findViewById(R.id.button6);
+            setWheelchairlift.setBackground(ContextCompat.getDrawable(this, R.drawable.radius));
+            setWheelchairlift.setTextColor(ContextCompat.getColor(this,R.color.black));
         }
 
-        public String getStartAddress() {
-            return startAddress;
+    }
+
+    public void onClickedBus(View v)
+    {
+        if(isServiceNeed[2]==false)
+        {
+            isServiceNeed[2] = true;
+            Button setWheelchairlift = findViewById(R.id.button2);
+            setWheelchairlift.setBackground(ContextCompat.getDrawable(this, R.drawable.radius_filled));
+            setWheelchairlift.setTextColor(ContextCompat.getColor(this,R.color.white));
+        }
+        else
+        {
+            isServiceNeed[2] = false;
+            Button setWheelchairlift = findViewById(R.id.button2);
+            setWheelchairlift.setBackground(ContextCompat.getDrawable(this, R.drawable.radius));
+            setWheelchairlift.setTextColor(ContextCompat.getColor(this,R.color.black));
         }
 
-        public void setStartAddress(String startAddress) {
-            this.startAddress = startAddress;
+    }
+
+    public void onClickedBusStation(View v)
+    {
+        if(isServiceNeed[3]==false)
+        {
+            isServiceNeed[3] = true;
+            Button setWheelchairlift = findViewById(R.id.button3);
+            setWheelchairlift.setBackground(ContextCompat.getDrawable(this, R.drawable.radius_filled));
+            setWheelchairlift.setTextColor(ContextCompat.getColor(this,R.color.white));
+        }
+        else
+        {
+            isServiceNeed[3] = false;
+            Button setWheelchairlift = findViewById(R.id.button3);
+            setWheelchairlift.setBackground(ContextCompat.getDrawable(this, R.drawable.radius));
+            setWheelchairlift.setTextColor(ContextCompat.getColor(this,R.color.black));
         }
 
-        public String getEndAddress() {
-            return endAddress;
-        }
-
-        public void setEndAddress(String endAddress) {
-            this.endAddress = endAddress;
-        }
-
-        public InfoAddress(String curruntAddress, String startAddress, String endAddress) {
-            this.curruntAddress = curruntAddress;
-            this.startAddress = startAddress;
-            this.endAddress = endAddress;
-        }
-
-        public InfoAddress(){}
     }
 
 }

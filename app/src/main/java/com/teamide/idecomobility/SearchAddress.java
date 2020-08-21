@@ -1,16 +1,56 @@
 package com.teamide.idecomobility;
 
-public class SearchAddress {
-    private String mainAdress;
-    private String fullAdress;
-    private String distance;
-    //private double la
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class SearchAddress implements Parcelable {
+    private String mainAdress;//검색한 내용
+    private String fullAdress;//검색 풀 주소
+    private String distance;//현재 위치에서로 부터의 거리
+    private double latitude = 0;//위도
+    private double longitude = 0;//경도
 
     public SearchAddress(String mainAdress, String fullAdress, String distance)
     {
-        this.mainAdress = mainAdress;//검색값
-        this.fullAdress = fullAdress;//실제 풀 주소명
-        this.distance = distance;//distance
+        this.mainAdress = mainAdress;
+        this.fullAdress = fullAdress;
+        this.distance = distance;
+    }
+
+    protected SearchAddress(Parcel in) {
+        mainAdress = in.readString();
+        fullAdress = in.readString();
+        distance = in.readString();
+        latitude = in.readDouble();
+        longitude = in.readDouble();
+    }
+
+    public static final Creator<SearchAddress> CREATOR = new Creator<SearchAddress>() {
+        @Override
+        public SearchAddress createFromParcel(Parcel in) {
+            return new SearchAddress(in);
+        }
+
+        @Override
+        public SearchAddress[] newArray(int size) {
+            return new SearchAddress[size];
+        }
+    };
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
     public String getMainAdress() {
@@ -35,5 +75,19 @@ public class SearchAddress {
 
     public void setDistance(String distance) {
         this.distance = distance;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(mainAdress);
+        dest.writeString(fullAdress);
+        dest.writeString(distance);
+        dest.writeDouble(latitude);
+        dest.writeDouble(longitude);
     }
 }

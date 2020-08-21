@@ -2,6 +2,7 @@ package com.teamide.idecomobility;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +38,7 @@ public class SearchAddressAdapter extends RecyclerView.Adapter<SearchAddressAdap
                     Context context = v.getContext();
                     Intent intent = new Intent(v.getContext(),MainActivity.class);
                     int pos = getAdapterPosition() ;
-                    intent.putExtra("startAddress",myDataList.get(pos).getFullAdress());
+                    intent.putExtra("startAddress", myDataList.get(pos).getFullAdress());
                     context.startActivity(intent);
 
                 }
