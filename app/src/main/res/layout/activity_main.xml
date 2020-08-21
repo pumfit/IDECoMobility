@@ -39,8 +39,8 @@
                     android:textColor="@color/white" />
 
                 <EditText
-                    android:id="@+id/addressSearchEditText"
-                     android:layout_width="wrap_content"
+                    android:id="@+id/addressSearchEditText1"
+                    android:layout_width="wrap_content"
                     android:layout_height="36dp"
                     android:ems="15"
                     android:layout_weight="1"
@@ -69,7 +69,7 @@
                     android:text="@string/end" />
 
                 <EditText
-                    android:id="@+id/editText2"
+                    android:id="@+id/addressSearchEditText2"
                     android:layout_width="wrap_content"
                     android:layout_height="36dp"
                     android:layout_weight="1"

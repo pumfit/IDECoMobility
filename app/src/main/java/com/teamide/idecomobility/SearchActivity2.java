@@ -14,52 +14,37 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
-public class SearchActivity extends Activity {
+public class SearchActivity2 extends Activity {
 
     private Geocoder geocoder = null;
     public ArrayList<SearchAddress> dataList;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
+        setContentView(R.layout.activity_search2);
 
         geocoder = new Geocoder(this);
         dataList = new ArrayList<SearchAddress>();
 
-        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.adressRecyclerView1);
+        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.adressRecyclerView2);
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(manager); // LayoutManager 등록
-        recyclerView.setAdapter(new SearchAddressAdapter(dataList));  // Adapter 등록
+        recyclerView.setAdapter(new SearchAddressAdapter2(dataList));  // Adapter 등록
 
     }
-
-//    private ArrayList<SearchAddress> getData(String address) {
-//        AddressParsing addressParsing = new AddressParsing(address);
-//        ArrayList<SearchAddress> list = new ArrayList<>();
-//        try {
-//            list = addressParsing.execute().get();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        } catch (ExecutionException e) {
-//            e.printStackTrace();
-//        }
-//        return list;
-//    }
 
     public void onClickedSearch(View v)
     {
         if(!(dataList==null)) {
             dataList.clear();
         }
-        EditText startText = (EditText) findViewById(R.id.addressSearchEditText3);
+        EditText startText = (EditText) findViewById(R.id.addressSearchEditText4);
         String startAdress = startText.getText().toString();
 
         List<Address> addressList = null;
 
         try {
-            Log.d("ad", startAdress);
             addressList = geocoder.getFromLocationName(startAdress, 10); // 최대 검색 결과 개수
         }
         catch (IOException e) {
@@ -85,10 +70,10 @@ public class SearchActivity extends Activity {
                 dataList.add(new SearchAddress(startAdress,address,"10km"));
             }
 
-            RecyclerView recyclerView = (RecyclerView)findViewById(R.id.adressRecyclerView1);
+            RecyclerView recyclerView = (RecyclerView)findViewById(R.id.adressRecyclerView2);
             LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false);
             recyclerView.setLayoutManager(manager);
-            recyclerView.setAdapter(new SearchAddressAdapter(dataList));
+            recyclerView.setAdapter(new SearchAddressAdapter2(dataList));
         }
         catch (IndexOutOfBoundsException e) {
             e.getStackTrace();
@@ -98,12 +83,4 @@ public class SearchActivity extends Activity {
             e.getStackTrace();
         }
     }
-//        EditText startText = (EditText) findViewById(R.id.addressSearchEditText3);
-//        String startAdress = startText.getText().toString();
-//        dataList = getData(startAdress);
-//
-//        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.adressRecyclerView1);
-//        LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false);
-//        recyclerView.setLayoutManager(manager);
-//        recyclerView.setAdapter(new SearchAddressAdapter(dataList));
 }

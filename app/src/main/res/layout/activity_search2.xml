@@ -27,23 +27,23 @@
                     android:layout_width="85dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/start"
+                    android:text="@string/end"
                     android:textColor="@color/white"
                     android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/addressSearchEditText3"
+                    android:id="@+id/addressSearchEditText4"
                     android:layout_width="wrap_content"
                     android:layout_height="36dp"
                     android:layout_marginStart="10dp"
                     android:layout_weight="1"
                     android:background="@color/white"
                     android:ems="15"
-                    android:hint="  출발지를 검색해 주세요."
+                    android:hint="  도착지를 검색해 주세요."
                     android:inputType="textPersonName" />
 
                 <Button
-                    android:id="@+id/searchButton1"
+                    android:id="@+id/searchButton2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -53,7 +53,7 @@
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/adressRecyclerView1"
+            android:id="@+id/adressRecyclerView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>

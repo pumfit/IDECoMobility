@@ -6,15 +6,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class SearchAdressAdapter extends RecyclerView.Adapter<SearchAdressAdapter.ViewHolder>{
+import static androidx.core.app.ActivityCompat.startActivityForResult;
 
-    public ArrayList<SearchAddress> myDataList;
+public class SearchAddressAdapter extends RecyclerView.Adapter<SearchAddressAdapter.ViewHolder>{
+
+    public ArrayList<SearchAddress> myDataList = new ArrayList<SearchAddress>();
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView mainAdress;
@@ -43,7 +44,7 @@ public class SearchAdressAdapter extends RecyclerView.Adapter<SearchAdressAdapte
         }
     }
 
-    SearchAdressAdapter(ArrayList<SearchAddress> dataList)
+    SearchAddressAdapter(ArrayList<SearchAddress> dataList)
     {
         myDataList = dataList;
     }
@@ -71,7 +72,13 @@ public class SearchAdressAdapter extends RecyclerView.Adapter<SearchAdressAdapte
     @Override
     public int getItemCount() {
         //Adapter가 관리하는 전체 데이터 개수 반환
-        return myDataList.size();
+        if(! (myDataList==null))
+        {
+            return myDataList.size();
+        }else
+        {
+            return 0;
+        }
     }
 
 }
