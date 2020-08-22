@@ -5,7 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.odsay.odsayandroidsdk.API;
 import com.odsay.odsayandroidsdk.ODsayData;
@@ -15,6 +18,8 @@ import com.odsay.odsayandroidsdk.OnResultCallbackListener;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.util.ArrayList;
+
 public class RouteResultActivity extends Activity {
 
     public String sLatitude = "37.6281126";
@@ -22,11 +27,13 @@ public class RouteResultActivity extends Activity {
     public String eLatitude = "37.654527";
     public String eLongitude = "127.060551";
 
+    ArrayList<direction_data> movieDataList;
+    //AIzaSyDX8dROz3L3e1jMQ7tUE1CC094guImPlo8"
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_routeresult);
 
-        TextView textView = findViewById(R.id.textView6);
         Intent intent = getIntent();
         InfoAddress infoAddress = intent.getParcelableExtra("infoAddress");
         boolean[] services = intent.getBooleanArrayExtra("service");
@@ -37,18 +44,43 @@ public class RouteResultActivity extends Activity {
         eLongitude = Double.toString(infoAddress.getEndAddress().getLongitude());
         Log.d("ad",sLatitude+"    "+sLongitude+"   "+eLatitude+"  "+eLongitude);
 
-        searchPath(infoAddress.getStartAddress(),infoAddress.getEndAddress());
+        searchPath(infoAddress.getStartAddress(),infoAddress.getEndAddress());//길찾기 실행
 
-        StringBuffer sb = new StringBuffer();
-        sb.append(infoAddress.getCurruntAddress().getMainAdress());
-        sb.append(services[0]);
-        sb.append(services[1]);
+        TextView startTextView = findViewById(R.id.start);
+        TextView endTextView = findViewById(R.id.end);
 
-       textView.setText(sb);
+        startTextView.setText(infoAddress.getStartAddress().getMainAdress());
+        endTextView.setText(infoAddress.getEndAddress().getMainAdress());
 
+        this.InitializeMovieData();//->72
+
+        ListView listView = (ListView)findViewById(R.id.listView);
+        final directionAdapter myAdapter = new directionAdapter(this,movieDataList);
+
+        listView.setAdapter(myAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView parent, View v, int position, long id){
+                Toast.makeText(getApplicationContext(),
+                        myAdapter.getItem(position).gettitle(),
+                        Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
-    public void searchPath(SearchAddress startAddress,SearchAddress endAddress)
+    public void InitializeMovieData() //data받아오기
+    {
+        movieDataList = new ArrayList<direction_data>();
+        //이부분을 case문으로 처리
+        movieDataList.add(new direction_data("출발", "출발지",null, null, null));
+        movieDataList.add(new direction_data("버스", "서울여대 후문 정류소","362","3","분 뒤 도착"));
+        movieDataList.add(new direction_data("도보", "도보로 420m 이동","태릉입구역 하차후 6번 출구 엘리베이터",null,null));
+        movieDataList.add(new direction_data("지하철", "태릉입구역","4-1, 6-1, 8-1","2","분 뒤 도착"));
+        movieDataList.add(new direction_data("도착", "도착지",null,null,null));
+    }
+
+    public void searchPath(SearchAddress startAddress,SearchAddress endAddress)//오딧세이 경로 찾기 함수
     {
         ODsayService odsayService = ODsayService.init(this, "nFVGyVxSTk6opjbmKKPCTDaEfNWyidhvs1HbmTtAf6U");
         odsayService.setReadTimeout(5000);
@@ -61,14 +93,12 @@ public class RouteResultActivity extends Activity {
             public void onSuccess(ODsayData odsayData, API api) {
                 try {
                     // API Value 는 API 호출 메소드 명을 따라갑니다.
-                    if (api == API.SEARCH_PUB_TRANS_PATH) {
+                    if (api == API.SEARCH_PUB_TRANS_PATH) {//여기가 오디세이 데이터 처리하는 함수
                         String searchType = odsayData.getJson().getJSONObject("result").getString("searchType");
                         JSONArray path =  odsayData.getJson().getJSONObject("result").getJSONArray("path");
                         String totalTime = path.getJSONObject(0).getJSONObject("info").getString("totalTime");
                         String payment = path.getJSONObject(0).getJSONObject("info").getString("payment");
                         Log.d("ad","오딧세이 호출 searchType :"+ searchType+"총 걸리는 시간:"+totalTime+"총 요금:"+payment);
-                        TextView textView = findViewById(R.id.textView6);
-                        textView.append("총 걸리는 시간:"+totalTime+"총 요금:"+payment);
                     }
                 }catch (JSONException e) {
                     e.printStackTrace();

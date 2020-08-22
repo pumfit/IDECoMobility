@@ -1,3 +1,4 @@
+
 package com.teamide.idecomobility;
 
 import android.content.Context;
@@ -7,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.teamide.idecomobility.R;
 import com.teamide.idecomobility.direction_data;
 
 import java.util.ArrayList;
