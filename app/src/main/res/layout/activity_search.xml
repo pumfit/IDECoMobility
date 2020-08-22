@@ -14,7 +14,8 @@
             android:layout_height="wrap_content"
             android:background="@color/colorBlueMain"
             android:orientation="vertical"
-            android:padding="18dp">
+            android:padding="18dp"
+            android:elevation="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -27,7 +28,7 @@
                     android:layout_width="85dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/start"
+                    android:text="@string/end"
                     android:textColor="@color/white"
                     android:textStyle="bold" />
 
@@ -43,12 +44,13 @@
                     android:inputType="textPersonName" />
 
                 <Button
-                    android:id="@+id/searchButton1"
+                    android:id="@+id/searchButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@android:drawable/ic_search_category_default"
+                    android:backgroundTint="#FFFFFF"
                     android:onClick="onClickedSearch" />
-                />
             </LinearLayout>
         </LinearLayout>
 

@@ -82,13 +82,13 @@ public class SearchActivity2 extends Activity {
                     location.setLongitude(ad.getLongitude());
                     double distance = location.distanceTo(location2)/1000;
                     Log.d("ad",String.valueOf(distance));
-                    dataList.add(new SearchAddress(startAdress,address,String.format("%.1f", distance)+"Km"));//현재 위치와의 거리
+                    dataList.add(new SearchAddress(startAdress,address,String.format("%.1f", distance)+"Km",location.getLatitude(),location.getLongitude()));//현재 위치와의 거리
                 }
             }
-            RecyclerView recyclerView = (RecyclerView)findViewById(R.id.adressRecyclerView1);
+            RecyclerView recyclerView = (RecyclerView)findViewById(R.id.adressRecyclerView2);
             LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false);
             recyclerView.setLayoutManager(manager); // LayoutManager 등록
-            recyclerView.setAdapter(new SearchAddressAdapter(dataList));  // Adapter 등록
+            recyclerView.setAdapter(new SearchAddressAdapter2(dataList));  // Adapter 등록
         }
         catch (IndexOutOfBoundsException e) {
             e.getStackTrace();

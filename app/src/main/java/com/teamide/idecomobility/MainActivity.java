@@ -1,5 +1,6 @@
 package com.teamide.idecomobility;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -61,14 +62,17 @@ public class MainActivity extends AppCompatActivity {
         double longitude = gpsTracker.getLongitude();
 
         String address = getCurrentAddress(latitude, longitude);
-        infoAddress.setCurruntAddress(address);
+        infoAddress.setStartAddress(new SearchAddress("currentAddress",address,"0",latitude,longitude));
+        infoAddress.setCurruntAddress( new SearchAddress("currentAddress",address,"0",latitude,longitude));
+        startText.setText(infoAddress.getCurruntAddress().getFullAdress());//현위치를 출발지로 지정
 
         startText.setOnClickListener(//에디트텍스트버튼클릭시
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent(getApplicationContext(),SearchActivity.class);
-                        startActivity(intent);
+                        startActivityForResult(intent,100);
+
                     }
                 }
         );
@@ -78,33 +82,33 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent(getApplicationContext(),SearchActivity2.class);
-                        startActivity(intent);
+                        startActivityForResult(intent,101);
                     }
                 }
         );
 
-        Intent intent = getIntent();
-        if(!(intent.getStringExtra("startAddress")==null))
-        {
-            infoAddress.setStartAddress(intent.getStringExtra("startAddress"));
-            //startText.setText(startAddress);
-        }
-        else if(!(intent.getStringExtra("endAddress")==null))
-        {
-            infoAddress.setEndAddress(intent.getStringExtra("endAddress"));
-            //endText.setText(endAddress);
-        }
-
-        if(infoAddress.getStartAddress()==null)
-        {
-            startText.setText(infoAddress.getCurruntAddress());
-            endText.setText(infoAddress.getEndAddress());
-        }
-        else
-        {
-            startText.setText(infoAddress.getStartAddress());
-            endText.setText(infoAddress.getEndAddress());
-        }
+//        Intent intent = getIntent();
+//        if(!(intent.getStringExtra("startAddress")==null))
+//        {
+//            infoAddress.setStartAddress(intent.getStringExtra("startAddress"));
+//            //startText.setText(startAddress);
+//        }
+//        else if(!(intent.getStringExtra("endAddress")==null))
+//        {
+//            infoAddress.setEndAddress(intent.getStringExtra("endAddress"));
+//            //endText.setText(endAddress);
+//        }
+//
+//        if(infoAddress.getStartAddress()==null)
+//        {
+//            startText.setText(infoAddress.getCurruntAddress());
+//            endText.setText(infoAddress.getEndAddress());
+//        }
+//        else
+//        {
+//            startText.setText(infoAddress.getStartAddress());
+//            endText.setText(infoAddress.getEndAddress());
+//        }
 
     }
 
@@ -153,7 +157,33 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-    public String getCurrentAddress( double latitude, double longitude) {
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+            if(requestCode==100)
+            {
+                if(resultCode==RESULT_OK)
+                {
+                    SearchAddress startAllAdress = data.getParcelableExtra("startAllAddress");
+                    infoAddress.setStartAddress(startAllAdress);
+                    EditText startText = (EditText) findViewById(R.id.addressSearchEditText1);
+                    startText.setText(infoAddress.getStartAddress().getFullAdress());
+                }
+            }
+            else if(requestCode==101)
+            {
+                if(resultCode==RESULT_OK)
+                {
+                    SearchAddress endAllAdress = data.getParcelableExtra("endAllAddress");
+                    infoAddress.setEndAddress(endAllAdress);
+                    EditText endText = (EditText) findViewById(R.id.addressSearchEditText2);
+                    endText.setText(infoAddress.getEndAddress().getFullAdress());
+                }
+            }
+    }
+
+    public String getCurrentAddress(double latitude, double longitude) {
 
         //지오코더... GPS를 주소로 변환
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
@@ -161,7 +191,6 @@ public class MainActivity extends AppCompatActivity {
         List<Address> addresses;
 
         try {
-
             addresses = geocoder.getFromLocation(
                     latitude,
                     longitude,
@@ -185,12 +214,14 @@ public class MainActivity extends AppCompatActivity {
 //https://webnautes.tistory.com/1315
     }
 
-    public void onClickedSearch(View v) { //정보보낼곳
-        Intent intent = new Intent(getApplicationContext(),RouteResultActivity.class);
-        //intent.putExtra("infoAdress", (Parcelable) infoAddress);
-        startActivity(intent);
-    }
+    public void onClickedSearch(View v) { //정보 보냄
 
+        Intent in = new Intent(getApplicationContext(),RouteResultActivity.class);
+        in.putExtra("infoAddress", (Parcelable) infoAddress);
+        in.putExtra("service",isServiceNeed);
+        startActivity(in);
+    }
+    //사용자 설정 버튼
     public void onClickedwheelchairlift(View v)
     {
         if(isServiceNeed[0]==false)

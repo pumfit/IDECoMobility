@@ -10,11 +10,23 @@ public class SearchAddress implements Parcelable {
     private double latitude = 0;//위도
     private double longitude = 0;//경도
 
+    public SearchAddress()
+    {
+    }
+
     public SearchAddress(String mainAdress, String fullAdress, String distance)
     {
         this.mainAdress = mainAdress;
         this.fullAdress = fullAdress;
         this.distance = distance;
+    }
+
+    public SearchAddress(String mainAdress, String fullAdress, String distance, double latitude, double longitude) {
+        this.mainAdress = mainAdress;
+        this.fullAdress = fullAdress;
+        this.distance = distance;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     protected SearchAddress(Parcel in) {

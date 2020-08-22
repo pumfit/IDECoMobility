@@ -13,6 +13,7 @@ import android.widget.EditText;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +46,6 @@ public class SearchActivity extends Activity {
         String startAdress = startText.getText().toString();
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
         List<Address> addressList = null;
-
         try {
             addressList = geocoder.getFromLocationName(startAdress, 5); // 최대 검색 결과 개수
             Log.d("ad", "검색 결과 개수"+String.valueOf(addressList.size()));
@@ -69,16 +69,15 @@ public class SearchActivity extends Activity {
                 double longitude = gpsTracker.getLongitude();
                 location2.setLatitude(latitude);
                 location2.setLongitude(longitude);
-                for (int i =0;i<addressList.size();i++)
-                {
+                for (int i =0;i<addressList.size();i++) {
                     Address ad = addressList.get(i);
-                    String address = ad.getAddressLine(0).toString()+"\n";
+                    String address = ad.getAddressLine(0).toString() + "\n";
                     Location location = new Location("seaech location");
                     location.setLatitude(ad.getLatitude());
                     location.setLongitude(ad.getLongitude());
-                    double distance = location.distanceTo(location2)/1000;
-                    Log.d("ad",String.valueOf(distance));
-                    dataList.add(new SearchAddress(startAdress,address,String.format("%.1f", distance)+"Km"));//현재 위치와의 거리
+                    double distance = location.distanceTo(location2) / 1000;
+                    Log.d("ad", String.valueOf(distance));
+                    dataList.add(new SearchAddress(startAdress, address, String.format("%.1f", distance) + "Km", location.getLatitude(), location.getLongitude()));
                 }
             }
             RecyclerView recyclerView = (RecyclerView)findViewById(R.id.adressRecyclerView1);
