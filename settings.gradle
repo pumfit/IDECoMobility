@@ -1,2 +1,3 @@
+include ':ODsaySDKAndroid'
 rootProject.name='IDECoMobility'
-include ':app', ':ODsayAndroidSDK'
+include ':app'
