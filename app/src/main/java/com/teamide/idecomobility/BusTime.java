@@ -24,6 +24,10 @@ public class BusTime extends Activity {
         TextView busst = findViewById(R.id.title);
         TextView bustm = findViewById(R.id.num);
 
+        String busstop = getTagValue("stNm",element); // 버스정류장 이름 가져오기
+        String time = getTagValue("exps1",element); // 남은시간 블러오기 (초)
+        Integer i = Integer.parseInt(time)/60;
+        String busTm = Integer.toString(i); // 남은시간 블러오기 (분) //정수 추가 부분 끝
     }
 
     public void busXml(){
