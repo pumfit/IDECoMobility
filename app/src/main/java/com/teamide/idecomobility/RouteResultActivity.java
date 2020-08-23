@@ -26,6 +26,7 @@ public class RouteResultActivity extends Activity {
     public String sLongitude = "127.09045680000001";
     public String eLatitude = "37.654527";
     public String eLongitude = "127.060551";
+    //AIzaSyDX8dROz3L3e1jMQ7tUE1CC094guImPlo8"
 
     ArrayList<direction_data> movieDataList;
     //AIzaSyDX8dROz3L3e1jMQ7tUE1CC094guImPlo8"

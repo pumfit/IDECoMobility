@@ -51,6 +51,7 @@ public class SearchActivity2 extends Activity {
         List<Address> addressList = null;
 
         try {
+
             addressList = geocoder.getFromLocationName(startAdress, 5); // 최대 검색 결과 개수
             Log.d("ad", "검색 결과 개수"+String.valueOf(addressList.size()));
         }
