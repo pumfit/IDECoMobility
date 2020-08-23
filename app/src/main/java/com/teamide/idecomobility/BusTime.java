@@ -14,7 +14,7 @@ import org.w3c.dom.NodeList;
 
 import java.util.ArrayList;
 
-public class BusTime extends RouteResultActivity {
+public class BusTime extends Activity {
     Element element;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,11 +24,6 @@ public class BusTime extends RouteResultActivity {
         TextView busst = findViewById(R.id.title);
         TextView bustm = findViewById(R.id.num);
 
-        busXml(); /*데이터 들어있는 테그에서 첫번째 데이터만 로드 */
-        String busstop = getTagValue("stNm",element); // 버스정류장 이름 가져오기
-        String time = getTagValue("exps1",element); // 남은시간 블러오기 (초)
-        Integer i = Integer.parseInt(time)/60;
-        String bustime = Integer.toString(i); // 남은시간 블러오기 (분)
     }
 
     public void busXml(){
