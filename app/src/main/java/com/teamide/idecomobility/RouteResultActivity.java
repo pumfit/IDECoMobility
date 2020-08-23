@@ -17,7 +17,6 @@ import com.odsay.odsayandroidsdk.OnResultCallbackListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.w3c.dom.Element;
 
 import java.util.ArrayList;
 
@@ -53,14 +52,7 @@ public class RouteResultActivity extends Activity {
         startTextView.setText(infoAddress.getStartAddress().getMainAdress());
         endTextView.setText(infoAddress.getEndAddress().getMainAdress());
 
-        BusTime bustime = new BusTime(); //정수추가 부분 시작
-
-        String busstop = bustime.getTagValue("stNm",bustime.element); // 버스정류장 이름 가져오기
-        String time = bustime.getTagValue("exps1",bustime.element); // 남은시간 블러오기 (초)
-        Integer i = Integer.parseInt(time)/60;
-        String bustm = Integer.toString(i); // 남은시간 블러오기 (분) //정수 추가 부분 끝
-
-        this.InitializeMovieData(busstop, bustm);//->72 // 매개변수 있게 수정함
+        this.InitializeMovieData();//->72
 
         ListView listView = (ListView)findViewById(R.id.listView);
         final directionAdapter myAdapter = new directionAdapter(this,movieDataList);
@@ -77,12 +69,12 @@ public class RouteResultActivity extends Activity {
         });
     }
 
-    public void InitializeMovieData(String a, String b) //data받아오기 //매개변수 추가
+    public void InitializeMovieData() //data받아오기
     {
         movieDataList = new ArrayList<direction_data>();
         //이부분을 case문으로 처리
         movieDataList.add(new direction_data("출발", "출발지",null, null, null));
-        movieDataList.add(new direction_data("버스", a,"362",b,"분 뒤 도착"));
+        movieDataList.add(new direction_data("버스", "서울여대 후문 정류소","362","3","분 뒤 도착"));
         movieDataList.add(new direction_data("도보", "도보로 420m 이동","태릉입구역 하차후 6번 출구 엘리베이터",null,null));
         movieDataList.add(new direction_data("지하철", "태릉입구역","4-1, 6-1, 8-1","2","분 뒤 도착"));
         movieDataList.add(new direction_data("도착", "도착지",null,null,null));
@@ -106,7 +98,6 @@ public class RouteResultActivity extends Activity {
                         JSONArray path =  odsayData.getJson().getJSONObject("result").getJSONArray("path");
                         String totalTime = path.getJSONObject(0).getJSONObject("info").getString("totalTime");
                         String payment = path.getJSONObject(0).getJSONObject("info").getString("payment");
-                        String busstopId = path.getJSONObject(0).getJSONObject("info").getString("stationID"); //역 및 정류량ID
                         Log.d("ad","오딧세이 호출 searchType :"+ searchType+"총 걸리는 시간:"+totalTime+"총 요금:"+payment);
                     }
                 }catch (JSONException e) {
