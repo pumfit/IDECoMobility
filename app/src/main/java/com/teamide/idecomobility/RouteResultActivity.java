@@ -4,11 +4,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.odsay.odsayandroidsdk.API;
 import com.odsay.odsayandroidsdk.ODsayData;
@@ -20,7 +24,7 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 
-public class RouteResultActivity extends Activity {
+public class RouteResultActivity extends AppCompatActivity {
 
     public String sLatitude = "37.6281126";
     public String sLongitude = "127.09045680000001";
@@ -33,6 +37,8 @@ public class RouteResultActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_routeresult);
+
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼, 디폴트로 true만 해도 백버튼이 생김
 
         Intent intent = getIntent();
         InfoAddress infoAddress = intent.getParcelableExtra("infoAddress");
@@ -68,6 +74,18 @@ public class RouteResultActivity extends Activity {
             }
         });
     }
+
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()){
+//            case android.R.id.home:{ //toolbar의 back키 눌렀을 때 동작
+//                finish();
+//                return true;
+//            }
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
+
 
     public void InitializeMovieData() //data받아오기
     {
