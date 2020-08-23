@@ -66,6 +66,8 @@ public class SearchActivity extends Activity { //출발지 검색시 실행되�
                 Log.d("ad", "검색결과없음");
             } else//받아온 데이터를 dataList에  SearchAddress형식으로 저장 -> 검색주소,전체주소,현위치에서의 거리,위도,경도
             {
+                View view = findViewById(R.id.nodata);
+                view.setVisibility(View.GONE);
                 Location location2 = new Location("current location");
                 gpsTracker = new GpsTracker(SearchActivity.this);
                 double latitude = gpsTracker.getLatitude();
