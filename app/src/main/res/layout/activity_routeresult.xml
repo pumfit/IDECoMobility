@@ -4,6 +4,7 @@
     android:id="@+id/getDirection"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,9 +17,10 @@
             android:layout_weight="1"
             android:background="@color/colorBluePrimary"
             android:minHeight="?attr/actionBarSize"
-            android:theme="?attr/actionBarTheme"
-            app:titleMarginStart="70dp"
-            app:title="경로안내" />
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:titleTextColor="@color/white"
+            app:title="경로안내"
+            app:titleMarginStart="150dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,7 +32,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="135dp"
                 android:background="@color/colorBlueMain"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:elevation="10dp">
 
                 <Space
                     android:layout_width="match_parent"
@@ -43,32 +46,34 @@
 
                     <TextView
                         android:id="@+id/start"
-                        android:layout_width="157dp"
+                        android:layout_width="160dp"
                         android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:text="출발지"
-                        android:textAlignment ="textEnd"
+                        android:textAlignment="center"
                         android:textColor="@color/white"
-                        android:textSize="20dp"
-                        android:gravity="end" />
+                        android:textSize="20dp" />
 
-                    <ImageView
+                    <Button
                         android:id="@+id/imageView"
                         android:layout_width="10dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:background="?attr/homeAsUpIndicator"
+                        android:backgroundTint="#FFFFFF"
                         android:rotation="180"
-                        app:srcCompat="@drawable/abc_vector_test" />
+                        app:srcCompat="?attr/actionModeCloseDrawable" />
 
                     <TextView
                         android:id="@+id/end"
-                        android:layout_width="wrap_content"
+                        android:layout_width="160dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:gravity="center"
                         android:text="도착지"
-                        android:textAlignment="textStart"
+                        android:textAlignment="center"
                         android:textColor="@color/white"
-                        android:textSize="20dp"
-                        android:gravity="start"/>
+                        android:textSize="20dp" />
 
                 </LinearLayout>
 

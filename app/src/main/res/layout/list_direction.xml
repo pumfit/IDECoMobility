@@ -15,19 +15,19 @@
 
         <TextView
             android:id="@+id/circle"
-            android:layout_width="112dp"
-            android:layout_height="101dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_width="90dp"
+            android:layout_height="80dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
             android:layout_weight="1"
             android:background="@drawable/circle"
             android:gravity="center"
             android:text="bus"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="30dp"
+            android:textSize="20dp"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -44,7 +44,7 @@
                     android:id="@+id/title"
                     android:layout_width="184dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="40dp"
                     android:text="Title"
                     android:textColor="#000000"
                     android:textSize="20dp"
@@ -59,14 +59,15 @@
 
                 <TextView
                     android:id="@+id/busOrSub"
-                    android:layout_width="168dp"
+                    android:layout_width="130dp"
                     android:layout_height="45dp"
                     android:layout_marginTop="10dp"
+                    android:layout_marginLeft="5dp"
                     android:text="362 or 휠체어" />
 
                 <TextView
                     android:id="@+id/num"
-                    android:layout_width="19dp"
+                    android:layout_width="10dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
@@ -79,7 +80,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginRight="30dp"
                     android:gravity="end"
                     android:text="분 뒤 도착"
                     android:textAlignment="textEnd" />
