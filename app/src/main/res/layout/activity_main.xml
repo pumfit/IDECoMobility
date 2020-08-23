@@ -44,6 +44,7 @@
                     android:layout_height="36dp"
                     android:layout_weight="1"
                     android:background="@color/white"
+                    android:editable="false"
                     android:ems="15"
                     android:hint=" 출발지를 검색해 주세요."
                     android:inputType="textPersonName" />
@@ -72,6 +73,7 @@
                     android:layout_height="36dp"
                     android:layout_weight="1"
                     android:background="@color/white"
+                    android:editable="false"
                     android:ems="15"
                     android:hint=" 도착지를 검색해 주세요."
                     android:inputType="textPersonName" />
@@ -240,7 +242,17 @@
                 android:text="무장애 정류소" />
 
         </LinearLayout>
+
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:srcCompat="@mipmap/mark"
+        tools:layout_editor_absoluteX="30dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

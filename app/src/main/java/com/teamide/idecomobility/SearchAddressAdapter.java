@@ -35,11 +35,10 @@ public class SearchAddressAdapter extends RecyclerView.Adapter<SearchAddressAdap
             itemView.setOnClickListener(new View.OnClickListener()
             {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View v) { //해당 검색결과 클릭시 intent로 데이터를 넘김
                     int pos = getAdapterPosition() ;
                     Context context = v.getContext();
                     Intent intent = new Intent(v.getContext(),MainActivity.class);
-                    intent.putExtra("startAddress", myDataList.get(pos).getFullAdress());//String
                     intent.putExtra("startAllAddress", myDataList.get(pos));//SearchAddress
                     ((Activity)context).setResult(Activity.RESULT_OK,intent);
                     ((Activity)context).finish();
@@ -59,7 +58,6 @@ public class SearchAddressAdapter extends RecyclerView.Adapter<SearchAddressAdap
         Context context = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        //전개자(Inflater)를 통해 얻은 참조 객체를 통해 뷰홀더 객체 생성
         View view = inflater.inflate(R.layout.recycler_adress_item, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
 
@@ -74,8 +72,7 @@ public class SearchAddressAdapter extends RecyclerView.Adapter<SearchAddressAdap
     }
 
     @Override
-    public int getItemCount() {
-        //Adapter가 관리하는 전체 데이터 개수 반환
+    public int getItemCount() { //Adapter가 관리하는 전체 데이터 개수 반환
         if(! (myDataList==null))
         {
             return myDataList.size();

@@ -41,7 +41,6 @@ public class SearchAddressAdapter2 extends RecyclerView.Adapter<SearchAddressAda
                     int pos = getAdapterPosition() ;
                     Context context = v.getContext();
                     Intent intent = new Intent(v.getContext(),MainActivity.class);
-                    intent.putExtra("endAddress",myDataList.get(pos).getFullAdress());
                     intent.putExtra("endAllAddress", myDataList.get(pos));
                     ((Activity)context).setResult(Activity.RESULT_OK,intent);
                     ((Activity)context).finish();
@@ -73,7 +72,6 @@ public class SearchAddressAdapter2 extends RecyclerView.Adapter<SearchAddressAda
         holder.mainAdress.setText( myDataList.get(position).getMainAdress());
         holder.fullAdress.setText(myDataList.get(position).getFullAdress());
         holder.distance.setText(myDataList.get(position).getDistance());
-
     }
 
     @Override

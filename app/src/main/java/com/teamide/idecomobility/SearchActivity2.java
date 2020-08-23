@@ -38,6 +38,8 @@ public class SearchActivity2 extends Activity {
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(manager); // LayoutManager 등록
         recyclerView.setAdapter(new SearchAddressAdapter2(dataList));  // Adapter 등록
+        View view = findViewById(R.id.nodata);
+        view.setVisibility(View.GONE);
     }
 
     public void onClickedSearch(View v)
@@ -65,6 +67,8 @@ public class SearchActivity2 extends Activity {
         try {
             if(addressList.size()==0)
             {
+                View view = findViewById(R.id.nodata);
+                view.setVisibility(View.VISIBLE);
                 Log.d("ad","검색결과없음");
             }else
             {

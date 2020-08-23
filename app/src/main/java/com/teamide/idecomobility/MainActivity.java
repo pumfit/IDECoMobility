@@ -30,12 +30,12 @@ import static android.graphics.drawable.Drawable.*;
 public class MainActivity extends AppCompatActivity {
 
     private GpsTracker gpsTracker;
+    String[] REQUIRED_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
-    private static final int PERMISSIONS_REQUEST_CODE = 100;
-    String[] REQUIRED_PERMISSIONS  = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
-    //GPS
-    InfoAddress infoAddress = new InfoAddress();//받아올 정보 class객체
-    boolean[] isServiceNeed = new  boolean[4];//순서대로 휠체어 리프트,엘리베이터,저상버스,무장애 정류소
+    private static final int PERMISSIONS_REQUEST_CODE = 100;//for GPS Tracking
+
+    InfoAddress infoAddress = new InfoAddress();//현위치,출발지,도착지 주소 정보
+    boolean[] isServiceNeed = new boolean[4];//사용자 설정 boolean 휠체어 리프트,엘리베이터,저상버스,무장애 정류소
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,82 +47,56 @@ public class MainActivity extends AppCompatActivity {
         startText.setInputType(0);
         endText.setInputType(0);
 
-        if (!checkLocationServicesStatus()) {
+        if (!checkLocationServicesStatus()) {//GPS 확인
             Intent callGPSSettingIntent
                     = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
             startActivityForResult(callGPSSettingIntent, GPS_ENABLE_REQUEST_CODE);
-        }else {
+        } else {
 
             checkRunTimePermission();
         }
 
-        gpsTracker = new GpsTracker(MainActivity.this);
+        gpsTracker = new GpsTracker(MainActivity.this);//현위치 GPS로 받아오기
 
-        double latitude = gpsTracker.getLatitude();//현위치 위도 경도 좌표 여기서
+        double latitude = gpsTracker.getLatitude();
         double longitude = gpsTracker.getLongitude();
 
         String address = getCurrentAddress(latitude, longitude);
-        infoAddress.setStartAddress(new SearchAddress("currentAddress",address,"0",latitude,longitude));
-        infoAddress.setCurruntAddress( new SearchAddress("currentAddress",address,"0",latitude,longitude));
+        infoAddress.setStartAddress(new SearchAddress("현위치", address, "0", latitude, longitude));
+        infoAddress.setCurruntAddress(new SearchAddress("현위치", address, "0", latitude, longitude));
         startText.setText(infoAddress.getCurruntAddress().getFullAdress());//현위치를 출발지로 지정
 
-        startText.setOnClickListener(//에디트텍스트버튼클릭시
+        startText.setOnClickListener( //출발지 EditText버튼 클릭시
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(getApplicationContext(),SearchActivity.class);
-                        startActivityForResult(intent,100);
+                        Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
+                        startActivityForResult(intent, 100);
 
                     }
                 }
         );
-
-        endText.setOnClickListener(//에디트텍스트버튼클릭시
+        endText.setOnClickListener( //도착지 EditText버튼 클릭시
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(getApplicationContext(),SearchActivity2.class);
-                        startActivityForResult(intent,101);
+                        Intent intent = new Intent(getApplicationContext(), SearchActivity2.class);
+                        startActivityForResult(intent, 101);
                     }
                 }
         );
-
-//        Intent intent = getIntent();
-//        if(!(intent.getStringExtra("startAddress")==null))
-//        {
-//            infoAddress.setStartAddress(intent.getStringExtra("startAddress"));
-//            //startText.setText(startAddress);
-//        }
-//        else if(!(intent.getStringExtra("endAddress")==null))
-//        {
-//            infoAddress.setEndAddress(intent.getStringExtra("endAddress"));
-//            //endText.setText(endAddress);
-//        }
-//
-//        if(infoAddress.getStartAddress()==null)
-//        {
-//            startText.setText(infoAddress.getCurruntAddress());
-//            endText.setText(infoAddress.getEndAddress());
-//        }
-//        else
-//        {
-//            startText.setText(infoAddress.getStartAddress());
-//            endText.setText(infoAddress.getEndAddress());
-//        }
-
     }
 
 
-    public boolean checkLocationServicesStatus() {
+    public boolean checkLocationServicesStatus() { //GPS기능 사용가능한지 판단
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
                 || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
 
-    void checkRunTimePermission(){
+    void checkRunTimePermission() {//RunTimePermissio 처리
 
-        //런타임 퍼미션 처리
         // 1. 위치 퍼미션을 가지고 있는지 체크합니다.
         int hasFineLocationPermission = ContextCompat.checkSelfPermission(MainActivity.this,
                 Manifest.permission.ACCESS_FINE_LOCATION);
@@ -132,55 +106,38 @@ public class MainActivity extends AppCompatActivity {
 
         if (hasFineLocationPermission == PackageManager.PERMISSION_GRANTED &&
                 hasCoarseLocationPermission == PackageManager.PERMISSION_GRANTED) {
+        } else {
 
-            // 2. 이미 퍼미션을 가지고 있다면
-            // ( 안드로이드 6.0 이하 버전은 런타임 퍼미션이 필요없기 때문에 이미 허용된 걸로 인식합니다.)
-            // 3.  위치 값을 가져올 수 있음
-
-        } else {  //2. 퍼미션 요청을 허용한 적이 없다면 퍼미션 요청이 필요합니다. 2가지 경우(3-1, 4-1)가 있습니다.
-
-            // 3-1. 사용자가 퍼미션 거부를 한 적이 있는 경우에는
             if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, REQUIRED_PERMISSIONS[0])) {
-                // 3-2. 요청을 진행하기 전에 사용자가에게 퍼미션이 필요한 이유를 설명해줄 필요가 있습니다.
                 Toast.makeText(MainActivity.this, "이 앱을 실행하려면 위치 접근 권한이 필요합니다.", Toast.LENGTH_LONG).show();
-                // 3-3. 사용자게에 퍼미션 요청을 합니다. 요청 결과는 onRequestPermissionResult에서 수신됩니다.
                 ActivityCompat.requestPermissions(MainActivity.this, REQUIRED_PERMISSIONS,
-                        PERMISSIONS_REQUEST_CODE);
-
+                        PERMISSIONS_REQUEST_CODE);//위치 정보 퍼미션 재요청
 
             } else {
-                // 4-1. 사용자가 퍼미션 거부를 한 적이 없는 경우에는 퍼미션 요청을 바로 합니다.
-                // 요청 결과는 onRequestPermissionResult에서 수신됩니다.
                 ActivityCompat.requestPermissions(MainActivity.this, REQUIRED_PERMISSIONS,
                         PERMISSIONS_REQUEST_CODE);
             }
         }
-
     }
 
-    @Override
+    @Override//받아온 intent 정보 처리
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-            if(requestCode==100)
-            {
-                if(resultCode==RESULT_OK)
-                {
-                    SearchAddress startAllAdress = data.getParcelableExtra("startAllAddress");
-                    infoAddress.setStartAddress(startAllAdress);
-                    EditText startText = (EditText) findViewById(R.id.addressSearchEditText1);
-                    startText.setText(infoAddress.getStartAddress().getFullAdress());
-                }
+        if (requestCode == 100) { //from SearchActivity
+            if (resultCode == RESULT_OK) {
+                SearchAddress startAllAdress = data.getParcelableExtra("startAllAddress");
+                infoAddress.setStartAddress(startAllAdress);
+                EditText startText = (EditText) findViewById(R.id.addressSearchEditText1);
+                startText.setText(infoAddress.getStartAddress().getFullAdress());
             }
-            else if(requestCode==101)
-            {
-                if(resultCode==RESULT_OK)
-                {
-                    SearchAddress endAllAdress = data.getParcelableExtra("endAllAddress");
-                    infoAddress.setEndAddress(endAllAdress);
-                    EditText endText = (EditText) findViewById(R.id.addressSearchEditText2);
-                    endText.setText(infoAddress.getEndAddress().getFullAdress());
-                }
+        } else if (requestCode == 101) {
+            if (resultCode == RESULT_OK) { //from SearchActivity2
+                SearchAddress endAllAdress = data.getParcelableExtra("endAllAddress");
+                infoAddress.setEndAddress(endAllAdress);
+                EditText endText = (EditText) findViewById(R.id.addressSearchEditText2);
+                endText.setText(infoAddress.getEndAddress().getFullAdress());
             }
+        }
     }
 
     public String getCurrentAddress(double latitude, double longitude) {
@@ -210,92 +167,74 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Address address = addresses.get(0);
-        return address.getAddressLine(0).toString()+"\n";
-//https://webnautes.tistory.com/1315
+        return address.getAddressLine(0).toString() + "\n";
+        //참고 https://webnautes.tistory.com/1315
     }
 
-    public void onClickedSearch(View v) { //정보 보냄
+    public void onClickedSearch(View v) { //길찾기 버튼 클릭시 받아온 주소 정보들 보냄
 
-        Intent in = new Intent(getApplicationContext(),RouteResultActivity.class);
+        Intent in = new Intent(getApplicationContext(), RouteResultActivity.class);
         in.putExtra("infoAddress", (Parcelable) infoAddress);
-        in.putExtra("service",isServiceNeed);
+        in.putExtra("service", isServiceNeed);
         startActivity(in);
     }
-    //사용자 설정 버튼
-    public void onClickedwheelchairlift(View v)
-    {
-        if(isServiceNeed[0]==false)
-        {
+
+    //이후부터 사용자 설정 버튼 정보 받아오고 UI 변경하는 메소드들
+    public void onClickedwheelchairlift(View v) {
+        if (isServiceNeed[0] == false) {
             isServiceNeed[0] = true;
             Button setWheelchairlift = findViewById(R.id.button5);
             setWheelchairlift.setBackground(ContextCompat.getDrawable(this, R.drawable.radius_filled));
-            setWheelchairlift.setTextColor(ContextCompat.getColor(this,R.color.white));
-        }
-        else
-        {
+            setWheelchairlift.setTextColor(ContextCompat.getColor(this, R.color.white));
+        } else {
             isServiceNeed[0] = false;
             Button setWheelchairlift = findViewById(R.id.button5);
             setWheelchairlift.setBackground(ContextCompat.getDrawable(this, R.drawable.radius));
-            setWheelchairlift.setTextColor(ContextCompat.getColor(this,R.color.black));
+            setWheelchairlift.setTextColor(ContextCompat.getColor(this, R.color.black));
         }
 
     }
 
-    public void onClickedElevator(View v)
-    {
-        if(isServiceNeed[1]==false)
-        {
+    public void onClickedElevator(View v) {
+        if (isServiceNeed[1] == false) {
             isServiceNeed[1] = true;
             Button setWheelchairlift = findViewById(R.id.button6);
             setWheelchairlift.setBackground(ContextCompat.getDrawable(this, R.drawable.radius_filled));
-            setWheelchairlift.setTextColor(ContextCompat.getColor(this,R.color.white));
-        }
-        else
-        {
+            setWheelchairlift.setTextColor(ContextCompat.getColor(this, R.color.white));
+        } else {
             isServiceNeed[1] = false;
             Button setWheelchairlift = findViewById(R.id.button6);
             setWheelchairlift.setBackground(ContextCompat.getDrawable(this, R.drawable.radius));
-            setWheelchairlift.setTextColor(ContextCompat.getColor(this,R.color.black));
+            setWheelchairlift.setTextColor(ContextCompat.getColor(this, R.color.black));
         }
 
     }
 
-    public void onClickedBus(View v)
-    {
-        if(isServiceNeed[2]==false)
-        {
+    public void onClickedBus(View v) {
+        if (isServiceNeed[2] == false) {
             isServiceNeed[2] = true;
             Button setWheelchairlift = findViewById(R.id.button2);
             setWheelchairlift.setBackground(ContextCompat.getDrawable(this, R.drawable.radius_filled));
-            setWheelchairlift.setTextColor(ContextCompat.getColor(this,R.color.white));
-        }
-        else
-        {
+            setWheelchairlift.setTextColor(ContextCompat.getColor(this, R.color.white));
+        } else {
             isServiceNeed[2] = false;
             Button setWheelchairlift = findViewById(R.id.button2);
             setWheelchairlift.setBackground(ContextCompat.getDrawable(this, R.drawable.radius));
-            setWheelchairlift.setTextColor(ContextCompat.getColor(this,R.color.black));
+            setWheelchairlift.setTextColor(ContextCompat.getColor(this, R.color.black));
         }
-
     }
 
-    public void onClickedBusStation(View v)
-    {
-        if(isServiceNeed[3]==false)
-        {
+    public void onClickedBusStation(View v) {
+        if (isServiceNeed[3] == false) {
             isServiceNeed[3] = true;
             Button setWheelchairlift = findViewById(R.id.button3);
             setWheelchairlift.setBackground(ContextCompat.getDrawable(this, R.drawable.radius_filled));
-            setWheelchairlift.setTextColor(ContextCompat.getColor(this,R.color.white));
-        }
-        else
-        {
+            setWheelchairlift.setTextColor(ContextCompat.getColor(this, R.color.white));
+        } else {
             isServiceNeed[3] = false;
             Button setWheelchairlift = findViewById(R.id.button3);
             setWheelchairlift.setBackground(ContextCompat.getDrawable(this, R.drawable.radius));
-            setWheelchairlift.setTextColor(ContextCompat.getColor(this,R.color.black));
+            setWheelchairlift.setTextColor(ContextCompat.getColor(this, R.color.black));
         }
-
     }
-
 }

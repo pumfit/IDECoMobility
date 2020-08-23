@@ -3,7 +3,7 @@ package com.teamide.idecomobility;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class SearchAddress implements Parcelable {
+public class SearchAddress implements Parcelable { //검색주소의 상세 데이터 클래스
     private String mainAdress;//검색한 내용
     private String fullAdress;//검색 풀 주소
     private String distance;//현재 위치에서로 부터의 거리
