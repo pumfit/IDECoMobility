@@ -53,12 +53,22 @@ public class BusTime {
         String busstop = getTagValue("stNm",element); // 버스정류장 이름 가져오기
         String time = getTagValue("exps1",element); // 남은시간 블러오기 (초)
         Integer i = Integer.parseInt(time)/60;
+<<<<<<< HEAD
         String bustm = Integer.toString(i); // 남은시간 블러오기 (분)
         data.add(busstop);
+=======
+        String bustm = Integer.toString(i); // 남은시간 블러오기 (분) //정수 추가 부분 끝
+        data.add(busstop);
+        data.add(time);
+>>>>>>> origin/master
         data.add(bustm);
 
         return data;
 
     }
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/master
