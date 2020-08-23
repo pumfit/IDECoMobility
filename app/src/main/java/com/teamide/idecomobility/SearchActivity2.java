@@ -72,6 +72,8 @@ public class SearchActivity2 extends Activity {
                 Log.d("ad","검색결과없음");
             }else
             {
+                View view = findViewById(R.id.nodata);
+                view.setVisibility(View.GONE);
                 Location location2 = new Location("current location");
                 gpsTracker = new GpsTracker(SearchActivity2.this);
                 double latitude = gpsTracker.getLatitude();
