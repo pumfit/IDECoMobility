@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
@@ -19,6 +20,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.android.gms.maps.SupportMapFragment;
 
 import java.io.IOException;
 import java.util.List;
@@ -37,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
     InfoAddress infoAddress = new InfoAddress();//현위치,출발지,도착지 주소 정보
     boolean[] isServiceNeed = new boolean[4];//사용자 설정 boolean 휠체어 리프트,엘리베이터,저상버스,무장애 정류소
 
+    private SharedPreferences.Editor editor;
+    private SharedPreferences preferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +52,11 @@ public class MainActivity extends AppCompatActivity {
         EditText endText = (EditText) findViewById(R.id.addressSearchEditText2);
         startText.setInputType(0);
         endText.setInputType(0);
+
+        preferences = getSharedPreferences("info", MODE_PRIVATE);    // test 이름의 기본모드 설정
+        editor= preferences.edit(); //sharedPreferences를 제어할 editor를 선언
+
+        checkFirstRun();
 
         if (!checkLocationServicesStatus()) {//GPS 확인
             Intent callGPSSettingIntent
@@ -171,12 +182,30 @@ public class MainActivity extends AppCompatActivity {
         //참고 https://webnautes.tistory.com/1315
     }
 
-    public void onClickedSearch(View v) { //길찾기 버튼 클릭시 받아온 주소 정보들 보냄
+   public void onClickedSearch(View v) { //길찾기 버튼 클릭시 받아온 주소 정보들 보냄
 
         Intent in = new Intent(getApplicationContext(), RouteResultActivity.class);
         in.putExtra("infoAddress", (Parcelable) infoAddress);
         in.putExtra("service", isServiceNeed);
         startActivity(in);
+    }
+
+    public void onClickedBusInfo(View v){
+        Intent in = new Intent(getApplicationContext(), BusInfoActivity.class); //현재 위치가져가면된다.
+        in.putExtra("infoAddress", (Parcelable) infoAddress);
+        startActivity(in);
+    }
+
+    public void checkFirstRun() {
+        boolean isFirstRun = preferences.getBoolean("firstrun",true);
+        if (isFirstRun) {
+            Intent newIntent = new Intent(this, DefaultSettingActivity.class);
+            startActivity(newIntent);
+
+            editor.putBoolean("firstrun",false);
+            editor.commit();
+        }
+
     }
 
     //이후부터 사용자 설정 버튼 정보 받아오고 UI 변경하는 메소드들
@@ -207,7 +236,6 @@ public class MainActivity extends AppCompatActivity {
             setWheelchairlift.setBackground(ContextCompat.getDrawable(this, R.drawable.radius));
             setWheelchairlift.setTextColor(ContextCompat.getColor(this, R.color.black));
         }
-
     }
 
     public void onClickedBus(View v) {

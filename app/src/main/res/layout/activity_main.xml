@@ -117,6 +117,19 @@
             tools:ignore="MissingConstraints">
 
             <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/button4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="onClickedBusInfo"
+                    android:text="버스" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/linearLayout3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -267,8 +280,8 @@
                 android:id="@+id/imageView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:srcCompat="@mipmap/mark"
-                android:layout_marginTop="80dp"/>
+                android:layout_marginTop="60dp"
+                app:srcCompat="@mipmap/mark" />
 
         </LinearLayout>
 
