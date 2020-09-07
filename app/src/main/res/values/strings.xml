@@ -2,4 +2,8 @@
     <string name="app_name">CoMobility</string>
     <string name="start">출발지</string>
     <string name="end">도착지</string>
+    <string name="setting_save">설정완료</string>
+    <string name="bus">버스</string>
+    <string name="call_tax">장애인 콜택시</string>
+    <string name="onfoot">도보</string>
 </resources>
