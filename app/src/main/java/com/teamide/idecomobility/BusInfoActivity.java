@@ -3,6 +3,13 @@ package com.teamide.idecomobility;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.fragment.app.FragmentActivity;
 
@@ -19,6 +26,9 @@ public class BusInfoActivity extends FragmentActivity implements OnMapReadyCallb
     private GoogleMap mMap;
     public  InfoAddress infoAddress;
 
+    LinearLayout draglayout;
+    boolean isSelected = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,22 +40,49 @@ public class BusInfoActivity extends FragmentActivity implements OnMapReadyCallb
 
         Intent intent = getIntent();
         infoAddress = intent.getParcelableExtra("infoAddress");
+
+        draglayout = (LinearLayout) findViewById(R.id.draglistView);
+        draglayout.setVisibility(View.INVISIBLE);
+
+        final ListView listView = findViewById(R.id.listbusView);
+        listView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
+                new String[]{"copy","past","cut","delete","convert","open", "copy","past","cut","delete","convert","open", "copy","past","cut","delete","convert","open"}));
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getApplicationContext(), position+" 번째 값 : " + parent.getItemAtPosition(position), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-       // LatLng SEOUL = new LatLng(37.56, 126.97); //위경도 좌표를 나타내는 클래스
-
         LatLng CLocation = new LatLng(infoAddress.getCurruntAddress().getLatitude(),infoAddress.getCurruntAddress().getLongitude()); //위경도 좌표를 나타내는 클래스
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(CLocation);
-        //markerOptions.title("서울");
-        //markerOptions.snippet("한국의 수도");
         mMap.addMarker(markerOptions);//마커를 맵 객체에 추가함
 
         mMap.moveCamera(CameraUpdateFactory.newLatLng(CLocation));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+    }
+
+    public  void onClickedSearch(View v)
+    {
+        if(isSelected==false)
+        {
+            draglayout.setVisibility(View.VISIBLE);
+            draglayout.setTop(1000);
+            Log.d("VIEW","보여져야함"+draglayout.getVisibility());
+            isSelected = true;
+        }
+        else
+        {
+            draglayout.setVisibility(View.INVISIBLE);
+            Log.d("VIEW","안보여져야함"+draglayout.getVisibility());
+            isSelected = false;
+        }
     }
 }
