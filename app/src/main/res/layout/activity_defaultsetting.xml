@@ -12,7 +12,9 @@
         android:background="@color/colorBlueMain"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        app:title="초기설정" />
+        app:title="초기설정"
+        app:titleMarginStart="170dp"
+        app:titleTextColor="@color/white" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,8 +26,12 @@
             android:id="@+id/textView6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="15dp"
+            android:textSize="20dp"
             android:textStyle="bold"
+            android:textColor="@color/black"
             android:text="선호하는 교통수단은 어떻게 되십니까?" />
 
         <LinearLayout
@@ -35,36 +41,41 @@
 
             <Button
                 android:id="@+id/button8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="20dp"
+                android:layout_height="40dp"
                 android:layout_weight="1"
+                android:layout_marginLeft="8dp"
                 android:background="@drawable/radius"
                 android:onClick="OnCliked1"
                 android:text="@string/bus" />
 
             <Button
                 android:id="@+id/button9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
                 android:layout_weight="1"
+                android:layout_marginLeft="8dp"
                 android:background="@drawable/radius"
                 android:onClick="OnCliked2"
                 android:text="@string/call_tax" />
 
             <Button
                 android:id="@+id/button10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_weight="1"
+                android:layout_marginLeft="8dp"
                 android:background="@drawable/radius"
                 android:onClick="OnCliked3"
                 android:text="지하철" />
 
             <Button
                 android:id="@+id/button11"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="20dp"
+                android:layout_height="40dp"
                 android:layout_weight="1"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="10dp"
                 android:background="@drawable/radius"
                 android:onClick="OnCliked4"
                 android:text="@string/onfoot" />
@@ -75,14 +86,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="24dp">
+        android:layout_marginTop="50dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:textStyle="bold"
-            android:text="집 주소를 등록해주세요" />
+            android:text="자주가는 주소를 등록해주세요"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -91,32 +105,47 @@
 
             <EditText
                 android:id="@+id/editText"
-                android:layout_width="wrap_content"
+                android:layout_width="296dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:ems="15"
                 android:inputType="textPersonName"
                 android:text="주소" />
 
             <Button
                 android:id="@+id/button12"
-                android:layout_width="wrap_content"
+                android:layout_width="99dp"
                 android:layout_height="wrap_content"
-                android:text="검색" />
+                android:layout_marginRight="10dp"
+                android:backgroundTint="@color/colorBlueMain"
+                android:text="검색"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="24dp">
+        android:layout_marginTop="50dp"
+        android:orientation="vertical">
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="필요한 서비스를 선택해주세요"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:textStyle="bold"
-            android:text="필요한 서비스를 선택해주세요" />
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="15dp"
+            android:text="(중복선택가능)" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -125,46 +154,58 @@
 
             <Button
                 android:id="@+id/button13"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="20dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="8dp"
                 android:layout_weight="1"
                 android:background="@drawable/radius"
                 android:onClick="OnCliked5"
-                android:text="Button" />
+                android:text="휠체어 칸" />
 
             <Button
                 android:id="@+id/button14"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="35dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="8dp"
                 android:layout_weight="1"
                 android:background="@drawable/radius"
                 android:onClick="OnCliked6"
-                android:text="Button" />
+                android:text="휠체어 리프트" />
 
             <Button
                 android:id="@+id/button15"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="20dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="8dp"
                 android:layout_weight="1"
                 android:background="@drawable/radius"
                 android:onClick="OnCliked7"
-                android:text="Button" />
+                android:text="엘리베이터" />
 
             <Button
                 android:id="@+id/button16"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="20dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/radius"
                 android:onClick="OnCliked8"
-                android:text="Button" />
+                android:text="저상버스" />
         </LinearLayout>
+
     </LinearLayout>
 
     <Button
         android:id="@+id/button17"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="400dp"
+        android:layout_height="70dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="180dp"
+        android:backgroundTint="@color/colorBlueMain"
         android:onClick="OnSaved"
-        android:text="@string/setting_save" />
+        android:text="@string/setting_save"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:textStyle="bold" />
 </LinearLayout>

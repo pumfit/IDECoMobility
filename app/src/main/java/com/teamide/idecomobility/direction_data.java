@@ -2,23 +2,14 @@
 package com.teamide.idecomobility;
 
 public class direction_data {
-    private String circle;
+
     private String title;
-    private String busOrSub;
-    private String num;
-    private String minLeft;
+    private String button;
 
-    public direction_data(String  circle, String title, String busOrSub, String num, String minLeft){
-        this.circle = circle;
+    public direction_data(String  title, String button){
         this.title = title;
-        this.busOrSub = busOrSub;
-        this.num = num;
-        this.minLeft = minLeft;
-    }
+        this.button = button;
 
-    public String getcircle()
-    {
-        return this.circle;
     }
 
     public String gettitle()
@@ -26,16 +17,9 @@ public class direction_data {
         return this.title;
     }
 
-    public String getbusOrSub()
+    public String getbutton()
     {
-        return this.busOrSub;
-    }
-
-    public  String getnum() { return this.num; }
-
-    public String getminLeft()
-    {
-        return this.minLeft;
+        return this.button;
     }
 
 }

@@ -115,10 +115,8 @@ public class RouteResultActivity extends Activity {
     {
         movieDataList = new ArrayList<direction_data>();
         //이부분을 case문으로 처리
-        movieDataList.add(new direction_data("출발", "출발지",null, null, null));
-        movieDataList.add(new direction_data("버스", "서울여대 후문 정류소","362","3","분 뒤 도착"));
-        movieDataList.add(new direction_data("도보", "도보로 420m 이동","태릉입구역 하차후 6번 출구 엘리베이터",null,null));
-        movieDataList.add(new direction_data("지하철", "태릉입구역","4-1, 6-1, 8-1","2","분 뒤 도착"));
-        movieDataList.add(new direction_data("도착", "도착지",null,null,null));
+
+        movieDataList.add(new direction_data("서울여대 후문 정류소","button"));
+
     }
 }
