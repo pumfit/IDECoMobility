@@ -4,11 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
     android:gravity="bottom"
     app:umanoDragView="@id/draglistView"
     app:umanoScrollableView="@id/listbusView"
-    app:umanoPanelHeight="150dp"
+    app:umanoPanelHeight="200dp"
     app:umanoOverlay="false"
     app:umanoShadowHeight="10dp"
     >
@@ -20,26 +19,41 @@
         android:orientation="vertical"
         android:visibility="visible">
 
+        <android.widget.Toolbar
+            android:id="@+id/businfotoolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorBlueMain"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            android:titleTextColor="@color/white"
+            />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/editText2"
+                android:id="@+id/searcheditText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
                 android:layout_weight="1"
                 android:ems="10"
+                android:hint="주소를 입력해주세요."
                 android:inputType="textPersonName"
-                android:text="Name" />
+                android:text="@string/current_location" />
 
             <Button
                 android:id="@+id/button7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:onClick="onClickedSearch"
+                android:onClick="onClickedAddressSearch"
+                android:textColor="@color/white"
+                android:background="@color/colorBlueMain"
+                android:layout_margin="8dp"
                 android:text="검색" />
 
         </LinearLayout>
@@ -63,28 +77,16 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="16sp"
-                android:text="Action"
-                android:textSize="24sp" />
-
-        </LinearLayout>
-
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
         <!-- 스크롤 해서 보여줄 부분은 listview 또는 custom listview 또는 recyclerview를 사용 -->
         <ListView
             android:id="@+id/listbusView"
             android:layout_width="match_parent"
-            android:layout_height="150dp">
-
+            android:layout_height="250dp">
         </ListView>
 
     </LinearLayout>
 
     <!-- 올라오는 화면을 꽉 채우고 싶다면 match_parent, 내용물 만큼만 보이고 뒷 배경이 반투명처리로 보이고 싶다면 wrap_content-->
-
 </com.sothree.slidinguppanel.SlidingUpPanelLayout>

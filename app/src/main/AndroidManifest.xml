@@ -23,6 +23,7 @@
         <activity android:name=".SearchActivity"/>
         <activity android:name=".SearchActivity2"/>
         <activity android:name=".BusInfoActivity"/>
+        <activity android:name=".BusInfosubActivity"/>
         <activity android:name=".RouteResultActivity"/>
         <activity android:name=".DefaultSettingActivity"/>
     </application>

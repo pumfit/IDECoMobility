@@ -3,7 +3,6 @@ package com.teamide.idecomobility;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +11,6 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-
-import static androidx.core.app.ActivityCompat.startActivityForResult;
 
 public class SearchAddressAdapter extends RecyclerView.Adapter<SearchAddressAdapter.ViewHolder>{
 
