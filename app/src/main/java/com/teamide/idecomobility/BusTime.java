@@ -17,6 +17,7 @@ public class BusTime {
     BusTime(String s) {
         this.busId = s;
         busXml();
+        getData();
     }
 
     public void busXml() {

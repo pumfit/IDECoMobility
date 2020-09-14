@@ -1,7 +1,6 @@
 package com.teamide.idecomobility;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -13,12 +12,10 @@ import android.widget.EditText;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.ExecutionException;
 
 public class SearchActivity extends Activity { //출발지 검색시 실행되는 액티비티
 
@@ -46,11 +43,11 @@ public class SearchActivity extends Activity { //출발지 검색시 실행되�
             dataList.clear();//기존 데이터리스트 clear()
         }
         EditText startText = (EditText) findViewById(R.id.addressSearchEditText3);
-        String startAdress = startText.getText().toString();//사용자가 검색한 주소를 불러옴
+        String startAddress = startText.getText().toString();//사용자가 검색한 주소를 불러옴
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
         List<Address> addressList = null;
         try {
-            addressList = geocoder.getFromLocationName(startAdress, 5); //역 Geocoding으로 최대 검색 결과 개수 5개까지의 주소를 불러옴
+            addressList = geocoder.getFromLocationName(startAddress, 5); //역 Geocoding으로 최대 검색 결과 개수 5개까지의 주소를 불러옴
             Log.d("ad", "검색 결과 개수" + String.valueOf(addressList.size()));
         } catch (IOException e) {
             e.printStackTrace();
@@ -82,7 +79,7 @@ public class SearchActivity extends Activity { //출발지 검색시 실행되�
                     location.setLongitude(ad.getLongitude());
                     double distance = location.distanceTo(location2) / 1000;
                     Log.d("ad", String.valueOf(distance));
-                    dataList.add(new SearchAddress(startAdress, address, String.format("%.1f", distance) + "Km", location.getLatitude(), location.getLongitude()));
+                    dataList.add(new SearchAddress(startAddress, address, String.format("%.1f", distance) + "Km", location.getLatitude(), location.getLongitude()));
                 }
             }
             RecyclerView recyclerView = (RecyclerView) findViewById(R.id.adressRecyclerView1);//RecyclerView 아이템 재등록

@@ -56,8 +56,6 @@ public class MainActivity extends AppCompatActivity {
         preferences = getSharedPreferences("info", MODE_PRIVATE);    // test 이름의 기본모드 설정
         editor= preferences.edit(); //sharedPreferences를 제어할 editor를 선언
 
-        checkFirstRun();
-
         if (!checkLocationServicesStatus()) {//GPS 확인
             Intent callGPSSettingIntent
                     = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
@@ -76,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
         infoAddress.setStartAddress(new SearchAddress("현위치", address, "0", latitude, longitude));
         infoAddress.setCurruntAddress(new SearchAddress("현위치", address, "0", latitude, longitude));
         startText.setText(infoAddress.getCurruntAddress().getFullAdress());//현위치를 출발지로 지정
+
+        checkFirstRun();
 
         startText.setOnClickListener( //출발지 EditText버튼 클릭시
                 new View.OnClickListener() {
@@ -155,9 +155,7 @@ public class MainActivity extends AppCompatActivity {
 
         //지오코더... GPS를 주소로 변환
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-
         List<Address> addresses;
-
         try {
             addresses = geocoder.getFromLocation(
                     latitude,
@@ -179,7 +177,6 @@ public class MainActivity extends AppCompatActivity {
 
         Address address = addresses.get(0);
         return address.getAddressLine(0).toString() + "\n";
-        //참고 https://webnautes.tistory.com/1315
     }
 
    public void onClickedSearch(View v) { //길찾기 버튼 클릭시 받아온 주소 정보들 보냄
@@ -201,68 +198,9 @@ public class MainActivity extends AppCompatActivity {
         if (isFirstRun) {
             Intent newIntent = new Intent(this, DefaultSettingActivity.class);
             startActivity(newIntent);
-
             editor.putBoolean("firstrun",false);
             editor.commit();
         }
 
-    }
-
-    //이후부터 사용자 설정 버튼 정보 받아오고 UI 변경하는 메소드들
-    public void onClickedwheelchairlift(View v) {
-        if (isServiceNeed[0] == false) {
-            isServiceNeed[0] = true;
-            Button setWheelchairlift = findViewById(R.id.button5);
-            setWheelchairlift.setBackground(ContextCompat.getDrawable(this, R.drawable.radius_filled));
-            setWheelchairlift.setTextColor(ContextCompat.getColor(this, R.color.white));
-        } else {
-            isServiceNeed[0] = false;
-            Button setWheelchairlift = findViewById(R.id.button5);
-            setWheelchairlift.setBackground(ContextCompat.getDrawable(this, R.drawable.radius));
-            setWheelchairlift.setTextColor(ContextCompat.getColor(this, R.color.black));
-        }
-
-    }
-
-    public void onClickedElevator(View v) {
-        if (isServiceNeed[1] == false) {
-            isServiceNeed[1] = true;
-            Button setWheelchairlift = findViewById(R.id.button6);
-            setWheelchairlift.setBackground(ContextCompat.getDrawable(this, R.drawable.radius_filled));
-            setWheelchairlift.setTextColor(ContextCompat.getColor(this, R.color.white));
-        } else {
-            isServiceNeed[1] = false;
-            Button setWheelchairlift = findViewById(R.id.button6);
-            setWheelchairlift.setBackground(ContextCompat.getDrawable(this, R.drawable.radius));
-            setWheelchairlift.setTextColor(ContextCompat.getColor(this, R.color.black));
-        }
-    }
-
-    public void onClickedBus(View v) {
-        if (isServiceNeed[2] == false) {
-            isServiceNeed[2] = true;
-            Button setWheelchairlift = findViewById(R.id.button2);
-            setWheelchairlift.setBackground(ContextCompat.getDrawable(this, R.drawable.radius_filled));
-            setWheelchairlift.setTextColor(ContextCompat.getColor(this, R.color.white));
-        } else {
-            isServiceNeed[2] = false;
-            Button setWheelchairlift = findViewById(R.id.button2);
-            setWheelchairlift.setBackground(ContextCompat.getDrawable(this, R.drawable.radius));
-            setWheelchairlift.setTextColor(ContextCompat.getColor(this, R.color.black));
-        }
-    }
-
-    public void onClickedBusStation(View v) {
-        if (isServiceNeed[3] == false) {
-            isServiceNeed[3] = true;
-            Button setWheelchairlift = findViewById(R.id.button3);
-            setWheelchairlift.setBackground(ContextCompat.getDrawable(this, R.drawable.radius_filled));
-            setWheelchairlift.setTextColor(ContextCompat.getColor(this, R.color.white));
-        } else {
-            isServiceNeed[3] = false;
-            Button setWheelchairlift = findViewById(R.id.button3);
-            setWheelchairlift.setBackground(ContextCompat.getDrawable(this, R.drawable.radius));
-            setWheelchairlift.setTextColor(ContextCompat.getColor(this, R.color.black));
-        }
     }
 }

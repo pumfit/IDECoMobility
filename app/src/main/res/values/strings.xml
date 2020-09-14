@@ -6,4 +6,5 @@
     <string name="bus">버스</string>
     <string name="call_tax">장애인 콜택시</string>
     <string name="onfoot">도보</string>
+    <string name="current_location">현위치</string>
 </resources>
