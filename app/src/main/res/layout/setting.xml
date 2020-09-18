@@ -6,16 +6,14 @@
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar2"
+        android:id="@+id/SettingInfoToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorBlueMain"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:title="초기설정"
-        app:titleMarginStart="170dp"
-        app:titleTextColor="@color/white"/>
+        app:title="설정"
+        app:titleTextColor="@color/white" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,13 +25,13 @@
             android:id="@+id/textView6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="15dp"
             android:textSize="20dp"
             android:textStyle="bold"
             android:textColor="@color/black"
-            android:text="선호하는 교통수단은 어떻게 되십니까?" />
+            android:text="선호하는 교통수단" />
 
         <RadioGroup
             android:id="@+id/PreferRadioGroup"
@@ -41,7 +39,7 @@
             android:layout_height="match_parent"
             android:checkedButton="@id/radioButton3"
             android:orientation="horizontal"
-            android:layout_marginLeft="15dp">
+            android:layout_marginLeft="10dp">
 
             <RadioButton
                 android:id="@+id/radioButton3"
@@ -53,7 +51,7 @@
 
             <RadioButton
                 android:id="@+id/radioButton4"
-                android:layout_width="129dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:checked="false"
@@ -62,7 +60,7 @@
 
             <RadioButton
                 android:id="@+id/radioButton5"
-                android:layout_width="wrap_content"
+                android:layout_width="96dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="onRadioButtonClicked"
@@ -78,50 +76,118 @@
 
         </RadioGroup>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="50dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="자주가는 주소를 등록해주세요"
-            android:layout_marginLeft="15dp"
-            android:layout_marginBottom="10dp"
-            android:textColor="@color/black"
-            android:textSize="20dp"
-            android:textStyle="bold" />
+        android:layout_marginTop="50dp"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginBottom="20dp">
 
-            <EditText
-                android:id="@+id/editText"
-                android:layout_width="296dp"
+            <TextView
+                android:layout_width="307dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:ems="15"
-                android:inputType="textPersonName"
-                android:text="주소" />
+                android:layout_marginBottom="10dp"
+                android:text="자주가는 장소"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                />
 
             <Button
-                android:id="@+id/button12"
-                android:layout_width="99dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/plus"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="추가"
+                android:background="@drawable/radius"
+                android:layout_marginRight="12dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="290dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/radius_filled"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView4"
+                        android:layout_width="238dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:text="학교"
+                        android:textColor="@color/white"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/button28"
+                        android:layout_width="62dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="13dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_weight="1"
+                        android:background="@color/colorBlueMain"
+                        android:text="X"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TextView"
+                    android:textColor="@color/white"
+                    android:textSize="12dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="5dp"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/editedit"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:backgroundTint="@color/colorBlueMain"
-                android:text="검색"
-                android:textColor="@color/white"
+                android:layout_weight="1"
+                android:background="@drawable/radius"
+                android:text="수정"
+                android:textColor="@color/colorBlueMain"
                 android:textStyle="bold" />
         </LinearLayout>
-    </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"></LinearLayout>
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -133,7 +199,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:text="필요한 서비스를 선택해주세요"
+            android:text="필요한 서비스"
             android:textColor="@color/black"
             android:textSize="20dp"
             android:textStyle="bold" />
@@ -152,10 +218,10 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/button13"
+                android:id="@+id/wheel"
                 android:layout_width="20dp"
                 android:layout_height="40dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="15dp"
                 android:layout_marginRight="8dp"
                 android:layout_weight="1"
                 android:background="@drawable/radius"
@@ -163,7 +229,7 @@
                 android:text="휠체어 칸" />
 
             <Button
-                android:id="@+id/button14"
+                android:id="@+id/wheelLift"
                 android:layout_width="35dp"
                 android:layout_height="40dp"
                 android:layout_marginRight="8dp"
@@ -173,7 +239,7 @@
                 android:text="휠체어 리프트" />
 
             <Button
-                android:id="@+id/button15"
+                android:id="@+id/elevater"
                 android:layout_width="20dp"
                 android:layout_height="40dp"
                 android:layout_marginRight="8dp"
@@ -183,7 +249,7 @@
                 android:text="엘리베이터" />
 
             <Button
-                android:id="@+id/button16"
+                android:id="@+id/foot"
                 android:layout_width="20dp"
                 android:layout_height="40dp"
                 android:layout_marginRight="10dp"
@@ -197,12 +263,14 @@
 
     <Button
         android:id="@+id/button17"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:background="@drawable/radius_filled"
-        android:onClick="OnSaved"
+        android:layout_width="400dp"
+        android:layout_height="70dp"
         android:layout_gravity="center"
+        android:layout_marginTop="120dp"
+        android:backgroundTint="@color/colorBlueMain"
+        android:onClick="OnSaved"
         android:text="@string/setting_save"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:textStyle="bold" />
 </LinearLayout>
