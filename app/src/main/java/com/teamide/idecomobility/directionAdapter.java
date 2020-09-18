@@ -1,4 +1,3 @@
-
 package com.teamide.idecomobility;
 
 import android.content.Context;
@@ -6,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -42,13 +40,18 @@ public class directionAdapter extends BaseAdapter {
     public View getView(int position, View converView, ViewGroup parent) {
         View view = mLayoutInflater.inflate(R.layout.list_direction, null);
 
+        TextView shape = (TextView) view.findViewById(R.id.circle);
         TextView title = (TextView)view.findViewById(R.id.title);
-        Button button = (Button) view.findViewById(R.id.button);
+        TextView vehicle = (TextView)view.findViewById(R.id.busOrSub);
+        TextView num = (TextView)view.findViewById(R.id.num);
+        TextView minLeft = (TextView)view.findViewById(R.id.minLeft);
 
+        shape.setText(sample.get(position).getcircle());
         title.setText(sample.get(position).gettitle());
-        button.setText(sample.get(position).getbutton());
+        vehicle.setText(sample.get(position).getbusOrSub());
+        num.setText(sample.get(position).getnum());
+        minLeft.setText(sample.get(position).getminLeft());
 
         return view;
     }
 }
-

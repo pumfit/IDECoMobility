@@ -9,24 +9,25 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/colorBlueMain">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar3"
             android:layout_width="411dp"
             android:layout_height="wrap_content"
-            android:background="@color/colorBluePrimary"
+            android:background="@color/colorBlueMain"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
-            app:titleMarginStart="150dp"
             app:title="CoMobility"
+            app:titleMarginStart="150dp"
             app:titleTextColor="@color/white" />
 
         <LinearLayout
             android:id="@+id/linearLayout4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorBlueMain"
+            android:background="@color/white"
             android:elevation="10dp"
             android:orientation="vertical"
             android:padding="18dp"
@@ -48,16 +49,16 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/start"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:textSize="15dp"
                         android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/addressSearchEditText1"
                         android:layout_width="wrap_content"
-                        android:layout_height="36dp"
+                        android:layout_height="40dp"
                         android:layout_weight="1"
-                        android:background="@color/white"
+                        android:background="#F3F3F3"
                         android:ems="15"
                         android:hint=" 출발지를 검색해 주세요."
                         android:inputType="textPersonName" />
@@ -77,16 +78,16 @@
                         android:layout_weight="1"
                         android:text="@string/end"
                         android:textAlignment="textStart"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:textSize="15dp"
                         android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/addressSearchEditText2"
                         android:layout_width="wrap_content"
-                        android:layout_height="36dp"
+                        android:layout_height="40dp"
                         android:layout_weight="1"
-                        android:background="@color/white"
+                        android:background="#F3F3F3"
                         android:ems="15"
                         android:hint=" 도착지를 검색해 주세요."
                         android:inputType="textPersonName" />
@@ -101,8 +102,8 @@
                 android:layout_height="0dp"
                 android:layout_marginVertical="8dp"
                 android:layout_weight="1"
-                android:background="#2196F3"
-                android:backgroundTint="@color/colorBluePrimary"
+                android:background="@drawable/whitebttn"
+                android:backgroundTint="@color/colorBlueMain"
                 android:onClick="onClickedSearch"
                 android:text="길찾기"
                 android:textColor="@color/white"
@@ -110,19 +111,230 @@
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/button4"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="onClickedBusInfo"
-            android:text="버스" />
+            android:layout_height="485dp"
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints">
 
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
-            app:srcCompat="@mipmap/mark" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="297dp"
+                        android:layout_height="30dp"
+                        android:text="선택한 서비스"
+                        android:textColor="@color/white"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/button6"
+                        android:layout_width="15dp"
+                        android:layout_height="30dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/whitebttn"
+                        android:backgroundTint="#FFFFFF"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginBottom="5dp"
+                        android:text="수정"
+                        android:textColor="@color/colorBlueMain"
+                        android:textStyle="bold"
+                        />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="393dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="239dp"
+                    android:layout_height="57dp"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                    <Button
+                        android:id="@+id/button2"
+                        android:layout_width="130dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/whitefilledradius"
+                        android:onClick="onClickedBus"
+                        android:text="엘리베이터"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorBlueMain" />
+
+                    <Button
+                        android:id="@+id/button3"
+                        android:layout_width="130dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/whitefilledradius"
+                        android:onClick="onClickedBusStation"
+                        android:text="저상 버스"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorBlueMain" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/button19"
+                        android:layout_width="100dp"
+                        android:layout_height="130dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:background="@drawable/whiterec"
+                        android:backgroundTintMode="screen"
+                        android:drawableTop="@drawable/ic_bus"
+                        android:padding="25dp"
+                        android:text="버스운행정보"
+                        android:textColor="@color/white"
+                        android:onClick="onClickedBusInfo"
+                        android:textSize="12dp" />
+
+                    <Button
+                        android:id="@+id/button20"
+                        android:layout_width="100dp"
+                        android:layout_height="130dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:background="@drawable/whiterec"
+                        android:backgroundTintMode="screen"
+                        android:drawableTop="@drawable/ic_train"
+                        android:padding="25dp"
+                        android:text="지하철 길찾기"
+                        android:textSize="12dp"
+                        android:textColor="@color/white" />
+
+                    <Button
+                        android:id="@+id/button21"
+                        android:layout_width="100dp"
+                        android:layout_height="130dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:background="@drawable/whiterec"
+                        android:backgroundTintMode="screen"
+                        android:drawableTop="@drawable/ic_car"
+                        android:padding="25dp"
+                        android:text="장애인 콜택시"
+                        android:textSize="12dp"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/button22"
+                        android:layout_width="100dp"
+                        android:layout_height="130dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:background="@drawable/whiterec"
+                        android:backgroundTintMode="screen"
+                        android:drawableTop="@drawable/ic_location"
+                        android:padding="26dp"
+                        android:text="내 주변 편의시설"
+                        android:textColor="@color/white"
+                        android:textSize="12dp" />
+
+                    <Button
+                        android:id="@+id/button23"
+                        android:layout_width="100dp"
+                        android:layout_height="130dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:background="@drawable/whiterec"
+                        android:backgroundTintMode="screen"
+                        android:drawableTop="@drawable/ic_star"
+                        android:padding="28dp"
+                        android:text="즐겨찾기"
+                        android:textColor="@color/white"
+                        android:textSize="12dp" />
+
+                    <Button
+                        android:id="@+id/button24"
+                        android:layout_width="100dp"
+                        android:layout_height="130dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:background="@drawable/whiterec"
+                        android:backgroundTintMode="screen"
+                        android:drawableTop="@drawable/ic_gear"
+                        android:padding="28dp"
+                        android:text="설정"
+                        android:onClick="onClickedSettingInfo"
+                        android:textColor="@color/white"
+                        android:textSize="12dp" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/button5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/whiterec"
+                    android:backgroundTint="#B20062BD"
+                    android:backgroundTintMode="screen"
+                    android:drawableLeft="@drawable/ic_phone"
+                    android:padding="20dp"
+                    android:text="주변 안내소 통화 연결"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="powered by www.ODsay.com"
+                    android:textSize="10dp"
+                    android:textAlignment="center"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
 
     </LinearLayout>
 
