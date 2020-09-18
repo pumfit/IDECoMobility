@@ -157,6 +157,7 @@ public class BusInfoActivity extends FragmentActivity implements OnMapReadyCallb
                             mMap.moveCamera(CameraUpdateFactory.newLatLng(CLocation[0]));
                             mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
                         }
+                        busDataList.remove(0);
                         busDataList.add(i, new BusStaionData(i,addresslist.get(i)));
                     }
                     final ListView listView = findViewById(R.id.listbusView);

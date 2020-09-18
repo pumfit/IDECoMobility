@@ -184,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(in);
     }
 
-    public void onClickedBusInfo(View v){
+    public void onClickedBusInfo(View v){//설정 정보
         Intent in = new Intent(getApplicationContext(), BusInfoActivity.class);
         in.putExtra("infoAddress", (Parcelable) infoAddress);
         startActivity(in);
@@ -192,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickedSettingInfo(View v){
         Intent in = new Intent(getApplicationContext(), SettingInfoActivity.class); //현재 위치가져가면된다.
-        in.putExtra("infoAddress", (Parcelable) infoAddress);
+   //     in.putExtra("infoAddress", (Parcelable) infoAddress);
         startActivity(in);
     }
 

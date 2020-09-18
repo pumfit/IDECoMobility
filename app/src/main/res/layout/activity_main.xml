@@ -305,9 +305,9 @@
                         android:background="@drawable/whiterec"
                         android:backgroundTintMode="screen"
                         android:drawableTop="@drawable/ic_gear"
+                        android:onClick="onClickedSettingInfo"
                         android:padding="28dp"
                         android:text="설정"
-                        android:onClick="onClickedSettingInfo"
                         android:textColor="@color/white"
                         android:textSize="12dp" />
                 </LinearLayout>
