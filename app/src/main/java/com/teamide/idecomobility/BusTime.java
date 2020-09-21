@@ -1,66 +1,116 @@
 package com.teamide.idecomobility;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
-import java.util.ArrayList;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserFactory;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
+import android.util.Log;
 
-public class BusTime {
-    Element element;
-    String busId;
+public class BusTime extends AsyncTask<String[], Void, String[]>{
+    private RouteResultActivity activity;
+    private String url;
+    private XmlPullParserFactory xmlFactoryObject;
+    private ProgressDialog pDialog;
 
-    BusTime(String s) {
-        this.busId = s;
-        busXml();
-        getData();
+    public BusTime(RouteResultActivity activity, String url){
+        this.activity = activity;
+        this.url = url;
     }
+//    @Override
+//    protected void onPreExecute() {
+//        super.onPreExecute();
+//        pDialog = new ProgressDialog(activity);
+//        pDialog.setTitle("Get Weather Information from XML");
+//        pDialog.setMessage("Loading...");
+//        pDialog.show();
+//    }
 
-    public void busXml() {
+    @Override
+    protected String[] doInBackground(String[]... params) {
         try {
-            String url = "http://ws.bus.go.kr/api/rest/arrive/getLowArrInfoByStId?"
-                    + "ServiceKey=ESol2fpbzP%2F%2BPJfShFAU%2FaMbhqzepxntyCIskM2bqyY0dWWU4Sd1w0VH0JpBnWCdBUd79%2BLI34mOXFs0UjrMJA%3D%3D"
-                    + "&stId=" + busId + "";
-            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(url);
-            doc.getDocumentElement().normalize();
+            URL url = new URL(this.url);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setReadTimeout(10000);
+            connection.setConnectTimeout(15000);
+            connection.setRequestMethod("GET");
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream stream = connection.getInputStream();
 
-            NodeList nList = doc.getElementsByTagName("itemList");
-            Node nNode = nList.item(0);
-            element = (Element) nNode;
+            xmlFactoryObject = XmlPullParserFactory.newInstance();
+            XmlPullParser myParser = xmlFactoryObject.newPullParser();
+
+            myParser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
+            myParser.setInput(stream, null);
+            String[] result = parseXML(myParser);
+            stream.close();
+
+            return result;
+
         } catch (Exception e) {
             e.printStackTrace();
-        }
-    }
-
-    public static String getTagValue(String tag, Element element) {
-        NodeList nList = element.getElementsByTagName(tag).item(0).getChildNodes();
-        Node nValue = (Node) nList.item(0);
-        if (nValue == null) {
+            Log.e("AsyncTask", "exception");
             return null;
         }
-        return nValue.getNodeValue();
     }
 
-    public ArrayList<String> getData() {
-        ArrayList<String> data = new ArrayList<String>();
-        String busstop = getTagValue("stNm", element); // 버스정류장 이름 가져오기
-        String time = getTagValue("exps1", element); // 남은시간 블러오기 (초)
-        Integer i = Integer.parseInt(time) / 60;
+    private String[] parseXML(XmlPullParser myParser) {
+        int event;
+        String text = null;
+        String[] result = new String[4];
 
-        String bustm = Integer.toString(i); // 남은시간 블러오기 (분)
-        data.add(busstop);
-        data.add(time);
-        data.add(bustm);
+        try {
+            event = myParser.getEventType();
+            while (event != XmlPullParser.END_DOCUMENT) {
+                String name = myParser.getName();
 
-        return data;
+                switch (event) {
+                    case XmlPullParser.START_TAG:
+                        break;
+                    case XmlPullParser.TEXT:
+                        text = myParser.getText();
+                        Log.d("ad","1st: "+text);
+                        break;
 
+                    case XmlPullParser.END_TAG:
+                        if (name.equals("stNm")) {
+                            result[3] = text;
+                            Log.d("ad","2st: "+result[3]);
+                        } else if (name.equals("busRouteId")) { //get humidity
+                            result[0] = myParser.getAttributeValue(null, "value1");
+                            Log.d("ad","3st: "+result[0]);
+
+                        } else if (name.equals("rtNm")) { //get pressure
+                            result[1] = myParser.getAttributeValue(null, "value2");
+                            Log.d("ad","4st: "+result[1]);
+
+                        } else if (name.equals("exps1")) { //get temperature
+                            result[2] = myParser.getAttributeValue(null, "value3");
+                            Log.d("ad","5st: "+result[2]);
+                        }
+                        break;
+                }
+                event = myParser.next();
+            }
+            return result;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
+    @Override
+    protected void onPostExecute(String[] result) {
+        //call back data to main thread
+        //pDialog.dismiss();
+        activity.callBackData(result);
+
+    }
 }
 

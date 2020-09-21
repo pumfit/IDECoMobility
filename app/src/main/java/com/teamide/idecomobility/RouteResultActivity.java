@@ -33,6 +33,8 @@ public class RouteResultActivity extends Activity {
     public String busName, busNm, busMin;
     public String subwayName, subwayMin;
     public String img;
+    public String localID;
+    public String test1, test2, test3, test4;
 
 
     ArrayList<direction_data> movieDataList;
@@ -40,6 +42,7 @@ public class RouteResultActivity extends Activity {
     ArrayList<String> busData = new ArrayList<String>();
 
     TransData jsonData = new TransData();
+    //BusTime bustime = new BusTime();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,19 +69,26 @@ public class RouteResultActivity extends Activity {
                     // API Value 는 API 호출 메소드 명을 따라갑니다.
                     if (api == API.SEARCH_PUB_TRANS_PATH) {//여기가 오디세이 데이터 처리하는 함수
                         String searchType = odsayData.getJson().getJSONObject("result").getString("searchType");
-                        JSONArray path =  odsayData.getJson().getJSONObject("result").getJSONArray("path");
+                        JSONArray path = odsayData.getJson().getJSONObject("result").getJSONArray("path");
                         String totalTime = path.getJSONObject(0).getJSONObject("info").getString("totalTime");
                         String payment = path.getJSONObject(0).getJSONObject("info").getString("payment");
-//                        Integer stationIdInt = path.getJSONObject(0).getJSONArray("subPath").getJSONObject(1).
-//                                getJSONObject("passStopList").getJSONArray("stations").getJSONObject(0).
-//                                getInt("staionID");
-//                        String stationId = stationIdInt.toString();
-//                        Log.d("ad","오딧세이 호출 searchType :"+ searchType+"총 걸리는 시간:"+totalTime+"총 요금:"+payment+"정류장ID"+stationId);
-                        searchPathData.add(searchType);
-                        searchPathData.add(totalTime);
-                        searchPathData.add(payment);
-//                        searchPathData.add(stationId);
+                        String startName = path.getJSONObject(0).getJSONArray("subPath").getJSONObject(3).getJSONArray("lane").getJSONObject(0).getString("busNo");
+                        String stationNm = path.getJSONObject(0).getJSONObject("info").getString("firstStartStation");
+                        Log.d("ad", "오딧세이 호출 searchType :" + searchType + " 총 걸리는 시간:" + totalTime + " 총 요금:" + payment + " 버스정류소:" + stationNm + " 버스번호" + startName);
+//                        searchPathData.add(searchType);
+//                        searchPathData.add(totalTime);
+//                        searchPathData.add(payment);
+//                        searchPathData.add(startName);
+//                        searchPathData.add(stationNm);
 
+//                        if (api == API.SEARCH_STATION){
+//                            JSONArray path1 = odsayData.getJson().getJSONObject("result").getJSONArray("station");
+//                            localId = path1.getJSONObject(0).getString("localStationID");
+//                            Log.d("ad","로컬 id: "+localId);
+//                            Log.d("ad","버스정류장 명: "+bustime.getData().get(0));
+//
+//                        }
+                        //Log.d("ad","버스시간data: "+bustime.getData().get(0));
                     }
 
                 }catch (JSONException e) {
@@ -95,6 +105,8 @@ public class RouteResultActivity extends Activity {
                 }
             }
         };
+        String url = "http://ws.bus.go.kr/api/rest/arrive/getLowArrInfoByStId?ServiceKey=idAKQNTIDrnSK5vmheOsFszfGqNfoydTlN08JVMaLchmHaKDSY0lWkjMtjiSfDGSa%2FVm7mVWhVX7WXEfF7OGgA%3D%3D&stId=112000001";
+        new BusTime(this, url).execute();
 
         JSONParser jsonParser = new JSONParser();
 
@@ -130,7 +142,10 @@ public class RouteResultActivity extends Activity {
         JSONObject ImgInfoArray = (JSONObject) imgjsonObject.get("inf");
         img= (String) ImgInfoArray.get("storedName");
 
+        //API 파라미터 설정
         odsayService.requestSearchPubTransPath(sLongitude,sLatitude,eLongitude,eLatitude,"0","0","0",onResultCallbackListener);
+        //odsayService.requestBusStationInfo(busName,onResultCallbackListener);
+
         this.InitializeMovieData(busName,busNm,busMin,subwayName,subwayMin);
 
         TextView startTextView = findViewById(R.id.start);
@@ -152,7 +167,6 @@ public class RouteResultActivity extends Activity {
                         Toast.LENGTH_LONG).show();
             }
         });
-
     }
 
     public void InitializeMovieData(String busName, String busNm, String busMin, String subwayName, String subwayMin) //data받아오기
@@ -165,5 +179,16 @@ public class RouteResultActivity extends Activity {
         movieDataList.add(new direction_data("지하철", subwayName+"역","4-1, 6-1, 8-1",subwayMin,"분 뒤 도착"));
         movieDataList.add(new direction_data("도착", "도착지",null,null,null));
         Log.d("ad","eighth");
+    }
+
+    public void callBackData(String[] result) {
+        test1 = result[0];
+        test2 = result[1];
+        test3 = result[2];
+        test4 = result[3];
+        Log.d("ad","결과1 : "+test1);
+        Log.d("ad","결과2 : "+test2);
+        Log.d("ad","결과3 : "+test3);
+        Log.d("ad","결과4 : "+test4);
     }
 }
