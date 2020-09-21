@@ -3,12 +3,9 @@ package com.teamide.idecomobility;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -61,7 +58,7 @@ public class SearchAddressAdapter2 extends RecyclerView.Adapter<SearchAddressAda
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         //전개자(Inflater)를 통해 얻은 참조 객체를 통해 뷰홀더 객체 생성
-        View view = inflater.inflate(R.layout.recycler_adress_item, parent, false);
+        View view = inflater.inflate(R.layout.recycler_address_item, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
 
         return viewHolder;

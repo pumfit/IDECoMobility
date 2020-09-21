@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/radius_filled"
+    android:weightSum="10"
+    android:layout_marginRight="10dp"
+    android:padding="5dp">
+
+    <TextView
+        android:id="@+id/addressTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginHorizontal="10dp"
+        android:layout_gravity="center"
+        android:textColor="@color/white"
+        android:text="TextView" />
+
+    <Button
+        android:id="@+id/deletebutton"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:background="#00FFFFFF"
+        android:text="X"
+        android:textColor="@color/white" />
+</LinearLayout>

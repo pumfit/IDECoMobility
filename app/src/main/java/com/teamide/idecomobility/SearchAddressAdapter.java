@@ -55,7 +55,7 @@ public class SearchAddressAdapter extends RecyclerView.Adapter<SearchAddressAdap
         Context context = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View view = inflater.inflate(R.layout.recycler_adress_item, parent, false);
+        View view = inflater.inflate(R.layout.recycler_address_item, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
 
         return viewHolder;

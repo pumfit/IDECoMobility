@@ -144,6 +144,7 @@ public class BusInfoActivity extends FragmentActivity implements OnMapReadyCallb
                     //Log.d("ad", "주변 정류장 전체 데이터" + station.toString());
                     MarkerOptions[] busmarkerOptions = new MarkerOptions[count];
                     LatLng[] CLocation = new LatLng[count];
+                    busDataList.clear();
                     for (int i = 0; i < count; i++) {
                         String location = station.getJSONObject(i).getString("stationName");
                         Double busx = station.getJSONObject(i).getDouble("x");
@@ -157,9 +158,9 @@ public class BusInfoActivity extends FragmentActivity implements OnMapReadyCallb
                             mMap.moveCamera(CameraUpdateFactory.newLatLng(CLocation[0]));
                             mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
                         }
-                        busDataList.remove(0);
                         busDataList.add(i, new BusStaionData(i,addresslist.get(i)));
                     }
+                    busDataList.remove(0);
                     final ListView listView = findViewById(R.id.listbusView);
                     final BusInfoAdapter mAdapter = new BusInfoAdapter(getApplicationContext(),busDataList);
                     listView.setAdapter(mAdapter);
@@ -206,9 +207,9 @@ public class BusInfoActivity extends FragmentActivity implements OnMapReadyCallb
         } catch (NullPointerException e) {
             e.getStackTrace();
         }
-//        final ListView listView = findViewById(R.id.listbusView);
-//        listView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
-//                addresslist));
+        final ListView listView = findViewById(R.id.listbusView);
+        final BusInfoAdapter mAdapter = new BusInfoAdapter(getApplicationContext(),busDataList);
+        listView.setAdapter(mAdapter);
     }
 
 }

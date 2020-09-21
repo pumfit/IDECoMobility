@@ -198,6 +198,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void checkFirstRun() {
         boolean isFirstRun = preferences.getBoolean("firstrun",true);
+        isFirstRun = true; //이거없애야함
         if (isFirstRun) {
             Intent newIntent = new Intent(this, DefaultSettingActivity.class);
             startActivity(newIntent);

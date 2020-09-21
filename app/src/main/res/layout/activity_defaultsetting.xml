@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -80,48 +81,62 @@
 
     </LinearLayout>
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="50dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="자주가는 주소를 등록해주세요"
-            android:layout_marginLeft="15dp"
-            android:layout_marginBottom="10dp"
-            android:textColor="@color/black"
-            android:textSize="20dp"
-            android:textStyle="bold" />
+        android:layout_marginTop="50dp"
+        android:orientation="vertical">
 
         <LinearLayout
+            android:layout_marginHorizontal="15dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/editText"
-                android:layout_width="296dp"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:ems="15"
-                android:inputType="textPersonName"
-                android:text="주소" />
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="자주가는 주소를 등록해주세요"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="(최대 3개까지 가능)" />
+            </LinearLayout>
 
             <Button
-                android:id="@+id/button12"
-                android:layout_width="99dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:backgroundTint="@color/colorBlueMain"
-                android:text="검색"
-                android:textColor="@color/white"
-                android:textStyle="bold" />
-        </LinearLayout>
-    </LinearLayout>
+                android:id="@+id/addbutton"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="15dp"
+                android:layout_gravity="center"
+                android:background="@drawable/radius"
+                android:onClick="onClick"
+                android:text="+"
+                android:textColor="@color/black" />
 
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycleradressList"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="15dp"
+            android:scrollbars="horizontal" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -139,12 +154,13 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textView8"
+            android:id="@+id/textView9"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginBottom="15dp"
-            android:text="(중복선택가능)" />
+            android:text="(중복선택가능)"
+            tools:ignore="DuplicateIds" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -196,10 +212,10 @@
     </LinearLayout>
 
     <Button
+        android:layout_marginTop="50dp"
         android:id="@+id/button17"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
         android:background="@drawable/radius_filled"
         android:onClick="OnSaved"
         android:layout_gravity="center"
