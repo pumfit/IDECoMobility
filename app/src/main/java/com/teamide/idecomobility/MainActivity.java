@@ -10,7 +10,6 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -18,8 +17,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -37,11 +39,15 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences.Editor editor;
     private SharedPreferences preferences;
 
+    RecyclerView selectedRecyclerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        selectedRecyclerView = findViewById(R.id.selectedlist);
+        selectedRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
         EditText startText = (EditText) findViewById(R.id.addressSearchEditText1);
         EditText endText = (EditText) findViewById(R.id.addressSearchEditText2);
         startText.setInputType(0);
@@ -49,6 +55,26 @@ public class MainActivity extends AppCompatActivity {
 
         preferences = getSharedPreferences("info", MODE_PRIVATE);    // test 이름의 기본모드 설정
         editor= preferences.edit(); //sharedPreferences를 제어할 editor를 선언
+
+        ArrayList<String> savelist = new ArrayList<String>();
+        if(preferences.getBoolean("inputdata1",false))
+        {
+            savelist.add("휠체어칸");
+        }
+        if(preferences.getBoolean("inputdata2",false))
+        {
+            savelist.add("휠체어 리프트");
+        }
+        if(preferences.getBoolean("inputdata3",false))
+        {
+            savelist.add("엘레베이터");
+        }
+        if(preferences.getBoolean("inputdata4",false))
+        {
+            savelist.add("저상버스");
+        }
+        SelectedServiceAdapter adapter = new SelectedServiceAdapter(savelist);
+        selectedRecyclerView.setAdapter(adapter);
 
         checkFirstRun();
 
@@ -198,7 +224,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void checkFirstRun() {
         boolean isFirstRun = preferences.getBoolean("firstrun",true);
-        isFirstRun = true; //이거없애야함
         if (isFirstRun) {
             Intent newIntent = new Intent(this, DefaultSettingActivity.class);
             startActivity(newIntent);
@@ -209,61 +234,4 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    //이후부터 사용자 설정 버튼 정보 받아오고 UI 변경하는 메소드들
-    public void onClickedwheelchairlift(View v) {
-        if (isServiceNeed[0] == false) {
-            isServiceNeed[0] = true;
-            Button setWheelchairlift = findViewById(R.id.button5);
-            setWheelchairlift.setBackground(ContextCompat.getDrawable(this, R.drawable.radius_filled));
-            setWheelchairlift.setTextColor(ContextCompat.getColor(this, R.color.white));
-        } else {
-            isServiceNeed[0] = false;
-            Button setWheelchairlift = findViewById(R.id.button5);
-            setWheelchairlift.setBackground(ContextCompat.getDrawable(this, R.drawable.radius));
-            setWheelchairlift.setTextColor(ContextCompat.getColor(this, R.color.black));
-        }
-
-    }
-
-    public void onClickedElevator(View v) {
-        if (isServiceNeed[1] == false) {
-            isServiceNeed[1] = true;
-            Button setWheelchairlift = findViewById(R.id.button6);
-            setWheelchairlift.setBackground(ContextCompat.getDrawable(this, R.drawable.radius_filled));
-            setWheelchairlift.setTextColor(ContextCompat.getColor(this, R.color.white));
-        } else {
-            isServiceNeed[1] = false;
-            Button setWheelchairlift = findViewById(R.id.button6);
-            setWheelchairlift.setBackground(ContextCompat.getDrawable(this, R.drawable.radius));
-            setWheelchairlift.setTextColor(ContextCompat.getColor(this, R.color.black));
-        }
-    }
-
-    public void onClickedBus(View v) {
-        if (isServiceNeed[2] == false) {
-            isServiceNeed[2] = true;
-            Button setWheelchairlift = findViewById(R.id.button2);
-            setWheelchairlift.setBackground(ContextCompat.getDrawable(this, R.drawable.whitebttn));
-            setWheelchairlift.setTextColor(ContextCompat.getColor(this, R.color.white));
-        } else {
-            isServiceNeed[2] = false;
-            Button setWheelchairlift = findViewById(R.id.button2);
-            setWheelchairlift.setBackground(ContextCompat.getDrawable(this, R.drawable.whitefilledradius));
-            setWheelchairlift.setTextColor(ContextCompat.getColor(this, R.color.colorBlueMain));
-        }
-    }
-
-    public void onClickedBusStation(View v) {
-        if (isServiceNeed[3] == false) {
-            isServiceNeed[3] = true;
-            Button setWheelchairlift = findViewById(R.id.button3);
-            setWheelchairlift.setBackground(ContextCompat.getDrawable(this, R.drawable.whitebttn));
-            setWheelchairlift.setTextColor(ContextCompat.getColor(this, R.color.white));
-        } else {
-            isServiceNeed[3] = false;
-            Button setWheelchairlift = findViewById(R.id.button3);
-            setWheelchairlift.setBackground(ContextCompat.getDrawable(this, R.drawable.whitefilledradius));
-            setWheelchairlift.setTextColor(ContextCompat.getColor(this, R.color.colorBlueMain));
-        }
-    }
 }

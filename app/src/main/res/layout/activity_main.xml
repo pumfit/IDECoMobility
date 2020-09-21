@@ -167,39 +167,11 @@
                 android:layout_marginTop="5dp"
                 android:orientation="vertical">
 
-
-                <LinearLayout
-                    android:layout_width="239dp"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/selectedlist"
+                    android:layout_width="match_parent"
                     android:layout_height="57dp"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
-
-                    <Button
-                        android:id="@+id/button2"
-                        android:layout_width="130dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/whitefilledradius"
-                        android:onClick="onClickedBus"
-                        android:text="엘리베이터"
-                        android:textStyle="bold"
-                        android:textColor="@color/colorBlueMain" />
-
-                    <Button
-                        android:id="@+id/button3"
-                        android:layout_width="130dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/whitefilledradius"
-                        android:onClick="onClickedBusStation"
-                        android:text="저상 버스"
-                        android:textStyle="bold"
-                        android:textColor="@color/colorBlueMain" />
-
-                </LinearLayout>
-
+                    android:layout_marginHorizontal="18dp" />
             </LinearLayout>
 
             <LinearLayout
