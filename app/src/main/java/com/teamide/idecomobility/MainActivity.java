@@ -203,7 +203,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickedSearch(View v) { //길찾기 버튼 클릭시 받아온 주소 정보들 보냄
-
         Intent in = new Intent(getApplicationContext(), RouteResultActivity.class);
         in.putExtra("infoAddress", (Parcelable) infoAddress);
         in.putExtra("service", isServiceNeed);
@@ -227,7 +226,6 @@ public class MainActivity extends AppCompatActivity {
         if (isFirstRun) {
             Intent newIntent = new Intent(this, DefaultSettingActivity.class);
             startActivity(newIntent);
-
             editor.putBoolean("firstrun",false);
             editor.commit();
         }

@@ -15,9 +15,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorBlueMain"
+            android:elevation="10dp"
             android:orientation="vertical"
-            android:padding="18dp"
-            android:elevation="10dp">
+            android:padding="18dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -38,12 +38,12 @@
                     android:id="@+id/addressSearchEditText4"
                     android:layout_width="wrap_content"
                     android:layout_height="36dp"
+                    android:layout_marginLeft="5dp"
                     android:layout_weight="1"
                     android:background="@color/white"
                     android:ems="15"
                     android:hint="  출발지를 검색해 주세요."
-                    android:inputType="textPersonName"
-                    android:layout_marginLeft="5dp"/>
+                    android:inputType="textPersonName" />
 
                 <Button
                     android:id="@+id/searchButton"
@@ -53,19 +53,33 @@
                     android:background="@android:drawable/ic_search_category_default"
                     android:backgroundTint="#FFFFFF"
                     android:onClick="onClickedSearch" />
+
             </LinearLayout>
+
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="26dp"
+            android:layout_marginTop="29dp"
+            android:layout_marginBottom="16dp"
+            android:text="자주가는 장소"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/adressRecyclerView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </androidx.recyclerview.widget.RecyclerView>
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/adressRecyclerView2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            </androidx.recyclerview.widget.RecyclerView>
 
             <LinearLayout
                 android:id="@+id/nodata"

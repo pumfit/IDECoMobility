@@ -35,10 +35,20 @@ public class SearchAddressAdapter extends RecyclerView.Adapter<SearchAddressAdap
                 public void onClick(View v) { //해당 검색결과 클릭시 intent로 데이터를 넘김
                     int pos = getAdapterPosition() ;
                     Context context = v.getContext();
-                    Intent intent = new Intent(v.getContext(),MainActivity.class);
-                    intent.putExtra("startAllAddress", myDataList.get(pos));//SearchAddress
-                    ((Activity)context).setResult(Activity.RESULT_OK,intent);
-                    ((Activity)context).finish();
+                    if(((Activity)context).getLocalClassName().equals("SearchActivity"))
+                    {
+                        Intent intent = new Intent(v.getContext(),MainActivity.class);
+                        intent.putExtra("startAllAddress", myDataList.get(pos));
+                        ((Activity)context).setResult(Activity.RESULT_OK,intent);
+                        ((Activity)context).finish();
+                    }
+                    else if(((Activity)context).getLocalClassName().equals("SearchActivity2"))
+                    {
+                        Intent intent = new Intent(v.getContext(),MainActivity.class);
+                        intent.putExtra("endAllAddress", myDataList.get(pos));
+                        ((Activity)context).setResult(Activity.RESULT_OK,intent);
+                        ((Activity)context).finish();
+                    }
                 }
             });
         }

@@ -1,7 +1,7 @@
 package com.teamide.idecomobility;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -9,41 +9,83 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Locale;
 
 public class SearchActivity2 extends Activity {
 
     private GpsTracker gpsTracker;
     public ArrayList<SearchAddress> dataList;
+    public ArrayList<SearchAddress> savelist;
+    private SharedPreferences preferences;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search2);
 
         dataList = new ArrayList<SearchAddress>();
+        savelist = new ArrayList<SearchAddress>();//저장해둔 리스트
+
+        preferences = getSharedPreferences("info", MODE_PRIVATE);
+        savelist = getAddressList();
 
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.adressRecyclerView2);
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(manager); // LayoutManager 등록
-        recyclerView.setAdapter(new SearchAddressAdapter2(dataList));  // Adapter 등록
+
+        SearchAddAdapter adapter = new SearchAddAdapter(savelist);
+        recyclerView.setAdapter(adapter);
+
         View view = findViewById(R.id.nodata);
         view.setVisibility(View.GONE);
     }
 
+    public ArrayList<SearchAddress> getAddressList() {
+        ArrayList<SearchAddress> savelist = new ArrayList<>();
+        ArrayList<String> full = getStringArrayPref("Addaddress1");
+        ArrayList<String> main = getStringArrayPref("Addaddress2");
+        ArrayList<String> lo = getStringArrayPref("Addaddress3");
+        ArrayList<String> la = getStringArrayPref("Addaddress4");
+        if (full.size() > 0) {
+            for (int i = 0; i < full.size(); i++) {
+                savelist.add(new SearchAddress(main.get(i), full.get(i), "0km", Double.parseDouble(lo.get(i)), Double.parseDouble(la.get(i))));
+            }
+        }
+        return savelist;
+    }
+
+    private ArrayList<String> getStringArrayPref(String key) {
+        preferences = getSharedPreferences("info", MODE_PRIVATE);
+        String json = preferences.getString(key, null);
+        ArrayList<String> urls = new ArrayList<String>();
+        if (json != null) {
+            try {
+                JSONArray a = new JSONArray(json);
+                for (int i = 0; i < a.length(); i++) {
+                    String url = a.optString(i);
+                    urls.add(url);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return urls;
+    }
+
     public void onClickedSearch(View v)
     {
+        TextView textView = findViewById(R.id.textView4);
+        textView.setVisibility(View.GONE);
         if(!(dataList==null)) {
             dataList.clear();
         }
@@ -95,7 +137,7 @@ public class SearchActivity2 extends Activity {
             RecyclerView recyclerView = (RecyclerView)findViewById(R.id.adressRecyclerView2);
             LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false);
             recyclerView.setLayoutManager(manager); // LayoutManager 등록
-            recyclerView.setAdapter(new SearchAddressAdapter2(dataList));  // Adapter 등록
+            recyclerView.setAdapter(new SearchAddressAdapter(dataList));  // Adapter 등록
         }
         catch (IndexOutOfBoundsException e) {
             e.getStackTrace();

@@ -10,6 +10,7 @@ import android.location.Geocoder;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -44,7 +45,7 @@ public class DefaultSettingActivity extends AppCompatActivity implements View.On
     private GpsTracker gpsTracker;
 
     public ArrayList<SearchAddress> savelist = new ArrayList<>();
-    public ArrayList<String> fullNamelist,mainNamelist,lalist,lolist = new ArrayList<>();
+    public ArrayList<String> fullNamelist,mainNamelist,lalist,lolist;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +58,10 @@ public class DefaultSettingActivity extends AppCompatActivity implements View.On
         addButton = findViewById(R.id.addbutton);
 
         preferRadioButton = findViewById(R.id.PreferRadioGroup);
+        fullNamelist = new ArrayList<>();
+        mainNamelist = new ArrayList<>();
+        lalist = new ArrayList<>();
+        lolist = new ArrayList<>();
 
         if (!checkLocationServicesStatus()) {//GPS 확인
             Intent callGPSSettingIntent
@@ -281,10 +286,14 @@ public class DefaultSettingActivity extends AppCompatActivity implements View.On
             lolist.add(Double.toString(savelist.get(i).getLongitude()));
             lalist.add(Double.toString(savelist.get(i).getLatitude()));
         }
-        setStringArrayPref(getApplicationContext(),"Addaddress1",fullNamelist);
-        setStringArrayPref(getApplicationContext(),"Addaddress2",mainNamelist);
-        setStringArrayPref(getApplicationContext(),"Addaddress3",lolist);
-        setStringArrayPref(getApplicationContext(),"Addaddress4",lalist);
+        if(savelist.size()>0)
+        {
+            setStringArrayPref(getApplicationContext(),"Addaddress1",fullNamelist);
+            setStringArrayPref(getApplicationContext(),"Addaddress2",mainNamelist);
+            setStringArrayPref(getApplicationContext(),"Addaddress3",lolist);
+            setStringArrayPref(getApplicationContext(),"Addaddress4",lalist);
+        }
+        editor.commit();
 
         Intent newIntent = new Intent(this, MainActivity.class);
         startActivity(newIntent);
@@ -292,11 +301,10 @@ public class DefaultSettingActivity extends AppCompatActivity implements View.On
     }
 
     private void setStringArrayPref(Context context, String key, ArrayList<String> values) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = prefs.edit();
         JSONArray a = new JSONArray();
         for (int i = 0; i < values.size(); i++) {
             a.put(values.get(i));
+            Log.d("ad",values.get(i));
         }
         if (!values.isEmpty()) {
             editor.putString(key, a.toString());
@@ -307,8 +315,8 @@ public class DefaultSettingActivity extends AppCompatActivity implements View.On
     }
 
     private ArrayList<String> getStringArrayPref(Context context, String key) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        String json = prefs.getString(key, null);
+        preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        String json = preferences.getString(key, null);
         ArrayList<String> urls = new ArrayList<String>();
         if (json != null) {
             try {
