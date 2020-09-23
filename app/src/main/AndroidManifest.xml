@@ -27,6 +27,7 @@
         <activity android:name=".RouteResultActivity"/>
         <activity android:name=".DefaultSettingActivity"/>
         <activity android:name=".SettingInfoActivity"/>
+        <activity android:name=".BookMarkActivity"/>
     </application>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
