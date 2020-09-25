@@ -9,4 +9,8 @@
         <item name="android:textColorPrimary">@color/white</item>
     </style>
 
+    <style name="MyRadioButtonStyle" parent="@android:style/Widget.CompoundButton.RadioButton">
+        <item name="android:button">@drawable/radius_filled</item>
+    </style>
+
 </resources>

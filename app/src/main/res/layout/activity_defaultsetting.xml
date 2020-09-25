@@ -46,36 +46,52 @@
 
             <RadioButton
                 android:id="@+id/radioButton3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="60dp"
+                android:layout_height="40dp"
                 android:layout_weight="1"
                 android:onClick="onRadioButtonClicked"
-                android:text="@string/bus" />
+                android:background="@drawable/custon_btn_radio"
+                android:text="@string/bus"
+                android:button = "@null"
+                android:textAlignment="center"
+                android:layout_marginRight="8dp"/>
 
             <RadioButton
                 android:id="@+id/radioButton4"
-                android:layout_width="129dp"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
                 android:layout_weight="1"
                 android:checked="false"
                 android:onClick="onRadioButtonClicked"
-                android:text="@string/call_tax" />
+                android:background="@drawable/custon_btn_radio"
+                android:text="@string/call_tax"
+                android:button = "@null"
+                android:textAlignment="center"
+                android:layout_marginRight="8dp"/>
 
             <RadioButton
                 android:id="@+id/radioButton5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="70dp"
+                android:layout_height="40dp"
                 android:layout_weight="1"
                 android:onClick="onRadioButtonClicked"
-                android:text="지하철" />
+                android:background="@drawable/custon_btn_radio"
+                android:text="지하철"
+                android:button = "@null"
+                android:textAlignment="center"
+                android:layout_marginRight="8dp"/>
 
             <RadioButton
                 android:id="@+id/radioButton6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="70dp"
+                android:layout_height="40dp"
                 android:layout_weight="1"
                 android:onClick="onRadioButtonClicked"
-                android:text="@string/onfoot" />
+                android:background="@drawable/custon_btn_radio"
+                android:text="@string/onfoot"
+                android:button = "@null"
+                android:textAlignment="center"
+                android:layout_marginRight="8dp"/>
 
         </RadioGroup>
 
@@ -119,12 +135,12 @@
                 android:id="@+id/addbutton"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:layout_marginLeft="15dp"
                 android:layout_gravity="center"
-                android:background="@drawable/radius"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/radius_filled"
                 android:onClick="onClick"
                 android:text="+"
-                android:textColor="@color/black" />
+                android:textColor="@color/white" />
 
         </LinearLayout>
 
