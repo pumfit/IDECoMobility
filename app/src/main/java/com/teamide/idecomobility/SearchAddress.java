@@ -21,6 +21,15 @@ public class SearchAddress implements Parcelable { //검색주소의 상세 데�
         this.distance = distance;
     }
 
+    public SearchAddress(String mainAdress, String fullAdress, double latitude, double longitude)
+    {
+        this.mainAdress = mainAdress;
+        this.fullAdress = fullAdress;
+        this.distance = "0km";
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
     public SearchAddress(String mainAdress, String fullAdress, String distance, double latitude, double longitude) {
         this.mainAdress = mainAdress;
         this.fullAdress = fullAdress;
@@ -48,6 +57,7 @@ public class SearchAddress implements Parcelable { //검색주소의 상세 데�
             return new SearchAddress[size];
         }
     };
+
 
     public double getLatitude() {
         return latitude;

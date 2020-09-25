@@ -34,6 +34,7 @@ public class AddmAddressAdapter extends RecyclerView.Adapter<AddmAddressAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull final AddmAddressAdapter.ViewHolder holder, final int position) {
+
         String text = mData.get(position).getMainAdress();
         String subText = mData.get(position).getFullAdress();
         holder.textView.setText(text);

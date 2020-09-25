@@ -71,6 +71,7 @@ public class SearchAddAdapter extends RecyclerView.Adapter<SearchAddAdapter.View
                 public void onClick(View v) { //해당 검색결과 클릭시 intent로 데이터를 넘김
                     int pos = getAdapterPosition() ;
                     Context context = v.getContext();
+
                     if(((Activity)context).getLocalClassName().equals("SearchActivity"))
                     {
                         Intent intent = new Intent(v.getContext(),MainActivity.class);
@@ -80,12 +81,12 @@ public class SearchAddAdapter extends RecyclerView.Adapter<SearchAddAdapter.View
                     }
                     else if(((Activity)context).getLocalClassName().equals("SearchActivity2"))
                     {
+
                         Intent intent = new Intent(v.getContext(),MainActivity.class);
                         intent.putExtra("endAllAddress", mData.get(pos));
                         ((Activity)context).setResult(Activity.RESULT_OK,intent);
                         ((Activity)context).finish();
                     }
-
                 }
             });
         }

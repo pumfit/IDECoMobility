@@ -263,6 +263,7 @@
                         android:background="@drawable/whiterec"
                         android:backgroundTintMode="screen"
                         android:drawableTop="@drawable/ic_star"
+                        android:onClick="onClickedBookMark"
                         android:padding="28dp"
                         android:text="즐겨찾기"
                         android:textColor="@color/white"
