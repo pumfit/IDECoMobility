@@ -179,6 +179,8 @@ public class DefaultSettingActivity extends AppCompatActivity implements View.On
 
     public void onRadioButtonClicked(View view) {
 
+        RadioButton button = (RadioButton) view;
+
         boolean checked = ((RadioButton) view).isChecked();
         editor.putBoolean("inputbus", false);
         editor.putBoolean("inputcalltax", false);
@@ -188,13 +190,17 @@ public class DefaultSettingActivity extends AppCompatActivity implements View.On
         switch (view.getId()) {
             case R.id.radioButton3:
                 if (checked) {
-                    editor.putBoolean("inputbus", true);
+                    editor.putBoolean("inputbus", false);
                 }
                 break;
             case R.id.radioButton4:
                 if (checked) {
                     editor.putBoolean("inputcalltax", true);
+//                    button.setTextColor(ContextCompat.getColor(this, R.color.white));
                 }
+//                else if (checked == false){
+//                    editor.putBoolean("inputbus", false);
+//                    button.setTextColor(ContextCompat.getColor(this, R.color.black)); };
                 break;
             case R.id.radioButton5:
                 if (checked) {
