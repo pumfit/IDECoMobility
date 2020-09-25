@@ -226,6 +226,7 @@
                         android:padding="25dp"
                         android:text="장애인 콜택시"
                         android:textSize="12dp"
+                        android:onClick="onClickedCalltexi"
                         android:textColor="@color/white" />
                 </LinearLayout>
             </LinearLayout>

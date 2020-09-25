@@ -42,7 +42,7 @@
                     android:layout_weight="1"
                     android:background="@color/white"
                     android:ems="15"
-                    android:hint="  출발지를 검색해 주세요."
+                    android:hint="  도착지를 검색해 주세요."
                     android:inputType="textPersonName" />
 
                 <Button

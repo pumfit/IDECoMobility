@@ -121,7 +121,7 @@ public class SearchActivity extends Activity { //출발지 검색시 실행되�
                 for (int i = 0; i < addressList.size(); i++) {
                     Address ad = addressList.get(i);
                     String address = ad.getAddressLine(0).toString() + "\n";
-                    Location location = new Location("seaech location");
+                    Location location = new Location("search location");
                     location.setLatitude(ad.getLatitude());
                     location.setLongitude(ad.getLongitude());
                     double distance = location.distanceTo(location2) / 1000;

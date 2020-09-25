@@ -1,15 +1,18 @@
 package com.teamide.idecomobility;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -209,18 +212,29 @@ public class MainActivity extends AppCompatActivity {
         startActivity(in);
     }
 
-    public void onClickedBusInfo(View v){//설정 정보
+    public void onClickedBusInfo(View v){ //버스버튼
         Intent in = new Intent(getApplicationContext(), BusInfoActivity.class);
         in.putExtra("infoAddress", (Parcelable) infoAddress);
         startActivity(in);
     }
 
-    public void onClickedBookMark(View v){//설정 정보
-        Intent in = new Intent(getApplicationContext(), BookMarkActivity.class);
-        startActivity(in);
+    public void onClickedCalltexi(View v){ //콜택시호출버튼
+        final String tel = "1588-4388";
+        final CalltexiDialog dialog = new CalltexiDialog(getApplicationContext());
+        dialog.setDialogListener(new CalltexiDialog.CustomDialogListener1() {
+            @Override
+            public void onPositiveClicked() {
+                startActivity(new Intent("android.intent.action.CALL",Uri.parse(tel)));
+            }
+            @Override
+            public void onNegativeClicked() {
+                dialog.cancel();
+            }
+        });
+        dialog.show();
     }
 
-    public void onClickedSettingInfo(View v){
+    public void onClickedSettingInfo(View v){ //설정버튼
         Intent in = new Intent(getApplicationContext(), SettingInfoActivity.class); //현재 위치가져가면된다.
    //     in.putExtra("infoAddress", (Parcelable) infoAddress);
         startActivity(in);

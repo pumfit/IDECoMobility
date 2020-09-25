@@ -74,7 +74,6 @@ public class BusTime extends AsyncTask<String[], Void, String[]>{
                         break;
                     case XmlPullParser.TEXT:
                         text = myParser.getText();
-                        Log.d("ad","1st: "+text);
                         break;
 
                     case XmlPullParser.END_TAG:
