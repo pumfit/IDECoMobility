@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="350dp"
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/calltexitoolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorBlueMain"
@@ -22,49 +22,42 @@
         android:layout_marginHorizontal="14dp"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="장애인 콜택시 호출"
-            android:layout_gravity="center"
-            android:textColor="@color/colorBlueMain"
-            android:textSize="25dp" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:gravity="center"
-            android:layout_marginVertical="14dp"
+            android:layout_marginVertical="10dp"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/region"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="#"
-                android:layout_gravity="center"
-                android:textColor="@color/black"
-                android:textSize="18dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" 지역 콜택시  "
+                android:text="서울"
                 android:layout_gravity="center"
                 android:textColor="@color/black"
                 android:textSize="22dp" />
 
             <TextView
-                android:id="@+id/callNum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="**-****-****"
+                android:text=" 지역"
                 android:layout_gravity="center"
                 android:textColor="@color/black"
-                android:textSize="30dp" />
-
+                android:textSize="22dp" />
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/callNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="**-****-****"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            android:textSize="30dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -77,14 +70,11 @@
                 android:layout_height="wrap_content"
                 android:text="바로 연결하시겠습니까?"
                 android:layout_gravity="center"
-                android:textColor="@color/black"
-                android:textSize="18dp" />
+                android:textColor="@color/colorBlueMain"
+                android:textSize="15dp" />
 
 
         </LinearLayout>
-
-
-
 
 
     </LinearLayout>
@@ -95,7 +85,7 @@
 
         <Button
             android:id="@+id/button25"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="50"
             android:background="@color/gray"
@@ -103,7 +93,7 @@
 
         <Button
             android:id="@+id/button26"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="50"
             android:background="@color/colorBlueMain"

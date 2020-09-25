@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -218,26 +219,18 @@ public class MainActivity extends AppCompatActivity {
         startActivity(in);
     }
 
-    public void onClickedCalltexi(View v){ //콜택시호출버튼
-        final String tel = "1588-4388";
-        final CalltexiDialog dialog = new CalltexiDialog(getApplicationContext());
-        dialog.setDialogListener(new CalltexiDialog.CustomDialogListener1() {
-            @Override
-            public void onPositiveClicked() {
-                startActivity(new Intent("android.intent.action.CALL",Uri.parse(tel)));
-            }
-            @Override
-            public void onNegativeClicked() {
-                dialog.cancel();
-            }
-        });
-        dialog.show();
-    }
-
     public void onClickedSettingInfo(View v){ //설정버튼
         Intent in = new Intent(getApplicationContext(), SettingInfoActivity.class); //현재 위치가져가면된다.
    //     in.putExtra("infoAddress", (Parcelable) infoAddress);
         startActivity(in);
+    }
+    public void onClickedBookMark(View v){
+        final AddBookMarkDialog dialog = new AddBookMarkDialog(this);
+        dialog.show();
+    }
+    public void onClickedCallTexi(View v){
+        final CalltexiDialog dialog = new CalltexiDialog(this);
+        dialog.show();
     }
 
     public void checkFirstRun() {

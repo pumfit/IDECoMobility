@@ -138,7 +138,7 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="15dp"
                 android:background="@drawable/radius_filled"
-                android:onClick="onClick"
+                android:onClick="addressOn"
                 android:text="+"
                 android:textColor="@color/white" />
 
