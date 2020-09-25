@@ -215,6 +215,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(in);
     }
 
+    public void onClickedBookMark(View v){//설정 정보
+        Intent in = new Intent(getApplicationContext(), BookMarkActivity.class);
+        startActivity(in);
+    }
+
     public void onClickedSettingInfo(View v){
         Intent in = new Intent(getApplicationContext(), SettingInfoActivity.class); //현재 위치가져가면된다.
    //     in.putExtra("infoAddress", (Parcelable) infoAddress);
