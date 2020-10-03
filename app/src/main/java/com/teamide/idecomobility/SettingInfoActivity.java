@@ -26,18 +26,47 @@ public class SettingInfoActivity extends AppCompatActivity {
     private SharedPreferences preferences;
     public boolean isbTrue[] = new boolean[8];
     EditText addressEdit;
+    Button wheel, wheelLift, elevator, foot;
     public RadioGroup preferRadioButton;
     public RecyclerView recyclerView;
     public ArrayList<SearchAddress> savelist;
     public ArrayList<String> fullNamelist, mainNamelist, lalist, lolist;
 
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setting);
 
         preferences = getSharedPreferences("info", MODE_PRIVATE);
         editor = preferences.edit();
-        editor.putBoolean("inputbus", true);
+
+        initView();
+
+        int savedRadioIndex = preferences.getInt("trans",0);
+        RadioButton savedRadioButton = (RadioButton)preferRadioButton.getChildAt(savedRadioIndex);
+        savedRadioButton.setChecked(true);
+
+        if(preferences.getBoolean("inputdata1",false))
+        {
+            wheel.setBackground(ContextCompat.getDrawable(this, R.drawable.radius_filled));
+            wheel.setTextColor(ContextCompat.getColor(this, R.color.white));
+        }
+        if(preferences.getBoolean("inputdata2",false))
+        {
+            wheelLift.setBackground(ContextCompat.getDrawable(this, R.drawable.radius_filled));
+            wheelLift.setTextColor(ContextCompat.getColor(this, R.color.white));
+        }
+        if(preferences.getBoolean("inputdata3",false))
+        {
+            elevator.setBackground(ContextCompat.getDrawable(this, R.drawable.radius_filled));
+            elevator.setTextColor(ContextCompat.getColor(this, R.color.white));
+        }
+        if(preferences.getBoolean("inputdata4",false))
+        {
+            foot.setBackground(ContextCompat.getDrawable(this, R.drawable.radius_filled));
+            foot.setTextColor(ContextCompat.getColor(this, R.color.white));
+        }
+
         savelist = getAddressList();
         //savelist = new ArrayList<SearchAddress>();
         Log.d("ad", "함수로 넣음");
@@ -47,10 +76,6 @@ public class SettingInfoActivity extends AppCompatActivity {
         mainNamelist = new ArrayList<>();
         lalist = new ArrayList<>();
         lolist = new ArrayList<>();
-        editor.putBoolean("inputdata1", false);
-        editor.putBoolean("inputdata2", false);
-        editor.putBoolean("inputdata3", false);
-        editor.putBoolean("inputdata4", false);
 
         recyclerView = findViewById(R.id.addresslist);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
@@ -108,22 +133,22 @@ public class SettingInfoActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.radioButton3:
                 if (checked) {
-                    editor.putBoolean("inputbus", true);
+                    editor.putInt("trans", 0);
                 }
                 break;
             case R.id.radioButton4:
                 if (checked) {
-                    editor.putBoolean("inputcalltax", true);
+                    editor.putInt("trans", 1);
                 }
                 break;
             case R.id.radioButton5:
                 if (checked) {
-                    editor.putBoolean("inputsubway", true);
+                    editor.putInt("inputsubway", 2);
                 }
                 break;
             case R.id.radioButton6:
                 if (checked) {
-                    editor.putBoolean("inputonfoot", true);
+                    editor.putInt("inputonfoot", 3);
                 }
                 break;
         }
@@ -133,50 +158,45 @@ public class SettingInfoActivity extends AppCompatActivity {
     public void OnCliked5(View v) {
         Button button = (Button) v;
 
-        if (isbTrue[4] == false) {
+        if (preferences.getBoolean("inputdata1",false)==false) {
             button.setBackground(ContextCompat.getDrawable(this, R.drawable.radius_filled));
             button.setTextColor(ContextCompat.getColor(this, R.color.white));
             editor.putBoolean("inputdata1", true); // key,value 형식으로 저장
-            isbTrue[4] = true;
         } else {
             button.setBackground(ContextCompat.getDrawable(this, R.drawable.radius));
             button.setTextColor(ContextCompat.getColor(this, R.color.black));
             editor.putBoolean("inputdata1", false); // key,value 형식으로 저장
-            isbTrue[4] = false;
         }
         editor.commit();
     }
 
     public void OnCliked6(View v) {
         Button button = (Button) v;
-
-        if (isbTrue[5] == false) {
+        if(preferences.getBoolean("inputdata2",false)==false) {
             button.setBackground(ContextCompat.getDrawable(this, R.drawable.radius_filled));
             button.setTextColor(ContextCompat.getColor(this, R.color.white));
             editor.putBoolean("inputdata2", true); // key,value 형식으로 저장
-            isbTrue[5] = true;
-        } else {
+        }else{
             button.setBackground(ContextCompat.getDrawable(this, R.drawable.radius));
             button.setTextColor(ContextCompat.getColor(this, R.color.black));
             editor.putBoolean("inputdata2", false); // key,value 형식으로 저장
-            isbTrue[5] = false;
         }
+//        if (isbTrue[5] == false) {
+//            isbTrue[5] = true;
         editor.commit();
     }
 
     public void OnCliked7(View v) {
         Button button = (Button) v;
 
-        if (isbTrue[6] == false) {
+        if (preferences.getBoolean("inputdata3",false)==false) {
             button.setBackground(ContextCompat.getDrawable(this, R.drawable.radius_filled));
             button.setTextColor(ContextCompat.getColor(this, R.color.white));
             editor.putBoolean("inputdata3", true); // key,value 형식으로 저장
-            isbTrue[6] = true;
         } else {
             button.setBackground(ContextCompat.getDrawable(this, R.drawable.radius));
             button.setTextColor(ContextCompat.getColor(this, R.color.black));
             editor.putBoolean("inputdata3", false); // key,value 형식으로 저장
-            isbTrue[6] = false;
         }
         editor.commit();
     }
@@ -184,16 +204,14 @@ public class SettingInfoActivity extends AppCompatActivity {
     public void OnCliked8(View v) {
         Button button = (Button) v;
 
-        if (isbTrue[7] == false) {
+        if (preferences.getBoolean("inputdata4",false)==false) {
             button.setBackground(ContextCompat.getDrawable(this, R.drawable.radius_filled));
             button.setTextColor(ContextCompat.getColor(this, R.color.white));
             editor.putBoolean("inputdata4", true); // key,value 형식으로 저장
-            isbTrue[7] = true;
         } else {
             button.setBackground(ContextCompat.getDrawable(this, R.drawable.radius));
             button.setTextColor(ContextCompat.getColor(this, R.color.black));
             editor.putBoolean("inputdata4", false); // key,value 형식으로 저장
-            isbTrue[7] = false;
         }
         editor.commit();
     }
@@ -256,5 +274,13 @@ public class SettingInfoActivity extends AppCompatActivity {
             }
         }
         return urls;
+    }
+
+    private void initView(){
+        preferRadioButton = (RadioGroup)findViewById(R.id.PreferRadioGroup);
+        wheel = (Button)findViewById(R.id.wheel);
+        wheelLift = (Button)findViewById(R.id.wheelLift);
+        elevator = (Button)findViewById(R.id.elevator);
+        foot = (Button)findViewById(R.id.foot);
     }
 }

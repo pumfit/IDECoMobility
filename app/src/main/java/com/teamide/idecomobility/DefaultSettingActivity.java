@@ -35,7 +35,7 @@ public class DefaultSettingActivity extends AppCompatActivity implements View.On
     private SharedPreferences.Editor editor;
     private SharedPreferences preferences;
     public boolean isbTrue[] = new boolean[8];
-    public Button addButton;
+    public Button addButton, button13, button14, button15, button16;
     public RadioGroup preferRadioButton;
     RecyclerView recyclerView;
     String[] REQUIRED_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
@@ -53,11 +53,20 @@ public class DefaultSettingActivity extends AppCompatActivity implements View.On
 
         preferences = getSharedPreferences("info", MODE_PRIVATE);
         editor = preferences.edit();
-        editor.putBoolean("inputbus", true);
+        //editor.putBoolean("inputbus", true);
+        initView();
+        editor.putString("trans","");
+        editor.putBoolean("inputdata1", false);
+        editor.putBoolean("inputdata2", false);
+        editor.putBoolean("inputdata3", false);
+        editor.putBoolean("inputdata4", false);
 
         addButton = findViewById(R.id.addbutton);
+        button13 = findViewById(R.id.button13);
+        button14 = findViewById(R.id.button14);
+        button15 = findViewById(R.id.button15);
+        button16 = findViewById(R.id.button16);
 
-        preferRadioButton = findViewById(R.id.PreferRadioGroup);
         fullNamelist = new ArrayList<>();
         mainNamelist = new ArrayList<>();
         lalist = new ArrayList<>();
@@ -182,34 +191,27 @@ public class DefaultSettingActivity extends AppCompatActivity implements View.On
         RadioButton button = (RadioButton) view;
 
         boolean checked = ((RadioButton) view).isChecked();
-        editor.putBoolean("inputbus", false);
-        editor.putBoolean("inputcalltax", false);
-        editor.putBoolean("inputsubway", false);
-        editor.putBoolean("inputonfoot", false);
+        editor.putInt("trans", 0);
 
         switch (view.getId()) {
             case R.id.radioButton3:
                 if (checked) {
-                    editor.putBoolean("inputbus", false);
+                    editor.putInt("trans",0 );
                 }
                 break;
             case R.id.radioButton4:
                 if (checked) {
-                    editor.putBoolean("inputcalltax", true);
-//                    button.setTextColor(ContextCompat.getColor(this, R.color.white));
+                    editor.putInt("trans", 1);
                 }
-//                else if (checked == false){
-//                    editor.putBoolean("inputbus", false);
-//                    button.setTextColor(ContextCompat.getColor(this, R.color.black)); };
                 break;
             case R.id.radioButton5:
                 if (checked) {
-                    editor.putBoolean("inputsubway", true);
+                    editor.putInt("trans", 2);
                 }
                 break;
             case R.id.radioButton6:
                 if (checked) {
-                    editor.putBoolean("inputonfoot", true);
+                    editor.putInt("trans", 3);
                 }
                 break;
         }
@@ -219,16 +221,14 @@ public class DefaultSettingActivity extends AppCompatActivity implements View.On
     public void OnCliked5(View v) {
         Button button = (Button) v;
 
-        if (isbTrue[4] == false) {
+        if (preferences.getBoolean("inputdata1",false)==false) {
             button.setBackground(ContextCompat.getDrawable(this, R.drawable.radius_filled));
             button.setTextColor(ContextCompat.getColor(this, R.color.white));
             editor.putBoolean("inputdata1", true); // key,value 형식으로 저장
-            isbTrue[4] = true;
         } else {
             button.setBackground(ContextCompat.getDrawable(this, R.drawable.radius));
             button.setTextColor(ContextCompat.getColor(this, R.color.black));
             editor.putBoolean("inputdata1", false); // key,value 형식으로 저장
-            isbTrue[4] = false;
         }
         editor.commit();
     }
@@ -236,16 +236,14 @@ public class DefaultSettingActivity extends AppCompatActivity implements View.On
     public void OnCliked6(View v) {
         Button button = (Button) v;
 
-        if (isbTrue[5] == false) {
+        if (preferences.getBoolean("inputdata2",false)==false) {
             button.setBackground(ContextCompat.getDrawable(this, R.drawable.radius_filled));
             button.setTextColor(ContextCompat.getColor(this, R.color.white));
             editor.putBoolean("inputdata2", true); // key,value 형식으로 저장
-            isbTrue[5] = true;
         } else {
             button.setBackground(ContextCompat.getDrawable(this, R.drawable.radius));
             button.setTextColor(ContextCompat.getColor(this, R.color.black));
             editor.putBoolean("inputdata2", false); // key,value 형식으로 저장
-            isbTrue[5] = false;
         }
         editor.commit();
     }
@@ -253,16 +251,14 @@ public class DefaultSettingActivity extends AppCompatActivity implements View.On
     public void OnCliked7(View v) {
         Button button = (Button) v;
 
-        if (isbTrue[6] == false) {
+        if (preferences.getBoolean("inputdata3",false)==false) {
             button.setBackground(ContextCompat.getDrawable(this, R.drawable.radius_filled));
             button.setTextColor(ContextCompat.getColor(this, R.color.white));
             editor.putBoolean("inputdata3", true); // key,value 형식으로 저장
-            isbTrue[6] = true;
         } else {
             button.setBackground(ContextCompat.getDrawable(this, R.drawable.radius));
             button.setTextColor(ContextCompat.getColor(this, R.color.black));
             editor.putBoolean("inputdata3", false); // key,value 형식으로 저장
-            isbTrue[6] = false;
         }
         editor.commit();
     }
@@ -270,16 +266,14 @@ public class DefaultSettingActivity extends AppCompatActivity implements View.On
     public void OnCliked8(View v) {
         Button button = (Button) v;
 
-        if (isbTrue[7] == false) {
+        if (preferences.getBoolean("inputdata4",false)==false) {
             button.setBackground(ContextCompat.getDrawable(this, R.drawable.radius_filled));
             button.setTextColor(ContextCompat.getColor(this, R.color.white));
             editor.putBoolean("inputdata4", true); // key,value 형식으로 저장
-            isbTrue[7] = true;
         } else {
             button.setBackground(ContextCompat.getDrawable(this, R.drawable.radius));
             button.setTextColor(ContextCompat.getColor(this, R.color.black));
             editor.putBoolean("inputdata4", false); // key,value 형식으로 저장
-            isbTrue[7] = false;
         }
         editor.commit();
     }
@@ -336,5 +330,13 @@ public class DefaultSettingActivity extends AppCompatActivity implements View.On
             }
         }
         return urls;
+    }
+
+    private void initView(){
+        preferRadioButton = findViewById(R.id.PreferRadioGroup);
+        button13 = (Button)findViewById(R.id.button13);
+        button14 = (Button)findViewById(R.id.button14);
+        button15 = (Button)findViewById(R.id.button15);
+        button16 = (Button)findViewById(R.id.button16);
     }
 }

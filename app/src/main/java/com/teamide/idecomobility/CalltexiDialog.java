@@ -58,7 +58,7 @@ public class CalltexiDialog extends Dialog implements View.OnClickListener{
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.button26:
-                ((Activity)context).startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse(tel)));
+                ((Activity)context).startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+tel)));
                 break;
             case R.id.button25:
                 cancel();

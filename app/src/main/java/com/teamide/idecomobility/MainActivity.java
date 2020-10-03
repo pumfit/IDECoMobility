@@ -224,6 +224,10 @@ public class MainActivity extends AppCompatActivity {
    //     in.putExtra("infoAddress", (Parcelable) infoAddress);
         startActivity(in);
     }
+    public void onClickedModify(View v){
+        final ModifyDialog dialog = new ModifyDialog(this);
+        dialog.show();
+    }
     public void onClickedBookMark(View v){
         final AddBookMarkDialog dialog = new AddBookMarkDialog(this);
         dialog.show();
@@ -243,5 +247,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+
 
 }

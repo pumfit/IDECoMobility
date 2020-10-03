@@ -58,7 +58,6 @@
                 android:layout_width="100dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
-                android:checked="false"
                 android:onClick="onRadioButtonClicked"
                 android:background="@drawable/custon_btn_radio"
                 android:text="@string/call_tax"
@@ -185,7 +184,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="8dp"
                 android:layout_weight="1"
-                android:background="@drawable/radius"
+                android:background="@drawable/custon_btn_radio"
                 android:onClick="OnCliked5"
                 android:text="휠체어 칸" />
 
@@ -195,17 +194,17 @@
                 android:layout_height="40dp"
                 android:layout_marginRight="8dp"
                 android:layout_weight="1"
-                android:background="@drawable/radius"
+                android:background="@drawable/custon_btn_radio"
                 android:onClick="OnCliked6"
                 android:text="휠체어 리프트" />
 
             <Button
-                android:id="@+id/elevater"
+                android:id="@+id/elevator"
                 android:layout_width="20dp"
                 android:layout_height="40dp"
                 android:layout_marginRight="8dp"
                 android:layout_weight="1"
-                android:background="@drawable/radius"
+                android:background="@drawable/custon_btn_radio"
                 android:onClick="OnCliked7"
                 android:text="엘리베이터" />
 
@@ -215,7 +214,7 @@
                 android:layout_height="40dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
-                android:background="@drawable/radius"
+                android:background="@drawable/custon_btn_radio"
                 android:onClick="OnCliked8"
                 android:text="저상버스" />
         </LinearLayout>
