@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -47,6 +48,7 @@ public class AddBookMarkDialog extends Dialog implements View.OnClickListener {
 
         toolbar = findViewById(R.id.bookmarktoolbar);
         toolbar.setTitle("자주가는 경로 등록");
+        toolbar.setTitleTextColor(Color.parseColor("#ffffff"));
 
         editStartText = findViewById(R.id.editText);
         editEndText = findViewById(R.id.editText2);

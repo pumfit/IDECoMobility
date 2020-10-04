@@ -17,76 +17,79 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="14dp"
-        android:layout_marginVertical="14dp"
-        android:gravity="center"
+        android:layout_marginTop="30dp"
         android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:layout_marginBottom="14dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="15dp"
             android:text="출발지"
             android:textColor="@color/black"
-            android:textSize="15dp"
+            android:textSize="23dp"
             android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginBottom="20dp">
 
             <EditText
                 android:id="@+id/editText"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
                 android:layout_weight="1"
-                android:background="@color/gray"
-                android:hint="오른쪽 돋보기를 눌러주세요."
+                android:layout_marginLeft="15dp"
+                android:hint="출발지를 검색해주세요"
                 android:maxLength="15" />
 
             <Button
                 android:id="@+id/startbutton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="27dp"
+                android:layout_height="27dp"
                 android:layout_weight="1"
-                android:text="Button" />
+                android:layout_marginRight="20dp"
+                android:background="@drawable/ic_search"
+                android:textColor="@color/white" />
         </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:layout_marginBottom="14dp"
+            android:layout_marginBottom="5dp"
             android:text="도착지"
+            android:layout_marginLeft="15dp"
             android:textColor="@color/black"
-            android:textSize="15dp"
+            android:textSize="23dp"
             android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
-            android:gravity="center">
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:layout_marginBottom="20dp">
 
             <EditText
                 android:id="@+id/editText2"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
                 android:layout_weight="1"
-                android:background="@color/gray"
-                android:hint="오른쪽 돋보기를 눌러주세요."
+                android:layout_marginLeft="15dp"
+                android:hint="도착지를 검색해주세요"
                 android:maxLength="15" />
 
             <Button
                 android:id="@+id/endbutton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="27dp"
+                android:layout_height="27dp"
                 android:layout_weight="1"
-                android:text="Button" />
+                android:layout_marginRight="20dp"
+                android:background="@drawable/ic_search"
+                android:textColor="@color/white" />
 
         </LinearLayout>
 
@@ -101,7 +104,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="50"
                 android:background="@color/gray"
-                android:text="취소" />
+                android:text="취소"
+                android:textSize="20dp"/>
 
             <Button
                 android:id="@+id/sbutton"
@@ -110,7 +114,8 @@
                 android:layout_weight="50"
                 android:background="@color/colorBlueMain"
                 android:text="저장"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:textSize="20dp"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

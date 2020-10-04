@@ -2,10 +2,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_edit"
-        android:title="EDIT"
-        app:showAsAction="always"/>
+        android:icon="@drawable/ic_edit"
+        android:title="edit"
+        app:showAsAction="always" />
     <item
         android:id="@+id/action_add"
         android:title="Add"
+        android:icon="@drawable/ic_plus"
         app:showAsAction="always"/>
 </menu>

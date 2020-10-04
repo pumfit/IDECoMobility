@@ -37,13 +37,13 @@ public class AddAddressAdapter extends RecyclerView.Adapter<AddAddressAdapter.Vi
         String text = mData.get(position).getMainAdress();
         holder.textView1.setText(text);
 
-        holder.deleteButton.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-                mData.remove(position);
-                notifyItemRemoved(position);
-                notifyItemRangeChanged(position, getItemCount());
-            }
-        });
+//        holder.deleteButton.setOnClickListener(new Button.OnClickListener() {
+//            public void onClick(View v) {
+//                mData.remove(position);
+//                notifyItemRemoved(position);
+//                notifyItemRangeChanged(position, getItemCount());
+//            }
+//        });
     }
 
     @Override
@@ -54,14 +54,14 @@ public class AddAddressAdapter extends RecyclerView.Adapter<AddAddressAdapter.Vi
     // 아이템 뷰를 저장하는 뷰홀더 클래스.
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView textView1;
-        Button deleteButton;
+//        Button deleteButton;
 
         ViewHolder(View itemView) {
             super(itemView);
 
             // 뷰 객체에 대한 참조. (hold strong reference)
             textView1 = itemView.findViewById(R.id.addressTextView);
-            deleteButton = itemView.findViewById(R.id.deletebutton);
+//            deleteButton = itemView.findViewById(R.id.deletebutton);
         }
     }
 

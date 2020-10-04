@@ -251,8 +251,8 @@
                         android:background="@drawable/whiterec"
                         android:backgroundTintMode="screen"
                         android:drawableTop="@drawable/ic_location"
-                        android:padding = "20dp"
-                        android:text="내 주변 편의시설"
+                        android:padding = "30dp"
+                        android:text="주변 편의시설"
                         android:textColor="@color/white"
                         android:textSize="12dp" />
 
