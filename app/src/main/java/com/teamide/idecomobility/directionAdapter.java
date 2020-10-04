@@ -49,7 +49,7 @@ public class directionAdapter extends BaseAdapter {
         TextView num = (TextView)view.findViewById(R.id.num);
         TextView minLeft = (TextView)view.findViewById(R.id.minLeft);
 
-        img.setImageAlpha(sample.get(position).getImg());
+        img.setImageResource(sample.get(position).getImg());
         shape.setText(sample.get(position).getcircle());
         title.setText(sample.get(position).gettitle());
         vehicle.setText(sample.get(position).getbusOrSub());

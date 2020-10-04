@@ -36,7 +36,7 @@
                 android:gravity="center"
                 android:text="bus"
                 android:textAlignment="center"
-                android:textColor="@color/colorBlueMain"
+                android:textColor="@color/colorBluePrimary"
                 android:textSize="15dp"
                 android:textStyle="bold" />
         </LinearLayout>
