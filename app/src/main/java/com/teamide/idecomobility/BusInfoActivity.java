@@ -2,6 +2,8 @@ package com.teamide.idecomobility;
 
 import android.app.ActionBar;
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -15,6 +17,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -72,6 +75,9 @@ public class BusInfoActivity extends FragmentActivity implements OnMapReadyCallb
         setActionBar(toolbar);
         ActionBar actionBar = getActionBar();
         actionBar.setTitle("버스");
+        final Drawable upArrow = ContextCompat.getDrawable(this, R.drawable.abc_ic_ab_back_material);
+        upArrow.setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
+        actionBar.setHomeAsUpIndicator(upArrow);
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
@@ -80,9 +86,6 @@ public class BusInfoActivity extends FragmentActivity implements OnMapReadyCallb
         final ListView listView = findViewById(R.id.listbusView);
         final BusInfoAdapter mAdapter = new BusInfoAdapter(this,busDataList);
         listView.setAdapter(mAdapter);
-
-//        listView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
-//                addresslist));
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

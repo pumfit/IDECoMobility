@@ -5,15 +5,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/SettingInfoToolbar"
+    <android.widget.Toolbar
+        android:id="@+id/settingtoolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorBlueMain"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        app:title="설정"
-        app:titleTextColor="@color/white" />
+        android:titleTextColor="@color/white"
+        />
 
     <LinearLayout
         android:layout_width="match_parent"
