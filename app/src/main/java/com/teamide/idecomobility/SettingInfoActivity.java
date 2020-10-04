@@ -94,7 +94,6 @@ public class SettingInfoActivity extends AppCompatActivity {
                         public void onPositiveClicked(SearchAddress saveAddress) {
                             savelist.add(saveAddress);
                         }
-
                         @Override
                         public void onNegativeClicked() {
                             dialog.cancel();
@@ -128,27 +127,30 @@ public class SettingInfoActivity extends AppCompatActivity {
         editor.putBoolean("inputsubway", false);
         editor.putBoolean("inputonfoot", false);
 
+        Button button = (Button) view;
+        preferRadioButton.clearCheck();
+
         switch (view.getId()) {
             case R.id.radioButton3:
                 if (checked) {
                     editor.putInt("trans", 0);
+                    button.setTextColor(ContextCompat.getColor(this, R.color.white));
                 }
-                break;
             case R.id.radioButton4:
                 if (checked) {
                     editor.putInt("trans", 1);
+                    button.setTextColor(ContextCompat.getColor(this, R.color.white));
                 }
-                break;
             case R.id.radioButton5:
                 if (checked) {
                     editor.putInt("inputsubway", 2);
+                    button.setTextColor(ContextCompat.getColor(this, R.color.white));
                 }
-                break;
             case R.id.radioButton6:
                 if (checked) {
                     editor.putInt("inputonfoot", 3);
+                    button.setTextColor(ContextCompat.getColor(this, R.color.white));
                 }
-                break;
         }
         editor.commit();
     }

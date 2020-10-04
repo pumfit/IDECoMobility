@@ -84,13 +84,12 @@ public class BookMarkActivity extends AppCompatActivity {
 
         helper = new myDBHelper(this);
 
-        try{
+        try {
             db = helper.getWritableDatabase();
-            Log.v("mytag","데이터베이스를 쓸 수 있음");
-        }catch (SQLiteException e)
-        {
+            Log.v("mytag", "데이터베이스를 쓸 수 있음");
+        } catch (SQLiteException e) {
             db = helper.getReadableDatabase();
-            Log.v("mytag","데이터베이스를 읽을 수만 있음");
+            Log.v("mytag", "데이터베이스를 읽을 수만 있음");
         }
 
         viewRecyclerView();
@@ -100,16 +99,16 @@ public class BookMarkActivity extends AppCompatActivity {
         private static final String DATABASE_NAME = "bookmarkInfo.db";
 
         public myDBHelper(@Nullable Context context) {
-            super(context,DATABASE_NAME,null,1);
+            super(context, DATABASE_NAME, null, 1);
         }
 
 
         @Override
         public void onCreate(SQLiteDatabase db) {
             db.execSQL("CREATE TABLE IF NOT EXISTS bookmarks( _id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    " "+ "s_main TEXT,"+"s_full TEXT,"+"s_la DOUBLE,"+ "s_lo DOUBLE,"+
-                    "e_main TEXT,"+"e_full TEXT,"+"e_la DOUBLE,"+ "e_lo DOUBLE);");
-            Log.v("mytag","테이블 처음 생성됨");
+                    " " + "s_main TEXT," + "s_full TEXT," + "s_la DOUBLE," + "s_lo DOUBLE," +
+                    "e_main TEXT," + "e_full TEXT," + "e_la DOUBLE," + "e_lo DOUBLE);");
+            Log.v("mytag", "테이블 처음 생성됨");
         }
 
         @Override
@@ -123,8 +122,8 @@ public class BookMarkActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.actionbar_actions, menu) ;
-        return true ;
+        getMenuInflater().inflate(R.menu.actionbar_actions, menu);
+        return true;
     }
 
     @Override
@@ -135,26 +134,18 @@ public class BookMarkActivity extends AppCompatActivity {
                 SearchAddress startAllAdress = data.getParcelableExtra("startAllAddress");
                 EditText s_editText = dialog.findViewById(R.id.editText);
                 EditText e_editText = dialog.findViewById(R.id.editText2);
-                if(startAllAdress.getMainAdress().equals(e_editText.getText()))
-                {
-                    Toast.makeText(getApplicationContext(), "출발지와 도착지는 같을 수 없습니다.", Toast.LENGTH_LONG).show();
-                }
-                else
-                {
-                    s_editText.setText(startAllAdress.getMainAdress());
-                    saveAddress.setStartAddress(startAllAdress);
-                }
+
+                s_editText.setText(startAllAdress.getMainAdress());
+                saveAddress.setStartAddress(startAllAdress);
             }
         } else if (requestCode == 201) {
             if (resultCode == RESULT_OK) { //from SearchActivity2
                 SearchAddress endAllAdress = data.getParcelableExtra("endAllAddress");
                 EditText s_editText = dialog.findViewById(R.id.editText);
                 EditText e_editText = dialog.findViewById(R.id.editText2);
-                if(endAllAdress.getMainAdress().equals(s_editText.getText()))
-                {
+                if (saveAddress.getStartAddress().getMainAdress().equals(endAllAdress.getMainAdress())) {
                     Toast.makeText(getApplicationContext(), "출발지와 도착지는 같을 수 없습니다.", Toast.LENGTH_LONG).show();
-                }else
-                {
+                } else {
                     e_editText.setText((CharSequence) endAllAdress.getMainAdress());
                     saveAddress.setEndAddress(endAllAdress);
                 }
@@ -169,8 +160,7 @@ public class BookMarkActivity extends AppCompatActivity {
                 finish();
                 return true;
             }
-            case R.id.action_add:
-            {
+            case R.id.action_add: {
                 dialog.setDialogListener(new AddBookMarkDialog.CustomDialogListener() {
                     @Override
                     public void onPositiveClicked() {
@@ -182,9 +172,9 @@ public class BookMarkActivity extends AppCompatActivity {
                         String e_full = saveAddress.getEndAddress().getFullAdress();
                         Double e_la = saveAddress.getEndAddress().getLatitude();
                         Double e_lo = saveAddress.getEndAddress().getLongitude();
-                        db.execSQL("INSERT INTO bookmarks VALUES (null,'" + s_main + "','" +s_full + "','" +s_la + "','" +s_lo
-                                + "','" +e_main + "','" +e_full + "','" +e_la + "','" + e_lo + "');");
-                        Log.v("mytag","데이테베이스에 데이터 저장함");
+                        db.execSQL("INSERT INTO bookmarks VALUES (null,'" + s_main + "','" + s_full + "','" + s_la + "','" + s_lo
+                                + "','" + e_main + "','" + e_full + "','" + e_la + "','" + e_lo + "');");
+                        Log.v("mytag", "데이테베이스에 데이터 저장함");
                         viewRecyclerView();
                     }
 
@@ -196,59 +186,51 @@ public class BookMarkActivity extends AppCompatActivity {
                 dialog.show();
                 break;
             }
-            case R.id.action_edit:
-            {
-                if(onEdited==false)
-                {
+            case R.id.action_edit: {
+                if (onEdited == false) {
                     myAdapter.setEdited(true);
                     mRecyclerView.setAdapter(myAdapter);
                     Button deletButton = findViewById(R.id.deletebutton);
                     deletButton.setVisibility(View.VISIBLE);
-                    onEdited=true;
-                }
-                else
-                {
+                    onEdited = true;
+                } else {
                     myAdapter.setEdited(false);
                     mRecyclerView.setAdapter(myAdapter);
                     Button deletButton = findViewById(R.id.deletebutton);
                     deletButton.setVisibility(View.GONE);
-                    onEdited=false;
+                    onEdited = false;
                 }
                 break;
             }
         }
         return super.onOptionsItemSelected(item);
     }
-    public void  onClickedDelete(View v)
-    {
+
+    public void onClickedDelete(View v) {
         infoArrayList = new ArrayList<InfoAddress>();
         Boolean[] list = myAdapter.getSelectList();
         ArrayList<InfoAddress> cList = myAdapter.getListData();
+        ArrayList<InfoAddress> mList = new ArrayList<InfoAddress>();
 
-        for(int i=cList.size()-1;i>=0;i--)
-        {
-            if(list[i] == true)
-            {
-                cList.remove(i);
+        for (int i = 0; i < cList.size(); i++) {
+            if (list[i] == false) {
+                mList.add(cList.get(i));
             }
         }
-        for(int i=0;i<infoArrayList.size();i++)
-        {
-            Log.d("ad", String.valueOf(cList.get(i).getCurruntAddress().getMainAdress()));
-        }
-        infoArrayList.clear();
-        infoArrayList = cList;
+        infoArrayList = mList;
+
         setDb();
         viewRecyclerView();
+
         Button deletButton = findViewById(R.id.deletebutton);
         deletButton.setVisibility(View.GONE);
-        onEdited=false;
+        onEdited = false;
     }
-    public void viewRecyclerView()
-    {
+
+    public void viewRecyclerView() {
         infoArrayList = new ArrayList<InfoAddress>();
         Cursor cursor;//커서 생성
-        cursor = db.rawQuery("SELECT * FROM bookmarks",null) ;
+        cursor = db.rawQuery("SELECT * FROM bookmarks", null);
         while (cursor.moveToNext()) {
             String s_main = cursor.getString(1);
             String s_full = cursor.getString(2);
@@ -258,14 +240,14 @@ public class BookMarkActivity extends AppCompatActivity {
             String e_full = cursor.getString(6);
             Double e_la = Double.parseDouble(cursor.getString(7));
             Double e_lo = Double.parseDouble(cursor.getString(8));
-            startAddress = new SearchAddress(s_main,s_full,s_la,s_lo);
-            endAddress = new SearchAddress(e_main,e_full,e_la,e_lo);
-            infoArrayList.add(new InfoAddress(startAddress,startAddress,endAddress));
+            startAddress = new SearchAddress(s_main, s_full, s_la, s_lo);
+            endAddress = new SearchAddress(e_main, e_full, e_la, e_lo);
+            infoArrayList.add(new InfoAddress(startAddress, startAddress, endAddress));
         }//리스트에 데이터베이스안에 들어 있는 데이터들을 추가함
         cursor.close();
-        myAdapter = new BookMarkAdapter(infoArrayList,getApplicationContext());
+        myAdapter = new BookMarkAdapter(infoArrayList, getApplicationContext());
         mRecyclerView.setAdapter(myAdapter);//어뎁터와 연결
-        Log.v("mytag","데이터베이스를 조회 함");
+        Log.v("mytag", "데이터베이스를 조회 함");
     }
 
     public void setDb() {

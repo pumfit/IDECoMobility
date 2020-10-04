@@ -200,17 +200,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickedSettingInfo(View v){ //설정버튼
-        Intent in = new Intent(getApplicationContext(), SettingInfoActivity.class); //현재 위치가져가면된다.
-   //     in.putExtra("infoAddress", (Parcelable) infoAddress);
+        Intent in = new Intent(getApplicationContext(), SettingInfoActivity.class);
         startActivity(in);
     }
     public void onClickedModify(View v){
         final ModifyDialog dialog = new ModifyDialog(this);
+        dialog.setDialogListener(new ModifyDialog.GroupDialogListener() {
+            @Override
+            public void onCancelClicked() {
+                dialog.cancel();
+            }
+            @Override
+            public void onSaveClicked() {
+                SelectedServiceAdapter mAdapter = (SelectedServiceAdapter) selectedRecyclerView.getAdapter();
+                recyclerView();
+            }
+        });
         dialog.show();
     }
+    public void onClickedSubWayInfo(View v){
+        Intent in = new Intent(getApplicationContext(), SubWayInfoActivity.class);
+        startActivity(in);
+    }
     public void onClickedBookMark(View v){
-//        final AddBookMarkDialog dialog = new AddBookMarkDialog(this);
-//        dialog.show();
         Intent in = new Intent(getApplicationContext(), BookMarkActivity.class);
         startActivity(in);
     }

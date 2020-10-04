@@ -1,15 +1,15 @@
 package com.teamide.idecomobility;
 
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
+import android.util.Log;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
 
-import android.app.ProgressDialog;
-import android.os.AsyncTask;
-import android.util.Log;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class BusTime extends AsyncTask<String[], Void, String[]>{
     private RouteResultActivity activity;
@@ -21,14 +21,6 @@ public class BusTime extends AsyncTask<String[], Void, String[]>{
         this.activity = activity;
         this.url = url;
     }
-//    @Override
-//    protected void onPreExecute() {
-//        super.onPreExecute();
-//        pDialog = new ProgressDialog(activity);
-//        pDialog.setTitle("Get Weather Information from XML");
-//        pDialog.setMessage("Loading...");
-//        pDialog.show();
-//    }
 
     @Override
     protected String[] doInBackground(String[]... params) {

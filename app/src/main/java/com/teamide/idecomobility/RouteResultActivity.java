@@ -43,7 +43,6 @@ public class RouteResultActivity extends Activity {
     ArrayList<String> busData = new ArrayList<String>();
 
     TransData jsonData = new TransData();
-    //BusTime bustime = new BusTime();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,8 +56,6 @@ public class RouteResultActivity extends Activity {
         sLongitude = Double.toString(infoAddress.getStartAddress().getLongitude());
         eLatitude = Double.toString(infoAddress.getEndAddress().getLatitude());
         eLongitude = Double.toString(infoAddress.getEndAddress().getLongitude());
-
-        Log.d("ad","first");
 
         ODsayService odsayService = ODsayService.init(RouteResultActivity.this, "nFVGyVxSTk6opjbmKKPCTDaEfNWyidhvs1HbmTtAf6U");
 

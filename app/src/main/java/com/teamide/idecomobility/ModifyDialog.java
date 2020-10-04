@@ -1,18 +1,12 @@
 package com.teamide.idecomobility;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-
-import androidx.core.content.ContextCompat;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -23,18 +17,20 @@ public class ModifyDialog extends Dialog implements View.OnClickListener{
     private Button cancelButton, callButton, button29, button30, button31, button32;
     private Context context;
     private androidx.appcompat.widget.Toolbar toolbar;
-    private CalltexiDialog.GroupDialogListener groupDialogListener;
+    private ModifyDialog.GroupDialogListener groupDialogListener;
 
     public ModifyDialog(Context context) {
         super(context);
         this.context = context;
     }
+
+    public void setDialogListener(GroupDialogListener groupDialogListener) {
+        this.groupDialogListener = groupDialogListener;
+    }
+
     interface GroupDialogListener{
         void onCancelClicked();
-        void onCallClicked();
-    }
-    public void dialogListener(CalltexiDialog.GroupDialogListener groupDialogListener){
-        this.groupDialogListener = groupDialogListener;
+        void onSaveClicked();
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,76 +128,15 @@ public class ModifyDialog extends Dialog implements View.OnClickListener{
                 break;
             case R.id.button28:
                 editor.commit();
+                groupDialogListener.onSaveClicked();
                 // main에 데이터는 넘겨줬는데 main 다시 로드 하는 코드
                 dismiss();
                 break;
             case R.id.button27:
+                groupDialogListener.onCancelClicked();
                 cancel();
                 break;
         }
     }
-
-
-
-//    public void OnCliked5(View v) {
-//        Button button = (Button) v;
-//
-//        if (preferences.getBoolean("inputdata1",false)==false) {
-//            button.setBackgroundResource(R.drawable.radius_filled);
-//            button.setTextColor(Color.parseColor("white"));
-//            editor.putBoolean("inputdata1", true); // key,value 형식으로 저장
-//        } else {
-//            button.setBackgroundResource(R.drawable.radius);
-//            button.setTextColor(Color.parseColor("white"));
-//            editor.putBoolean("inputdata1", false); // key,value 형식으로 저장
-//        }
-//        editor.commit();
-//    }
-//
-//    public void OnCliked6(View v) {
-//        Button button = (Button) v;
-//        if(preferences.getBoolean("inputdata2",false)==false) {
-//            button.setBackgroundResource(R.drawable.radius_filled);
-//            button.setTextColor(Color.parseColor("white"));
-//            editor.putBoolean("inputdata2", true); // key,value 형식으로 저장
-//        }else{
-//            button.setBackgroundResource(R.drawable.radius);
-//            button.setTextColor(Color.parseColor("white"));
-//            editor.putBoolean("inputdata2", false); // key,value 형식으로 저장
-//        }
-////        if (isbTrue[5] == false) {
-////            isbTrue[5] = true;
-//        editor.commit();
-//    }
-//
-//    public void OnCliked7(View v) {
-//        Button button = (Button) v;
-//
-//        if (preferences.getBoolean("inputdata3",false)==false) {
-//            button.setBackgroundResource(R.drawable.radius_filled);
-//            button.setTextColor(Color.parseColor("white"));
-//            editor.putBoolean("inputdata3", true); // key,value 형식으로 저장
-//        } else {
-//            button.setBackgroundResource(R.drawable.radius);
-//            button.setTextColor(Color.parseColor("black"));
-//            editor.putBoolean("inputdata3", false); // key,value 형식으로 저장
-//        }
-//        editor.commit();
-//    }
-//
-//    public void OnCliked8(View v) {
-//        Button button = (Button) v;
-//
-//        if (preferences.getBoolean("inputdata4",false)==false) {
-//            button.setBackgroundResource(R.drawable.radius_filled);
-//            button.setTextColor(Color.parseColor("white"));
-//            editor.putBoolean("inputdata4", true); // key,value 형식으로 저장
-//        } else {
-//            button.setBackgroundResource(R.drawable.radius);
-//            button.setTextColor(Color.parseColor("black"));
-//            editor.putBoolean("inputdata4", false); // key,value 형식으로 저장
-//        }
-//        editor.commit();
-//    }
 
 }

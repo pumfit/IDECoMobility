@@ -34,7 +34,6 @@ public class AddAddressDialog extends Dialog implements View.OnClickListener {
     public SearchAddress saveAddress;
 
     private androidx.appcompat.widget.Toolbar toolbar;
-
     private CustomDialogListener customDialogListener;
 
     public ArrayList<SearchAddress> dataList;
