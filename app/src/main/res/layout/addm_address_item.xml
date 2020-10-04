@@ -5,7 +5,7 @@
 
     <LinearLayout
         android:layout_width="290dp"
-        android:layout_height="wrap_content"
+        android:layout_height="70dp"
         android:layout_marginHorizontal="5dp"
         android:background="@drawable/radius_filled"
         android:orientation="vertical"
@@ -20,7 +20,8 @@
                 android:id="@+id/textView1"
                 android:layout_width="238dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
+                android:layout_marginHorizontal="15dp"
+
                 android:layout_weight="1"
                 android:text="학교"
                 android:textColor="@color/white"
@@ -29,7 +30,7 @@
 
             <Button
                 android:id="@+id/deletebutton"
-                android:layout_width="wrap_content"
+                android:layout_width="40dp"
                 android:layout_height="20dp"
                 android:background="@color/colorBlueMain"
                 android:text="X"
@@ -40,7 +41,7 @@
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
+            android:layout_marginHorizontal="15dp"
             android:layout_marginVertical="5dp"
             android:text="TextView"
             android:textColor="@color/white"

@@ -49,6 +49,9 @@
                 android:background="@drawable/custon_btn_radio"
                 android:button = "@null"
                 android:textAlignment="center"
+                android:textColor="@color/clickable_words"
+                android:textColorHighlight="@color/clickable_words"
+                android:textColorLink="@color/clickable_words"
                 android:layout_marginRight="8dp"
                 android:onClick="onRadioButtonClicked"
                 android:text="@string/bus" />
@@ -61,6 +64,9 @@
                 android:onClick="onRadioButtonClicked"
                 android:background="@drawable/custon_btn_radio"
                 android:text="@string/call_tax"
+                android:textColor="@color/clickable_words"
+                android:textColorHighlight="@color/clickable_words"
+                android:textColorLink="@color/clickable_words"
                 android:button = "@null"
                 android:textAlignment="center"
                 android:layout_marginRight="8dp" />
@@ -73,6 +79,9 @@
                 android:onClick="onRadioButtonClicked"
                 android:background="@drawable/custon_btn_radio"
                 android:text="지하철"
+                android:textColor="@color/clickable_words"
+                android:textColorHighlight="@color/clickable_words"
+                android:textColorLink="@color/clickable_words"
                 android:button = "@null"
                 android:textAlignment="center"
                 android:layout_marginRight="8dp" />
@@ -85,6 +94,9 @@
                 android:onClick="onRadioButtonClicked"
                 android:background="@drawable/custon_btn_radio"
                 android:text="@string/onfoot"
+                android:textColor="@color/clickable_words"
+                android:textColorHighlight="@color/clickable_words"
+                android:textColorLink="@color/clickable_words"
                 android:button = "@null"
                 android:textAlignment="center"
                 android:layout_marginRight="8dp" />
@@ -127,8 +139,10 @@
                 android:layout_marginRight="12dp"
                 android:layout_weight="1"
                 android:background="@drawable/radius"
+                android:backgroundTint="#F3F3F3"
                 android:onClick="onClick"
-                android:text="추가" />
+                android:text="+추가"
+                android:textStyle="bold"/>
         </LinearLayout>
 
         <LinearLayout
