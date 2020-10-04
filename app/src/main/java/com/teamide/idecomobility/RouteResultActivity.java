@@ -175,9 +175,9 @@ public class RouteResultActivity extends Activity {
         movieDataList = new ArrayList<direction_data>();
         //이부분을 case문으로 처리
         movieDataList.add(new direction_data(R.drawable.ic_flag, "출발","출발지", null, null, null));
-        movieDataList.add(new direction_data(R.drawable.ic_bus_blue, busName,busNm,busMin,"분 뒤 도착", "1"));
+        movieDataList.add(new direction_data(R.drawable.ic_bus_blue, busName,busNm,busMin,"1", "분 뒤 도착"));
         movieDataList.add(new direction_data(R.drawable.ic_walk, "도보","도보로 420m 이동","태릉입구역 하차후 6번 출구 엘리베이터",null, null));
-        movieDataList.add(new direction_data(R.drawable.ic_train_blue, "지하철",subwayName+"역","4-1, 6-1, 8-1","분 뒤 도착","1"));
+        movieDataList.add(new direction_data(R.drawable.ic_train_blue, "지하철",subwayName+"역","4-1, 6-1, 8-1","1", "분 뒤 도착"));
         movieDataList.add(new direction_data(R.drawable.ic_flag, "도착","도착지",null,null, null));
         Log.d("ad","eighth");
     }

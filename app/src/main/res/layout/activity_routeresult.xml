@@ -13,7 +13,7 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="110dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/colorBluePrimary"
             android:minHeight="?attr/actionBarSize"
@@ -30,29 +30,27 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="135dp"
+                android:layout_height="100dp"
                 android:background="@color/colorBlueMain"
                 android:orientation="vertical"
                 android:elevation="10dp">
 
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp" />
-
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    android:layout_height="100dp"
+                    android:orientation="horizontal"
+                    android:gravity="center">
 
                     <TextView
                         android:id="@+id/start"
-                        android:layout_width="160dp"
+                        android:layout_width="170dp"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="출발지"
                         android:textAlignment="center"
                         android:textColor="@color/white"
-                        android:textSize="20dp" />
+                        android:textSize="20dp"
+                        />
 
                     <Button
                         android:id="@+id/imageView"
@@ -66,7 +64,7 @@
 
                     <TextView
                         android:id="@+id/end"
-                        android:layout_width="160dp"
+                        android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
@@ -78,12 +76,6 @@
                 </LinearLayout>
 
             </LinearLayout>
-
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_graph" />
 
             <ListView
                 android:id="@+id/listView"
