@@ -1,12 +1,11 @@
 package com.teamide.idecomobility;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,7 +14,6 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -43,10 +41,11 @@ public class SettingInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setting);
 
-        Toolbar toolbar = findViewById(R.id.settingtoolbar);
-        setActionBar(toolbar);
-        ActionBar actionBar = getActionBar();
+        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.settingtoolbar);
+        setSupportActionBar(toolbar);
+        androidx.appcompat.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("설정");
+        actionBar.setTitle(Html.fromHtml("<font color='#ffffff'>즐겨찾기 </font>"));
         final Drawable upArrow = ContextCompat.getDrawable(this, R.drawable.abc_ic_ab_back_material);
         upArrow.setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
         actionBar.setHomeAsUpIndicator(upArrow);

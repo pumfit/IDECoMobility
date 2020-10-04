@@ -2,7 +2,6 @@ package com.teamide.idecomobility;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,10 +17,10 @@ import com.odsay.odsayandroidsdk.OnResultCallbackListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import org.json.simple.JSONObject;
 import java.util.ArrayList;
 
 public class RouteResultActivity extends Activity {
