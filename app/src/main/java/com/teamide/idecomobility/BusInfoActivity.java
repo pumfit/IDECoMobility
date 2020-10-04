@@ -47,6 +47,7 @@ public class BusInfoActivity extends FragmentActivity implements OnMapReadyCallb
 
     ArrayList<BusStaionData> busDataList = new ArrayList<>();
     public ArrayList<String> addresslist = new ArrayList<>();
+    public ArrayList<String> stlist = new ArrayList<>();
     public ODsayService odsayService;
 
 
@@ -61,7 +62,7 @@ public class BusInfoActivity extends FragmentActivity implements OnMapReadyCallb
         mapFragment.getMapAsync(this);//맵을 불러옴
 
         addresslist.add("결과 없음");
-        busDataList.add(new BusStaionData(0,"결과없음"));
+        busDataList.add(new BusStaionData(0,"결과없음","결과없음"));
 
         Intent intent = getIntent();
         infoAddress = intent.getParcelableExtra("infoAddress");
@@ -88,6 +89,7 @@ public class BusInfoActivity extends FragmentActivity implements OnMapReadyCallb
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //Toast.makeText(getApplicationContext(), position + " 번째 값 : " + parent.getItemAtPosition(position), Toast.LENGTH_SHORT).show();
                 String busTitle = mAdapter.busStaionData.get(position).getBusStationName();
+                String busStId = mAdapter.busStaionData.get(position).getBusStationID();
                 Intent in = new Intent(getApplicationContext(), BusInfosubActivity.class);
                 in.putExtra("bustitle", busTitle);
                 startActivity(in);
@@ -147,9 +149,11 @@ public class BusInfoActivity extends FragmentActivity implements OnMapReadyCallb
                     busDataList.clear();
                     for (int i = 0; i < count; i++) {
                         String location = station.getJSONObject(i).getString("stationName");
+                        String stID = station.getJSONObject(i).getString(""); // odsay 추가!!!
                         Double busx = station.getJSONObject(i).getDouble("x");
                         Double busy = station.getJSONObject(i).getDouble("y");
                         addresslist.add(i, location);
+                        stlist.add(i,stID);
                         CLocation[i] = new LatLng(busy, busx);
                         busmarkerOptions[i] = new MarkerOptions();
                         busmarkerOptions[i].position(CLocation[i]);
@@ -158,7 +162,7 @@ public class BusInfoActivity extends FragmentActivity implements OnMapReadyCallb
                             mMap.moveCamera(CameraUpdateFactory.newLatLng(CLocation[0]));
                             mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
                         }
-                        busDataList.add(i, new BusStaionData(i,addresslist.get(i)));
+                        busDataList.add(i, new BusStaionData(i,addresslist.get(i),stlist.get(i)));
                     }
                     busDataList.remove(0);
                     final ListView listView = findViewById(R.id.listbusView);
