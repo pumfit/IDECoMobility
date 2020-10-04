@@ -10,8 +10,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -27,6 +30,7 @@ public class BookMarkActivity extends AppCompatActivity {
 
     ArrayList<InfoAddress> boolmarklist;
     //final AddBookMarkDialog dialog = new AddBookMarkDialog(this);
+    ArrayList<InfoAddress> infoArrayList;
     public RecyclerView mRecyclerView;
     RecyclerView.LayoutManager mLayoutManager;
 
@@ -35,6 +39,10 @@ public class BookMarkActivity extends AppCompatActivity {
     public SearchAddress startAddress;
     public SearchAddress endAddress;
     private InfoAddress saveAddress;//현위치,출발지,도착지 주소 정보
+
+    public Boolean onEdited = false;
+
+    Button deletButton;
 
     myDBHelper helper;
     SQLiteDatabase db;
@@ -56,6 +64,15 @@ public class BookMarkActivity extends AppCompatActivity {
 
         saveAddress = new InfoAddress();
 
+        mRecyclerView = findViewById(R.id.addresslist);
+        mRecyclerView.setHasFixedSize(true);//리사이클러뷰 받아오고 설정
+
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        deletButton = findViewById(R.id.deletebutton);
+        deletButton.setVisibility(View.GONE);
+
         helper = new myDBHelper(this);
 
         try{
@@ -66,7 +83,7 @@ public class BookMarkActivity extends AppCompatActivity {
             db = helper.getReadableDatabase();
             Log.v("mytag","데이터베이스를 읽을 수만 있음");
         }
-        //db.execSQL("delete from bookmarks");
+
         viewRecyclerView();
     }
 
@@ -108,15 +125,30 @@ public class BookMarkActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 SearchAddress startAllAdress = data.getParcelableExtra("startAllAddress");
                 EditText s_editText = dialog.findViewById(R.id.editText);
-                s_editText.setText(startAllAdress.getMainAdress());
-                saveAddress.setStartAddress(startAllAdress);
+                EditText e_editText = dialog.findViewById(R.id.editText2);
+                if(startAllAdress.getMainAdress().equals(e_editText.getText()))
+                {
+                    Toast.makeText(getApplicationContext(), "출발지와 도착지는 같을 수 없습니다.", Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    s_editText.setText(startAllAdress.getMainAdress());
+                    saveAddress.setStartAddress(startAllAdress);
+                }
             }
         } else if (requestCode == 201) {
             if (resultCode == RESULT_OK) { //from SearchActivity2
                 SearchAddress endAllAdress = data.getParcelableExtra("endAllAddress");
+                EditText s_editText = dialog.findViewById(R.id.editText);
                 EditText e_editText = dialog.findViewById(R.id.editText2);
-                e_editText.setText((CharSequence) endAllAdress.getMainAdress());
-                saveAddress.setEndAddress(endAllAdress);
+                if(endAllAdress.getMainAdress().equals(s_editText.getText()))
+                {
+                    Toast.makeText(getApplicationContext(), "출발지와 도착지는 같을 수 없습니다.", Toast.LENGTH_LONG).show();
+                }else
+                {
+                    e_editText.setText((CharSequence) endAllAdress.getMainAdress());
+                    saveAddress.setEndAddress(endAllAdress);
+                }
             }
         }
     }
@@ -141,8 +173,6 @@ public class BookMarkActivity extends AppCompatActivity {
                         String e_full = saveAddress.getEndAddress().getFullAdress();
                         Double e_la = saveAddress.getEndAddress().getLatitude();
                         Double e_lo = saveAddress.getEndAddress().getLongitude();
-                        Log.d("ad",s_main+s_full+s_la+s_lo);
-
                         db.execSQL("INSERT INTO bookmarks VALUES (null,'" + s_main + "','" +s_full + "','" +s_la + "','" +s_lo
                                 + "','" +e_main + "','" +e_full + "','" +e_la + "','" + e_lo + "');");
                         Log.v("mytag","데이테베이스에 데이터 저장함");
@@ -155,24 +185,62 @@ public class BookMarkActivity extends AppCompatActivity {
                     }
                 });
                 dialog.show();
+                break;
+            }
+            case R.id.action_edit:
+            {
+                if(onEdited==false)
+                {
+                    myAdapter.setEdited(true);
+                    mRecyclerView.setAdapter(myAdapter);
+                    Button deletButton = findViewById(R.id.deletebutton);
+                    deletButton.setVisibility(View.VISIBLE);
+                    onEdited=true;
+                }
+                else
+                {
+                    myAdapter.setEdited(false);
+                    mRecyclerView.setAdapter(myAdapter);
+                    Button deletButton = findViewById(R.id.deletebutton);
+                    deletButton.setVisibility(View.GONE);
+                    onEdited=false;
+                }
+                break;
             }
         }
         return super.onOptionsItemSelected(item);
     }
+    public void  onClickedDelete(View v)
+    {
+        infoArrayList = new ArrayList<InfoAddress>();
+        Boolean[] list = myAdapter.getSelectList();
+        ArrayList<InfoAddress> cList = myAdapter.getListData();
+
+        for(int i=cList.size()-1;i>=0;i--)
+        {
+            if(list[i] == true)
+            {
+                cList.remove(i);
+            }
+        }
+        for(int i=0;i<infoArrayList.size();i++)
+        {
+            Log.d("ad", String.valueOf(cList.get(i).getCurruntAddress().getMainAdress()));
+        }
+        infoArrayList.clear();
+        infoArrayList = cList;
+        setDb();
+        viewRecyclerView();
+        Button deletButton = findViewById(R.id.deletebutton);
+        deletButton.setVisibility(View.GONE);
+        onEdited=false;
+    }
     public void viewRecyclerView()
     {
-        mRecyclerView = findViewById(R.id.addresslist);
-        mRecyclerView.setHasFixedSize(true);//리사이클러뷰 받아오고 설정
-
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-
-        ArrayList<InfoAddress> infoArrayList = new ArrayList<InfoAddress>();
-
+        infoArrayList = new ArrayList<InfoAddress>();
         Cursor cursor;//커서 생성
         cursor = db.rawQuery("SELECT * FROM bookmarks",null) ;
         while (cursor.moveToNext()) {
-            Log.v("mytag","현재 테이블 값"+cursor.getString(0));
             String s_main = cursor.getString(1);
             String s_full = cursor.getString(2);
             Double s_la = Double.parseDouble(cursor.getString(3));
@@ -184,11 +252,29 @@ public class BookMarkActivity extends AppCompatActivity {
             startAddress = new SearchAddress(s_main,s_full,s_la,s_lo);
             endAddress = new SearchAddress(e_main,e_full,e_la,e_lo);
             infoArrayList.add(new InfoAddress(startAddress,startAddress,endAddress));
-        }//리스트에 데이터베이스에 들어 있는 데이터들을 추가함
+        }//리스트에 데이터베이스안에 들어 있는 데이터들을 추가함
         cursor.close();
-        myAdapter = new BookMarkAdapter(infoArrayList,getApplicationContext(),db);
+        myAdapter = new BookMarkAdapter(infoArrayList,getApplicationContext());
         mRecyclerView.setAdapter(myAdapter);//어뎁터와 연결
         Log.v("mytag","데이터베이스를 조회 함");
+    }
+
+    public void setDb() {
+        db.execSQL("delete from bookmarks");
+        for (int i = 0; i < infoArrayList.size(); i++) {
+            String s_main = infoArrayList.get(i).getStartAddress().getMainAdress();
+            String s_full = infoArrayList.get(i).getStartAddress().getFullAdress();
+            Double s_la = infoArrayList.get(i).getStartAddress().getLatitude();
+            Double s_lo = infoArrayList.get(i).getStartAddress().getLongitude();
+            String e_main = infoArrayList.get(i).getEndAddress().getMainAdress();
+            String e_full = infoArrayList.get(i).getEndAddress().getFullAdress();
+            Double e_la = infoArrayList.get(i).getEndAddress().getLatitude();
+            Double e_lo = infoArrayList.get(i).getEndAddress().getLongitude();
+
+            db.execSQL("INSERT INTO bookmarks VALUES (null,'" + s_main + "','" + s_full + "','" + s_la + "','" + s_lo
+                    + "','" + e_main + "','" + e_full + "','" + e_la + "','" + e_lo + "');");
+        }
+        Log.v("mytag", "데이테베이스에 삭제후 데이터 다시 저장함");
     }
 
 }

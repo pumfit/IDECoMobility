@@ -48,7 +48,6 @@ public class SelectedServiceAdapter extends RecyclerView.Adapter<SelectedService
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
             textview = itemView.findViewById(R.id.serviceTextView);
         }
     }

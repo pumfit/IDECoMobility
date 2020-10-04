@@ -68,9 +68,7 @@ public class SettingInfoActivity extends AppCompatActivity {
         }
 
         savelist = getAddressList();
-        //savelist = new ArrayList<SearchAddress>();
         Log.d("ad", "함수로 넣음");
-        //savelist.add(new SearchAddress("d","e","0km",0,0));
         preferRadioButton = findViewById(R.id.PreferRadioGroup);
         fullNamelist = new ArrayList<>();
         mainNamelist = new ArrayList<>();

@@ -3,33 +3,46 @@ package com.teamide.idecomobility;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Parcelable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class BookMarkAdapter extends RecyclerView.Adapter<BookMarkAdapter.ViewHolder> {
 
     private ArrayList<InfoAddress> mData = null;
-    SQLiteDatabase db;
+    private Boolean selectlist[];
     Context context;
+    public Boolean isEdited = false;
 
-    public BookMarkAdapter(ArrayList<InfoAddress> list, Context context,SQLiteDatabase db) {
+    public BookMarkAdapter(ArrayList<InfoAddress> list, Context context) {
 
         mData = list;
-        this.db = db;
+        selectlist = new Boolean[mData.size()];
+        Arrays.fill(selectlist,false);
         this.context = context;
     }
 
+    public Boolean getEdited() {
+        return isEdited;
+    }
+
+    public void setEdited(Boolean edited) {
+        isEdited = edited;
+    }
+
+    public ArrayList<InfoAddress> getListData() {
+        return mData;
+    }
 
     @NonNull
     @Override
@@ -39,7 +52,11 @@ public class BookMarkAdapter extends RecyclerView.Adapter<BookMarkAdapter.ViewHo
 
         View view = inflater.inflate(R.layout.bookmark_address_item, parent, false);
         BookMarkAdapter.ViewHolder vh = new BookMarkAdapter.ViewHolder(view);
-
+        if (!isEdited) {
+            vh.checkBox.setVisibility(View.GONE);
+        } else {
+            vh.checkBox.setVisibility(View.VISIBLE);
+        }
         return vh;
     }
 
@@ -49,13 +66,14 @@ public class BookMarkAdapter extends RecyclerView.Adapter<BookMarkAdapter.ViewHo
         String subText = mData.get(position).getEndAddress().getMainAdress();
         holder.startTextView.setText(text);
         holder.endTextView.setText(subText);
-        holder.deleteButton.setOnClickListener(new Button.OnClickListener() {
+        holder.checkBox.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                mData.remove(position);
-                notifyItemRemoved(position);
-                notifyItemRangeChanged(position, getItemCount());
-                Log.v("mytag", (position)+"번 삭제");
-                setDb();
+                CheckBox cb = (CheckBox) v;
+                if (cb.isChecked()) {
+                    selectlist[position] = true;
+                } else {
+                    selectlist[position] = false;
+                }
             }
         });
         holder.searchButton.setOnClickListener(new Button.OnClickListener() {
@@ -63,7 +81,7 @@ public class BookMarkAdapter extends RecyclerView.Adapter<BookMarkAdapter.ViewHo
                 Context context = v.getContext();
                 Intent in = new Intent(context, RouteResultActivity.class);
                 in.putExtra("infoAddress", (Parcelable) mData.get(position));
-                ((Activity)context).startActivity(in);
+                ((Activity) context).startActivity(in);
             }
         });
     }
@@ -79,6 +97,7 @@ public class BookMarkAdapter extends RecyclerView.Adapter<BookMarkAdapter.ViewHo
         TextView endTextView;
         Button deleteButton;
         Button searchButton;
+        CheckBox checkBox;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -88,27 +107,13 @@ public class BookMarkAdapter extends RecyclerView.Adapter<BookMarkAdapter.ViewHo
             endTextView = itemView.findViewById(R.id.textView2);
             deleteButton = itemView.findViewById(R.id.deletebutton);
             searchButton = itemView.findViewById(R.id.searchbutton);
+            checkBox = itemView.findViewById(R.id.checkBox);
         }
     }
 
-    public void setDb()
+    public Boolean[] getSelectList()
     {
-        db.execSQL("delete from bookmarks");
-        for(int i=0;i<mData.size();i++)
-        {
-            String s_main = mData.get(i).getStartAddress().getMainAdress();
-            String s_full = mData.get(i).getStartAddress().getFullAdress();
-            Double s_la = mData.get(i).getStartAddress().getLatitude();
-            Double s_lo = mData.get(i).getStartAddress().getLongitude();
-            String e_main = mData.get(i).getEndAddress().getMainAdress();
-            String e_full = mData.get(i).getEndAddress().getFullAdress();
-            Double e_la = mData.get(i).getEndAddress().getLatitude();
-            Double e_lo = mData.get(i).getEndAddress().getLongitude();
-
-            db.execSQL("INSERT INTO bookmarks VALUES (null,'" + s_main + "','" +s_full + "','" +s_la + "','" +s_lo
-                    + "','" +e_main + "','" +e_full + "','" +e_la + "','" + e_lo + "');");
-        }
-        Log.v("mytag","데이테베이스에 삭제후 데이터 다시 저장함");
+        return selectlist;
     }
 
 }

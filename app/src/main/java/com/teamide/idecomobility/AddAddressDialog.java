@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -28,6 +29,7 @@ public class AddAddressDialog extends Dialog implements View.OnClickListener {
     private EditText editText;
     private ListView listView;
     private SearchView searchView;
+    private TextView textView;
     private Context context;
     public SearchAddress saveAddress;
 
@@ -61,6 +63,8 @@ public class AddAddressDialog extends Dialog implements View.OnClickListener {
 
         editText = findViewById(R.id.editText);
         listView = findViewById(R.id.addresslistView);
+        textView = findViewById(R.id.textView10);
+        textView.setVisibility(View.GONE);
         searchView = findViewById(R.id.addressSearchView);
         mPositiveButton = findViewById(R.id.sbutton);
         mNegativeButton = findViewById(R.id.nbutton);
@@ -164,7 +168,17 @@ public class AddAddressDialog extends Dialog implements View.OnClickListener {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        ArrayAdapter adapter = new ArrayAdapter(context, android.R.layout.simple_list_item_single_choice, list);
+        ArrayAdapter adapter;
+        if(list.get(0).equals("결과없음"))
+        {
+            adapter = new ArrayAdapter(context,android.R.layout.simple_list_item_1, list);
+            listView.setVisibility(View.GONE);
+            textView.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            adapter = new ArrayAdapter(context, android.R.layout.simple_list_item_single_choice, list);
+        }
         listView.setAdapter(adapter);
     }
 

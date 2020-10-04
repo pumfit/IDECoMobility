@@ -62,8 +62,6 @@ public class AddBookMarkDialog extends Dialog implements View.OnClickListener {
         mNegativeButton.setOnClickListener(this);
         startButton.setOnClickListener(this);
         endButton.setOnClickListener(this);
-
-
     }
     @Override
     public void onClick(View v) {
