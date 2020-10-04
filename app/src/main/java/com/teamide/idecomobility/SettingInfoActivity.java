@@ -2,6 +2,7 @@ package com.teamide.idecomobility;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -46,11 +47,11 @@ public class SettingInfoActivity extends AppCompatActivity {
         RadioButton savedRadioButton = (RadioButton)preferRadioButton.getChildAt(savedRadioIndex);
         savedRadioButton.setChecked(true);
 
-        if(preferences.getBoolean("inputdata1",false))
-        {
+        if(preferences.getBoolean("inputdata1",false)) {
             wheel.setBackground(ContextCompat.getDrawable(this, R.drawable.radius_filled));
             wheel.setTextColor(ContextCompat.getColor(this, R.color.white));
         }
+
         if(preferences.getBoolean("inputdata2",false))
         {
             wheelLift.setBackground(ContextCompat.getDrawable(this, R.drawable.radius_filled));
@@ -132,21 +133,28 @@ public class SettingInfoActivity extends AppCompatActivity {
             case R.id.radioButton3:
                 if (checked) {
                     editor.putInt("trans", 0);
+                    editor.putBoolean("inputcalltax", false);
+                    editor.putBoolean("inputsubway", false);
+                    editor.putBoolean("inputonfoot", false);
+
                 }
                 break;
             case R.id.radioButton4:
                 if (checked) {
                     editor.putInt("trans", 1);
+                    editor.putBoolean("inputbus", false);
+                    editor.putBoolean("inputsubway", false);
+                    editor.putBoolean("inputonfoot", false);
                 }
                 break;
             case R.id.radioButton5:
                 if (checked) {
-                    editor.putInt("inputsubway", 2);
+                    editor.putInt("trans", 2);
                 }
                 break;
             case R.id.radioButton6:
                 if (checked) {
-                    editor.putInt("inputonfoot", 3);
+                    editor.putInt("trans", 3);
                 }
                 break;
         }

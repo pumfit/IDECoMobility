@@ -3,6 +3,7 @@ package com.teamide.idecomobility;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -60,6 +61,7 @@ public class AddAddressDialog extends Dialog implements View.OnClickListener {
 
         toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("장소 등록");
+        toolbar.setTitleTextColor(Color.parseColor("#ffffff"));
 
         editText = findViewById(R.id.editText);
         listView = findViewById(R.id.addresslistView);

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -44,6 +45,7 @@ public class CalltexiDialog extends Dialog implements View.OnClickListener{
 
         toolbar = findViewById(R.id.calltexitoolbar);
         toolbar.setTitle("장애인 콜 택시 호출");
+        toolbar.setTitleTextColor(Color.parseColor("#ffffff"));
 
         cancelButton = findViewById(R.id.button25);
         callButton = findViewById(R.id.button26);
