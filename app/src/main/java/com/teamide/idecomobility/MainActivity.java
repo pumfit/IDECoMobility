@@ -56,25 +56,7 @@ public class MainActivity extends AppCompatActivity {
         preferences = getSharedPreferences("info", MODE_PRIVATE);    // test 이름의 기본모드 설정
         editor= preferences.edit(); //sharedPreferences를 제어할 editor를 선언
 
-        ArrayList<String> savelist = new ArrayList<String>();
-        if(preferences.getBoolean("inputdata1",false))
-        {
-            savelist.add("휠체어칸");
-        }
-        if(preferences.getBoolean("inputdata2",false))
-        {
-            savelist.add("휠체어 리프트");
-        }
-        if(preferences.getBoolean("inputdata3",false))
-        {
-            savelist.add("엘레베이터");
-        }
-        if(preferences.getBoolean("inputdata4",false))
-        {
-            savelist.add("저상버스");
-        }
-        SelectedServiceAdapter adapter = new SelectedServiceAdapter(savelist);
-        selectedRecyclerView.setAdapter(adapter);
+        recyclerView(); //recycler 리스트 생성 함수
 
         checkFirstRun();
 
@@ -116,6 +98,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
+        ;
+
     }
 
 
@@ -244,6 +228,28 @@ public class MainActivity extends AppCompatActivity {
             editor.commit();
         }
 
+    }
+
+    public void recyclerView() {
+        ArrayList<String> savelist = new ArrayList<String>();
+        if(preferences.getBoolean("inputdata1",false))
+        {
+            savelist.add("휠체어칸");
+        }
+        if(preferences.getBoolean("inputdata2",false))
+        {
+            savelist.add("휠체어 리프트");
+        }
+        if(preferences.getBoolean("inputdata3",false))
+        {
+            savelist.add("엘레베이터");
+        }
+        if(preferences.getBoolean("inputdata4",false))
+        {
+            savelist.add("저상버스");
+        }
+        SelectedServiceAdapter adapter = new SelectedServiceAdapter(savelist);
+        selectedRecyclerView.setAdapter(adapter);
     }
 
 

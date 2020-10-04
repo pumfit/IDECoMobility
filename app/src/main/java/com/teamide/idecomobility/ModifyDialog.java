@@ -3,6 +3,7 @@ package com.teamide.idecomobility;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -16,6 +17,7 @@ import androidx.core.content.ContextCompat;
 import static android.content.Context.MODE_PRIVATE;
 
 public class ModifyDialog extends Dialog implements View.OnClickListener{
+    private MainActivity main;
     private SharedPreferences.Editor editor;
     private SharedPreferences preferences;
     private Button cancelButton, callButton, button29, button30, button31, button32;
@@ -43,7 +45,7 @@ public class ModifyDialog extends Dialog implements View.OnClickListener{
         editor = preferences.edit();
 
         toolbar = findViewById(R.id.servicemodifytoolbar);
-        toolbar.setTitle("필수서비스 수정");
+        toolbar.setTitle("필요서비스 수정");
 
         cancelButton = findViewById(R.id.button27);
         callButton = findViewById(R.id.button28);
@@ -75,6 +77,10 @@ public class ModifyDialog extends Dialog implements View.OnClickListener{
 
         cancelButton.setOnClickListener(this);
         callButton.setOnClickListener(this);
+        button29.setOnClickListener(this);
+        button30.setOnClickListener(this);
+        button31.setOnClickListener(this);
+        button32.setOnClickListener(this);
     }
     @Override
     public void onClick(View view) {
@@ -87,7 +93,7 @@ public class ModifyDialog extends Dialog implements View.OnClickListener{
                     editor.putBoolean("inputdata1", true); // key,value 형식으로 저장
                 } else {
                     button.setBackgroundResource(R.drawable.radius);
-                    button.setTextColor(Color.parseColor("white"));
+                    button.setTextColor(Color.parseColor("black"));
                     editor.putBoolean("inputdata1", false); // key,value 형식으로 저장
                 }
                 break;
@@ -98,7 +104,7 @@ public class ModifyDialog extends Dialog implements View.OnClickListener{
                     editor.putBoolean("inputdata2", true); // key,value 형식으로 저장
                 } else {
                     button.setBackgroundResource(R.drawable.radius);
-                    button.setTextColor(Color.parseColor("white"));
+                    button.setTextColor(Color.parseColor("black"));
                     editor.putBoolean("inputdata2", false); // key,value 형식으로 저장
                 }
                 break;
@@ -109,7 +115,7 @@ public class ModifyDialog extends Dialog implements View.OnClickListener{
                     editor.putBoolean("inputdata3", true); // key,value 형식으로 저장
                 } else {
                     button.setBackgroundResource(R.drawable.radius);
-                    button.setTextColor(Color.parseColor("white"));
+                    button.setTextColor(Color.parseColor("black"));
                     editor.putBoolean("inputdata3", false); // key,value 형식으로 저장
                 }
                 break;
@@ -120,12 +126,14 @@ public class ModifyDialog extends Dialog implements View.OnClickListener{
                     editor.putBoolean("inputdata4", true); // key,value 형식으로 저장
                 } else {
                     button.setBackgroundResource(R.drawable.radius);
-                    button.setTextColor(Color.parseColor("white"));
+                    button.setTextColor(Color.parseColor("black"));
                     editor.putBoolean("inputdata4", false); // key,value 형식으로 저장
                 }
                 break;
             case R.id.button28:
                 editor.commit();
+                // main에 데이터는 넘겨줬는데 main 다시 로드 하는 코드
+                dismiss();
                 break;
             case R.id.button27:
                 cancel();
