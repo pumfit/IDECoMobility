@@ -191,48 +191,54 @@
 
                     <Button
                         android:id="@+id/button19"
-                        android:layout_width="100dp"
-                        android:layout_height="130dp"
+                        android:layout_width="80dp"
+                        android:layout_height="120dp"
                         android:layout_gravity="center_horizontal"
                         android:layout_weight="1"
                         android:background="@drawable/whiterec"
                         android:backgroundTintMode="screen"
                         android:drawableTop="@drawable/ic_bus"
-                        android:padding="25dp"
+                        android:padding="20dp"
                         android:text="버스운행정보"
                         android:textColor="@color/white"
                         android:onClick="onClickedBusInfo"
-                        android:textSize="12dp" />
+                        android:textSize="13dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="5dp"/>
 
                     <Button
                         android:id="@+id/button20"
-                        android:layout_width="100dp"
-                        android:layout_height="130dp"
+                        android:layout_width="80dp"
+                        android:layout_height="120dp"
                         android:layout_gravity="center_horizontal"
                         android:layout_weight="1"
                         android:background="@drawable/whiterec"
                         android:backgroundTintMode="screen"
                         android:drawableTop="@drawable/ic_train"
                         android:onClick="onClickedSubWayInfo"
-                        android:padding="25dp"
+                        android:padding="20dp"
                         android:text="지하철 길찾기"
                         android:textColor="@color/white"
-                        android:textSize="12dp" />
+                        android:textSize="13dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"/>
 
                     <Button
                         android:id="@+id/button21"
-                        android:layout_width="100dp"
-                        android:layout_height="130dp"
+                        android:layout_width="80dp"
+                        android:layout_height="120dp"
                         android:layout_gravity="center_horizontal"
                         android:layout_weight="1"
                         android:background="@drawable/whiterec"
                         android:backgroundTintMode="screen"
                         android:drawableTop="@drawable/ic_car"
-                        android:padding="25dp"
+                        android:padding="20dp"
                         android:text="장애인 콜택시"
                         android:onClick="onClickedCallTexi"
-                        android:textSize="12dp"
-                        android:textColor="@color/white" />
+                        android:textSize="13dp"
+                        android:textColor="@color/white"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="10dp"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -241,67 +247,45 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="130dp"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/button22"
-                        android:layout_width="100dp"
-                        android:layout_height="130dp"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_weight="1"
-                        android:background="@drawable/whiterec"
-                        android:backgroundTintMode="screen"
-                        android:drawableTop="@drawable/ic_location"
-                        android:padding = "30dp"
-                        android:text="주변 편의시설"
-                        android:textColor="@color/white"
-                        android:textSize="12dp" />
-
-                    <Button
-                        android:id="@+id/button23"
-                        android:layout_width="100dp"
-                        android:layout_height="130dp"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_weight="1"
-                        android:background="@drawable/whiterec"
-                        android:backgroundTintMode="screen"
-                        android:drawableTop="@drawable/ic_star"
-                        android:onClick="onClickedBookMark"
-                        android:padding="28dp"
-                        android:text="즐겨찾기"
-                        android:textColor="@color/white"
-                        android:textSize="12dp" />
-
-                    <Button
-                        android:id="@+id/button24"
-                        android:layout_width="100dp"
-                        android:layout_height="130dp"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_weight="1"
-                        android:background="@drawable/whiterec"
-                        android:backgroundTintMode="screen"
-                        android:drawableTop="@drawable/ic_gear"
-                        android:onClick="onClickedSettingInfo"
-                        android:padding="28dp"
-                        android:text="설정"
-                        android:textColor="@color/white"
-                        android:textSize="12dp" />
-                </LinearLayout>
+                <Button
+                    android:id="@+id/button23"
+                    android:layout_width="380dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/whiterec"
+                    android:backgroundTintMode="screen"
+                    android:drawableLeft="@drawable/ic_star"
+                    android:gravity="center|end"
+                    android:onClick="onClickedBookMark"
+                    android:paddingLeft="25dp"
+                    android:paddingRight="30dp"
+                    android:text="즐겨찾기"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    android:layout_marginLeft="5dp"
+                    />
 
                 <Button
-                    android:id="@+id/button5"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/button24"
+                    android:layout_width="380dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
                     android:background="@drawable/whiterec"
-                    android:backgroundTint="#B20062BD"
                     android:backgroundTintMode="screen"
-                    android:drawableLeft="@drawable/ic_phone"
-                    android:padding="20dp"
-                    android:text="주변 안내소 통화 연결"
-                    android:textColor="@color/white" />
+                    android:drawableLeft="@drawable/ic_gear"
+                    android:onClick="onClickedSettingInfo"
+                    android:gravity="center|end"
+                    android:paddingLeft="25dp"
+                    android:paddingRight="30dp"
+                    android:text="설정"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginLeft="5dp"
+                    />
 
                 <TextView
                     android:id="@+id/textView3"
