@@ -1,5 +1,7 @@
 package com.teamide.idecomobility;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
@@ -95,6 +97,27 @@ public class SettingInfoActivity extends AppCompatActivity {
 
         AddmAddressAdapter adapter = new AddmAddressAdapter(savelist);
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        AlertDialog.Builder dlg = new AlertDialog.Builder(SettingInfoActivity.this);
+        dlg.setTitle("알림"); //제목
+        dlg.setMessage("지금까지 내용을 저장하시겠습니까?"); // 메시지
+        dlg.setPositiveButton("저장",new DialogInterface.OnClickListener(){
+            public void onClick(DialogInterface dialog, int which) {
+                OnSaved(getCurrentFocus());
+            }
+        });
+        dlg.setNegativeButton("취소",new DialogInterface.OnClickListener(){
+            public void onClick(DialogInterface dialog, int which) {
+                Intent in = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(in);
+                finish();
+            }
+        });
+        dlg.show();
     }
 
     public void onClick(View v) {

@@ -40,13 +40,6 @@ public class SearchAddAdapter extends RecyclerView.Adapter<SearchAddAdapter.View
         holder.textView.setText(text);
         holder.subtextView.setText(subText);
 
-//        holder.deleteButton.setOnClickListener(new Button.OnClickListener() {
-//            public void onClick(View v) {
-//                mData.remove(position);
-//                notifyItemRemoved(position);
-//                notifyItemRangeChanged(position, getItemCount());
-//            }
-//        });
     }
 
     @Override

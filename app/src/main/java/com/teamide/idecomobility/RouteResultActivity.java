@@ -28,7 +28,7 @@ public class RouteResultActivity extends Activity {
     public String sLatitude = "37.6281126";
     public String sLongitude = "127.09045680000001";
     public String eLatitude = "37.654527";
-    public String eLongitude = "127.060551";
+    public String eLongitude = "127.060551";//기본 디폴트 값으로 이후 없애야함
 
     public String busName, busNm, busMin;
     public String subwayName, subwayMin;
@@ -37,7 +37,7 @@ public class RouteResultActivity extends Activity {
     public String test1, test2, test3, test4;
 
 
-    ArrayList<direction_data> movieDataList;
+    ArrayList<direction_data> resultDataList;
     ArrayList<String> searchPathData = new ArrayList<String>();
     ArrayList<String> busData = new ArrayList<String>();
 
@@ -72,33 +72,20 @@ public class RouteResultActivity extends Activity {
                         String startName = path.getJSONObject(0).getJSONArray("subPath").getJSONObject(3).getJSONArray("lane").getJSONObject(0).getString("busNo");
                         String stationNm = path.getJSONObject(0).getJSONObject("info").getString("firstStartStation");
                         Log.d("ad", "오딧세이 호출 searchType :" + searchType + " 총 걸리는 시간:" + totalTime + " 총 요금:" + payment + " 버스정류소:" + stationNm + " 버스번호" + startName);
-//                        searchPathData.add(searchType);
-//                        searchPathData.add(totalTime);
-//                        searchPathData.add(payment);
-//                        searchPathData.add(startName);
-//                        searchPathData.add(stationNm);
-
-//                        if (api == API.SEARCH_STATION){
-//                            JSONArray path1 = odsayData.getJson().getJSONObject("result").getJSONArray("station");
-//                            localId = path1.getJSONObject(0).getString("localStationID");
-//                            Log.d("ad","로컬 id: "+localId);
-//                            Log.d("ad","버스정류장 명: "+bustime.getData().get(0));
-//
-//                        }
-                        //Log.d("ad","버스시간data: "+bustime.getData().get(0));
                     }
 
-                }catch (JSONException e) {
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
             }
+
             // 호출 실패 시 실행
             @Override
             public void onError(int i, String s, API api) {
                 if (api == API.SEARCH_PUB_TRANS_PATH) {
-                    Log.d("ad","오딧세이 Can't read data");
-                    Log.d("ad","에러코드"+s);
+                    Log.d("ad", "오딧세이 Can't read data");
+                    Log.d("ad", "에러코드" + s);
                 }
             }
         };
@@ -114,10 +101,10 @@ public class RouteResultActivity extends Activity {
             e.printStackTrace();
         }
         JSONObject busInfoArray = (JSONObject) busjsonObject.get("inf");
-        busName= (String) busInfoArray.get("stNm");
-        busNm= (String) busInfoArray.get("rtNm");
+        busName = (String) busInfoArray.get("stNm");
+        busNm = (String) busInfoArray.get("rtNm");
         String busSec = (String) busInfoArray.get("exps1_sec");
-        busMin = String.valueOf(Integer.parseInt(busSec)/60);
+        busMin = String.valueOf(Integer.parseInt(busSec) / 60);
 
         JSONObject subwayjsonObject = null;
         try {
@@ -126,9 +113,9 @@ public class RouteResultActivity extends Activity {
             e.printStackTrace();
         }
         JSONObject subwayInfoArray = (JSONObject) subwayjsonObject.get("inf");
-        subwayName= (String) subwayInfoArray.get("statnNm");
+        subwayName = (String) subwayInfoArray.get("statnNm");
         String subwaySec = (String) subwayInfoArray.get("barvlDt_sec");
-        subwayMin = String.valueOf(Integer.parseInt(subwaySec)/60);
+        subwayMin = String.valueOf(Integer.parseInt(subwaySec) / 60);
 
         JSONObject imgjsonObject = null;
         try {
@@ -137,13 +124,13 @@ public class RouteResultActivity extends Activity {
             e.printStackTrace();
         }
         JSONObject ImgInfoArray = (JSONObject) imgjsonObject.get("inf");
-        img= (String) ImgInfoArray.get("storedName");
+        img = (String) ImgInfoArray.get("storedName");
 
         //API 파라미터 설정
-        odsayService.requestSearchPubTransPath(sLongitude,sLatitude,eLongitude,eLatitude,"0","0","0",onResultCallbackListener);
+        odsayService.requestSearchPubTransPath(sLongitude, sLatitude, eLongitude, eLatitude, "0", "0", "0", onResultCallbackListener);
         //odsayService.requestBusStationInfo(busName,onResultCallbackListener);
 
-        this.InitializeMovieData(busName,busNm,busMin,subwayName,subwayMin);
+        this.InitializeResultData(busName, busNm, busMin, subwayName, subwayMin);
 
         TextView startTextView = findViewById(R.id.start);
         TextView endTextView = findViewById(R.id.end);
@@ -151,14 +138,14 @@ public class RouteResultActivity extends Activity {
         startTextView.setText(infoAddress.getStartAddress().getMainAdress());
         endTextView.setText(infoAddress.getEndAddress().getMainAdress());
 
-        ListView listView = (ListView)findViewById(R.id.listView);
-        final directionAdapter myAdapter = new directionAdapter(this,movieDataList);
+        ListView listView = (ListView) findViewById(R.id.listView);
+        final directionAdapter myAdapter = new directionAdapter(this, resultDataList);
 
         listView.setAdapter(myAdapter);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView parent, View v, int position, long id){
+            public void onItemClick(AdapterView parent, View v, int position, long id) {
                 Toast.makeText(getApplicationContext(),
                         myAdapter.getItem(position).gettitle(),
                         Toast.LENGTH_LONG).show();
@@ -166,16 +153,16 @@ public class RouteResultActivity extends Activity {
         });
     }
 
-    public void InitializeMovieData(String busName, String busNm, String busMin, String subwayName, String subwayMin) //data받아오기
+    public void InitializeResultData(String busName, String busNm, String busMin, String subwayName, String subwayMin) //data받아오기
     {
-        movieDataList = new ArrayList<direction_data>();
+        resultDataList = new ArrayList<direction_data>();
         //이부분을 case문으로 처리
-        movieDataList.add(new direction_data(R.drawable.ic_flag, "출발","출발지", null, null, null));
-        movieDataList.add(new direction_data(R.drawable.ic_bus_blue, "버스",(String)busName,(String)busNm,null, busMin+"분 뒤 도착"));
-        movieDataList.add(new direction_data(R.drawable.ic_walk, "도보","도보로 420m 이동","태릉입구역 하차후 6번 출구 엘리베이터",null, null));
-        movieDataList.add(new direction_data(R.drawable.ic_train_blue, "지하철",subwayName+"역","4-1, 6-1, 8-1","1", "분 뒤 도착"));
-        movieDataList.add(new direction_data(R.drawable.ic_flag, "도착","도착지",null,null, null));
-        Log.d("ad","eighth");
+        resultDataList.add(new direction_data(R.drawable.ic_flag, "출발", "출발지", null, null, null));
+        resultDataList.add(new direction_data(R.drawable.ic_bus_blue, "버스", (String) busName, (String) busNm, null, busMin + "분 뒤 도착"));
+        resultDataList.add(new direction_data(R.drawable.ic_walk, "도보", "도보로 420m 이동", "태릉입구역 하차후 6번 출구 엘리베이터", null, null));
+        resultDataList.add(new direction_data(R.drawable.ic_train_blue, "지하철", subwayName + "역", "4-1, 6-1, 8-1", "1", "분 뒤 도착"));
+        resultDataList.add(new direction_data(R.drawable.ic_flag, "도착", "도착지", null, null, null));
+        Log.d("ad", "eighth");
     }
 
     public void callBackData(String[] result) {
@@ -183,9 +170,9 @@ public class RouteResultActivity extends Activity {
         test2 = result[1];
         test3 = result[2];
         test4 = result[3];
-        Log.d("ad","결과1 : "+test1);
-        Log.d("ad","결과2 : "+test2);
-        Log.d("ad","결과3 : "+test3);
-        Log.d("ad","결과4 : "+test4);
+        Log.d("ad", "결과1 : " + test1);
+        Log.d("ad", "결과2 : " + test2);
+        Log.d("ad", "결과3 : " + test3);
+        Log.d("ad", "결과4 : " + test4);
     }
 }

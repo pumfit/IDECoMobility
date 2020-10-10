@@ -59,6 +59,8 @@
                         android:layout_height="40dp"
                         android:layout_weight="1"
                         android:background="#F3F3F3"
+                        android:duplicateParentState="false"
+                        android:editable="false"
                         android:ems="15"
                         android:hint=" 출발지를 검색해 주세요."
                         android:inputType="textPersonName" />
@@ -88,6 +90,7 @@
                         android:layout_height="40dp"
                         android:layout_weight="1"
                         android:background="#F3F3F3"
+                        android:editable="false"
                         android:ems="15"
                         android:hint=" 도착지를 검색해 주세요."
                         android:inputType="textPersonName" />

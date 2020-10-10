@@ -85,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
                         startActivityForResult(intent, 100);
-
                     }
                 }
         );
@@ -157,9 +156,7 @@ public class MainActivity extends AppCompatActivity {
 
     public String getCurrentAddress(double latitude, double longitude) {
 
-        //지오코더... GPS를 주소로 변환
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-
         List<Address> addresses;
 
         try {
@@ -203,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
         Intent in = new Intent(getApplicationContext(), SettingInfoActivity.class);
         startActivity(in);
     }
-    public void onClickedModify(View v){
+    public void onClickedModify(View v){//서비스 수정 버튼
         final ModifyDialog dialog = new ModifyDialog(this);
         dialog.setDialogListener(new ModifyDialog.GroupDialogListener() {
             @Override
@@ -218,15 +215,15 @@ public class MainActivity extends AppCompatActivity {
         });
         dialog.show();
     }
-    public void onClickedSubWayInfo(View v){
+    public void onClickedSubWayInfo(View v){//지하철 정보 버튼
         Intent in = new Intent(getApplicationContext(), SubWayInfoActivity.class);
         startActivity(in);
     }
-    public void onClickedBookMark(View v){
+    public void onClickedBookMark(View v){//북마크 버튼
         Intent in = new Intent(getApplicationContext(), BookMarkActivity.class);
         startActivity(in);
     }
-    public void onClickedCallTexi(View v){
+    public void onClickedCallTexi(View v){//콜택시 호출 버튼
         final CalltexiDialog dialog = new CalltexiDialog(this);
         dialog.show();
     }
@@ -263,7 +260,4 @@ public class MainActivity extends AppCompatActivity {
         SelectedServiceAdapter adapter = new SelectedServiceAdapter(savelist);
         selectedRecyclerView.setAdapter(adapter);
     }
-
-
-
 }

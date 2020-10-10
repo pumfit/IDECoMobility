@@ -141,7 +141,6 @@ public class BookMarkActivity extends AppCompatActivity {
         } else if (requestCode == 201) {
             if (resultCode == RESULT_OK) { //from SearchActivity2
                 SearchAddress endAllAdress = data.getParcelableExtra("endAllAddress");
-                EditText s_editText = dialog.findViewById(R.id.editText);
                 EditText e_editText = dialog.findViewById(R.id.editText2);
                 if (saveAddress.getStartAddress().getMainAdress().equals(endAllAdress.getMainAdress())) {
                     Toast.makeText(getApplicationContext(), "출발지와 도착지는 같을 수 없습니다.", Toast.LENGTH_LONG).show();
