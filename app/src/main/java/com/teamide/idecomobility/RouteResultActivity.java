@@ -90,7 +90,7 @@ public class RouteResultActivity extends Activity {
             }
         };
         String url = "http://ws.bus.go.kr/api/rest/arrive/getLowArrInfoByStId?ServiceKey=idAKQNTIDrnSK5vmheOsFszfGqNfoydTlN08JVMaLchmHaKDSY0lWkjMtjiSfDGSa%2FVm7mVWhVX7WXEfF7OGgA%3D%3D&stId=112000001";
-        new BusTime(this, url).execute();
+        new BusTime(url).execute();
 
         JSONParser jsonParser = new JSONParser();
 

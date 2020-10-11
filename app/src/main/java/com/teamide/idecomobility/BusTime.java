@@ -13,12 +13,13 @@ import java.net.URL;
 
 public class BusTime extends AsyncTask<String[], Void, String[]>{
     private RouteResultActivity activity;
+    private BusInfosubActivity busactivity;
     private String url;
     private XmlPullParserFactory xmlFactoryObject;
     private ProgressDialog pDialog;
 
-    public BusTime(RouteResultActivity activity, String url){
-        this.activity = activity;
+
+    public BusTime(String url){
         this.url = url;
     }
 

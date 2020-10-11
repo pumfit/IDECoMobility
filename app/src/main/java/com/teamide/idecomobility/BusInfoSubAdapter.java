@@ -1,11 +1,18 @@
 package com.teamide.idecomobility;
 
+import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import com.odsay.odsayandroidsdk.API;
+import com.odsay.odsayandroidsdk.ODsayData;
+import com.odsay.odsayandroidsdk.ODsayService;
+import com.odsay.odsayandroidsdk.OnResultCallbackListener;
 
 import java.util.ArrayList;
 
@@ -14,6 +21,7 @@ public class BusInfoSubAdapter extends BaseAdapter {
     Context mContext = null;
     LayoutInflater mLayoutInflater = null;
     ArrayList<BusInfoSubData> busData;
+    public ODsayService oDsayService;
 
     public BusInfoSubAdapter(Context context, ArrayList<BusInfoSubData> data) {
         mContext = context;

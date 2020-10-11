@@ -3,6 +3,7 @@ package com.teamide.idecomobility;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,6 +14,11 @@ import android.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.odsay.odsayandroidsdk.API;
+import com.odsay.odsayandroidsdk.ODsayData;
+import com.odsay.odsayandroidsdk.ODsayService;
+import com.odsay.odsayandroidsdk.OnResultCallbackListener;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -22,24 +28,33 @@ import java.util.ArrayList;
 public class BusInfosubActivity extends AppCompatActivity {
 
     TextView titleText;
-    String busNm, busMin;
+    String localStId, busNm, busMin;
     ArrayList<BusInfoSubData> busInfoDataList;
+    public ODsayService oDsayService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_businfosub);
 
+        oDsayService = ODsayService.init(BusInfosubActivity.this, "nFVGyVxSTk6opjbmKKPCTDaEfNWyidhvs1HbmTtAf6U");
+
         titleText = findViewById(R.id.busTitleTextView);
 
         Intent in = getIntent();
         String busTitle = in.getExtras().getString("bustitle");
         String busStID = in.getExtras().getString("busStId");
+        Log.d("ad","받은 버정 변환전 id: "+busStID);
         titleText.setText(busTitle);
 
+        busChangeId(busStID);
+        Log.d("ad","local변환ID : "+localStId);
+
 //        String url = "http://ws.bus.go.kr/api/rest/arrive/getLowArrInfoByStId?ServiceKey=idAKQNTIDrnSK5vmheOsFszfGqNfoydTlN08JVMaLchmHaKDSY0lWkjMtjiSfDGSa%2FVm7mVWhVX7WXEfF7OGgA%3D%3D&stId="+busStID;
-//        new BusTime(this, url).execute();  //BusTime api 불러오기 // for문 돌려서 데이터 넣어서 리스트 띄우기
+//        BusTime bustime = new BusTime(url);
+//        bustime.execute();  //BusTime api 불러오기 // for문 돌려서 데이터 넣어서 리스트 띄우기
 //        JSONParser jsonParser = new JSONParser();
+//
 //
 //        JSONObject busjsonObject = null;
 //        try {
@@ -93,5 +108,24 @@ public class BusInfosubActivity extends AppCompatActivity {
         busInfoDataList.add(new BusInfoSubData(busNm,busMin+"분 뒤 도착"));
         busInfoDataList.add(new BusInfoSubData("4318","분 뒤 도착"));
         busInfoDataList.add(new BusInfoSubData("1156","분 뒤 도착"));
+    }
+
+    public void busChangeId(String busStId){
+        OnResultCallbackListener onResultCallbackListener = new OnResultCallbackListener() {
+            @Override
+            public void onSuccess(ODsayData odsayData, API api) {
+                try{
+                    localStId = odsayData.getJson().getJSONObject("result").getString("localStationID");
+                    Log.d("ad","local ID 함수내부: "+localStId);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onError(int i, String s, API api) {
+                Log.d("ad","에러코드"+s);
+            }
+        };
+        oDsayService.requestBusStationInfo(busStId, onResultCallbackListener);
     }
 }

@@ -50,6 +50,7 @@ public class BusInfoActivity extends FragmentActivity implements OnMapReadyCallb
 
     ArrayList<BusStaionData> busDataList = new ArrayList<>();
     public ArrayList<String> addresslist = new ArrayList<>();
+    //public ArrayList<String> localStIdlist = new ArrayList<>();
     public ArrayList<String> stlist = new ArrayList<>();
     public ODsayService odsayService;
 
@@ -65,6 +66,7 @@ public class BusInfoActivity extends FragmentActivity implements OnMapReadyCallb
         mapFragment.getMapAsync(this);//맵을 불러옴
 
         addresslist.add("결과 없음");
+        //localStIdlist.add("결과 없음");
         busDataList.add(new BusStaionData(0,"결과없음","결과없음"));
 
         Intent intent = getIntent();
@@ -95,6 +97,7 @@ public class BusInfoActivity extends FragmentActivity implements OnMapReadyCallb
                 String busStId = mAdapter.busStaionData.get(position).getBusStationID();
                 Intent in = new Intent(getApplicationContext(), BusInfosubActivity.class);
                 in.putExtra("bustitle", busTitle);
+                in.putExtra("busStId",busStId);
                 startActivity(in);
             }
         });
@@ -130,7 +133,6 @@ public class BusInfoActivity extends FragmentActivity implements OnMapReadyCallb
 
         String address = editText.getText().toString();//사용자가 검색한 주소를 불러옴
         setAddressList(address);
-
     }
 
     public void setAddressList(String searchAddress) {
@@ -152,7 +154,7 @@ public class BusInfoActivity extends FragmentActivity implements OnMapReadyCallb
                     busDataList.clear();
                     for (int i = 0; i < count; i++) {
                         String location = station.getJSONObject(i).getString("stationName");
-                        String stID = station.getJSONObject(i).getString(""); // odsay 추가!!!
+                        String stID = station.getJSONObject(i).getString("stationID"); // odsay 추가!!!
                         Double busx = station.getJSONObject(i).getDouble("x");
                         Double busy = station.getJSONObject(i).getDouble("y");
                         addresslist.add(i, location);
@@ -208,6 +210,7 @@ public class BusInfoActivity extends FragmentActivity implements OnMapReadyCallb
                 Address ad = addressList.get(0);
                 addresslist.clear();
                 odsayService.requestPointSearch(String.valueOf(ad.getLongitude()), String.valueOf(ad.getLatitude()), "500", "1", onResultCallbackListener);
+                //odsayService.requestBusStationInfo(String.valueOf(-),onResultCallbackListener);
             }
         } catch (IndexOutOfBoundsException e) {
             e.getStackTrace();
