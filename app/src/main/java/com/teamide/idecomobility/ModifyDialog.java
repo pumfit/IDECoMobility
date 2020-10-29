@@ -42,6 +42,7 @@ public class ModifyDialog extends Dialog implements View.OnClickListener{
 
         toolbar = findViewById(R.id.servicemodifytoolbar);
         toolbar.setTitle("필요서비스 수정");
+        toolbar.setTitleTextColor(Color.parseColor("#ffffff"));
 
         cancelButton = findViewById(R.id.button27);
         callButton = findViewById(R.id.button28);
