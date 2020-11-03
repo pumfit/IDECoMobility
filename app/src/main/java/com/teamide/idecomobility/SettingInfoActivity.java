@@ -46,8 +46,7 @@ public class SettingInfoActivity extends AppCompatActivity {
         androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.settingtoolbar);
         setSupportActionBar(toolbar);
         androidx.appcompat.app.ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("설정");
-        actionBar.setTitle(Html.fromHtml("<font color='#ffffff'>즐겨찾기 </font>"));
+        actionBar.setTitle(Html.fromHtml("<font color='#ffffff'>설정 </font>"));
         final Drawable upArrow = ContextCompat.getDrawable(this, R.drawable.abc_ic_ab_back_material);
         upArrow.setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
         actionBar.setHomeAsUpIndicator(upArrow);
