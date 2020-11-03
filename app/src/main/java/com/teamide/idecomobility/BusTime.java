@@ -12,8 +12,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class BusTime extends AsyncTask<String[], Void, String[]>{
-    private RouteResultActivity activity;
-    private BusInfosubActivity busactivity;
     private String url;
     private XmlPullParserFactory xmlFactoryObject;
     private ProgressDialog pDialog;
@@ -97,12 +95,5 @@ public class BusTime extends AsyncTask<String[], Void, String[]>{
         }
     }
 
-    @Override
-    protected void onPostExecute(String[] result) {
-        //call back data to main thread
-        //pDialog.dismiss();
-        activity.callBackData(result);
-
-    }
 }
 

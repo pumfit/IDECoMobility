@@ -216,7 +216,8 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
     }
     public void onClickedSubWayInfo(View v){//지하철 정보 버튼
-        Intent in = new Intent(getApplicationContext(), SubWayInfoActivity.class);
+        Intent in = new Intent(getApplicationContext(), SubWayInfoSearchActivity.class);
+        in.putExtra("infoAddress", (Parcelable) infoAddress);
         startActivity(in);
     }
     public void onClickedBookMark(View v){//북마크 버튼

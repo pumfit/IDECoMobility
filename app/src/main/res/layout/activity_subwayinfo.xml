@@ -8,7 +8,7 @@
         android:id="@+id/subwayinfotoolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="@color/colorBlueMain"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         android:titleTextColor="@color/white" />
@@ -17,8 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-
-        android:background="@color/colorBlueMain">
+        android:background="@color/colorBluePrimary">
 
         <TextView
             android:id="@+id/textView5"
@@ -43,33 +42,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="15dp"
-        android:layout_marginHorizontal="10dp"
-        android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/editText3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
-
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/colorBlueMain"
-            android:text="검색"
-            android:textColor="@color/white" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
         android:orientation="horizontal">
 
@@ -83,7 +55,7 @@
         <Button
             android:id="@+id/button9"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="58dp"
             android:layout_weight="1"
             android:text="휠체어 리프트" />
     </LinearLayout>
@@ -107,6 +79,16 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="장애인 화장실" />
+
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textSize="18dp"
+        android:text="찾고 있는 배려 시스템을 선택해주세요." />
 
 </LinearLayout>

@@ -30,13 +30,12 @@ import java.util.ArrayList;
 
 public class BookMarkActivity extends AppCompatActivity {
 
-    TextView textView;
+    public TextView textView;
 
-    ArrayList<InfoAddress> boolmarklist;
-    //final AddBookMarkDialog dialog = new AddBookMarkDialog(this);
-    ArrayList<InfoAddress> infoArrayList;
+    public ArrayList<InfoAddress> boolmarklist;
+    public ArrayList<InfoAddress> infoArrayList;
     public RecyclerView mRecyclerView;
-    RecyclerView.LayoutManager mLayoutManager;
+    public RecyclerView.LayoutManager mLayoutManager;
 
     private BookMarkAdapter myAdapter;
     public AddBookMarkDialog dialog;
@@ -46,10 +45,10 @@ public class BookMarkActivity extends AppCompatActivity {
 
     public Boolean onEdited = false;
 
-    Button deletButton;
+    public Button deletButton;
 
-    myDBHelper helper;
-    SQLiteDatabase db;
+    public myDBHelper helper;
+    public SQLiteDatabase db;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

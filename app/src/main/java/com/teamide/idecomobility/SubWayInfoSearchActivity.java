@@ -39,16 +39,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-
-public class BusInfoActivity extends FragmentActivity implements OnMapReadyCallback {
-
+public class SubWayInfoSearchActivity extends FragmentActivity implements OnMapReadyCallback {
     private GoogleMap mMap;
     public InfoAddress infoAddress;
 
     public LinearLayout draglayout;
     public EditText editText;
 
-    ArrayList<BusStaionData> busDataList = new ArrayList<>();
+    ArrayList<BusStaionData> subwayDataList = new ArrayList<>();
     public ArrayList<String> addresslist = new ArrayList<>();
     public ArrayList<String> stlist = new ArrayList<>();
     public ODsayService odsayService;
@@ -57,16 +55,15 @@ public class BusInfoActivity extends FragmentActivity implements OnMapReadyCallb
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_businfo);
+        setContentView(R.layout.activity_subwaysearch);
 
-        odsayService = ODsayService.init(BusInfoActivity.this, "nFVGyVxSTk6opjbmKKPCTDaEfNWyidhvs1HbmTtAf6U");
+        odsayService = ODsayService.init(SubWayInfoSearchActivity.this, "nFVGyVxSTk6opjbmKKPCTDaEfNWyidhvs1HbmTtAf6U");
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map); //프래그먼트 생성
-        mapFragment.getMapAsync(this);//맵을 불러옴
+        mapFragment.getMapAsync((OnMapReadyCallback) this);//맵을 불러옴
 
         addresslist.add("결과 없음");
-        //localStIdlist.add("결과 없음");
-        busDataList.add(new BusStaionData(0,"결과없음","결과없음"));
+        subwayDataList.add(new BusStaionData(0,"결과없음","결과없음"));
 
         Intent intent = getIntent();
         infoAddress = intent.getParcelableExtra("infoAddress");
@@ -75,7 +72,7 @@ public class BusInfoActivity extends FragmentActivity implements OnMapReadyCallb
         Toolbar toolbar = findViewById(R.id.businfotoolbar);
         setActionBar(toolbar);
         ActionBar actionBar = getActionBar();
-        actionBar.setTitle("버스");
+        actionBar.setTitle("지하철 내 배려시설");
         final Drawable upArrow = ContextCompat.getDrawable(this, R.drawable.abc_ic_ab_back_material);
         upArrow.setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
         actionBar.setHomeAsUpIndicator(upArrow);
@@ -87,18 +84,17 @@ public class BusInfoActivity extends FragmentActivity implements OnMapReadyCallb
         draglayout = (LinearLayout) findViewById(R.id.draglistView);
 
         final ListView listView = findViewById(R.id.listsubwayView);
-        final BusInfoAdapter mAdapter = new BusInfoAdapter(this,busDataList);
+        final BusInfoAdapter mAdapter = new BusInfoAdapter(this, subwayDataList);
         listView.setAdapter(mAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //Toast.makeText(getApplicationContext(), position + " 번째 값 : " + parent.getItemAtPosition(position), Toast.LENGTH_SHORT).show();
-                String busTitle = mAdapter.subwayData.get(position).getBusStationName();
-                String busStId = mAdapter.subwayData.get(position).getBusStationID();
-                Intent in = new Intent(getApplicationContext(), BusInfosubActivity.class);
-                in.putExtra("bustitle", busTitle);
-                in.putExtra("busStId",busStId);
+                String subwayTitle = mAdapter.subwayData.get(position).getBusStationName();
+                String subwayStId = mAdapter.subwayData.get(position).getBusStationID();
+                Intent in = new Intent(getApplicationContext(), SubWayInfoActivity.class);
+                in.putExtra("bustitle", subwayTitle);
+                in.putExtra("busStId",subwayStId);
                 startActivity(in);
             }
         });
@@ -152,9 +148,9 @@ public class BusInfoActivity extends FragmentActivity implements OnMapReadyCallb
                     //Log.d("ad", "주변 정류장 전체 데이터" + station.toString());
                     MarkerOptions[] busmarkerOptions = new MarkerOptions[count];
                     LatLng[] CLocation = new LatLng[count];
-                    busDataList.clear();
+                    subwayDataList.clear();
                     for (int i = 0; i < count; i++) {
-                        String location = station.getJSONObject(i).getString("stationName");
+                        String location = station.getJSONObject(i).getString("stationName")+"역 "+station.getJSONObject(i).getString("laneName");
                         String stID = station.getJSONObject(i).getString("stationID"); // odsay 추가!!!
                         Double busx = station.getJSONObject(i).getDouble("x");
                         Double busy = station.getJSONObject(i).getDouble("y");
@@ -168,10 +164,10 @@ public class BusInfoActivity extends FragmentActivity implements OnMapReadyCallb
                             mMap.moveCamera(CameraUpdateFactory.newLatLng(CLocation[0]));
                             mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
                         }
-                        busDataList.add(i, new BusStaionData(i,addresslist.get(i),stlist.get(i)));
+                        subwayDataList.add(i, new BusStaionData(i,addresslist.get(i),stlist.get(i)));
                     }
                     final ListView listView = findViewById(R.id.listsubwayView);
-                    final BusInfoAdapter mAdapter = new BusInfoAdapter(getApplicationContext(),busDataList);
+                    final BusInfoAdapter mAdapter = new BusInfoAdapter(getApplicationContext(), subwayDataList);
                     listView.setAdapter(mAdapter);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -209,8 +205,7 @@ public class BusInfoActivity extends FragmentActivity implements OnMapReadyCallb
             } else {
                 Address ad = addressList.get(0);
                 addresslist.clear();
-                odsayService.requestPointSearch(String.valueOf(ad.getLongitude()), String.valueOf(ad.getLatitude()), "500", "1", onResultCallbackListener);
-                //odsayService.requestBusStationInfo(String.valueOf(-),onResultCallbackListener);
+                odsayService.requestPointSearch(String.valueOf(ad.getLongitude()), String.valueOf(ad.getLatitude()), "500", "2", onResultCallbackListener);
             }
         } catch (IndexOutOfBoundsException e) {
             e.getStackTrace();
@@ -218,10 +213,8 @@ public class BusInfoActivity extends FragmentActivity implements OnMapReadyCallb
             e.getStackTrace();
         }
         final ListView listView = findViewById(R.id.listsubwayView);
-        final BusInfoAdapter mAdapter = new BusInfoAdapter(getApplicationContext(),busDataList);
+        final BusInfoAdapter mAdapter = new BusInfoAdapter(getApplicationContext(), subwayDataList);
         listView.setAdapter(mAdapter);
     }
 
 }
-
-

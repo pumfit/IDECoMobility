@@ -14,22 +14,22 @@ public class BusInfoAdapter extends BaseAdapter {
 
     Context mContext = null;
     LayoutInflater mLayoutInflater = null;
-    ArrayList<BusStaionData> busStaionData;
+    ArrayList<BusStaionData> subwayData;
 
     public BusInfoAdapter(Context mContext, ArrayList<BusStaionData> busStaionData) {
         this.mContext = mContext;
         mLayoutInflater = LayoutInflater.from(mContext);
-        this.busStaionData = busStaionData;
+        this.subwayData = busStaionData;
     }
 
     @Override
     public int getCount() {
-        return busStaionData.size();
+        return subwayData.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return busStaionData.get(position);
+        return subwayData.get(position);
     }
 
     @Override
@@ -44,8 +44,8 @@ public class BusInfoAdapter extends BaseAdapter {
         ImageView imageView = (ImageView)view.findViewById(R.id.listNumimageView);
         TextView movieName = (TextView)view.findViewById(R.id.busStationNametextView);
 
-        imageView.setImageResource(busStaionData.get(position).getListNum());
-        movieName.setText(busStaionData.get(position).getBusStationName());
+        imageView.setImageResource(subwayData.get(position).getListNum());
+        movieName.setText(subwayData.get(position).getBusStationName());
 
         return view;
     }

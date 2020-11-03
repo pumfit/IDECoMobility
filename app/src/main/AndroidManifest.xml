@@ -29,6 +29,7 @@
         <activity android:name=".SettingInfoActivity"/>
         <activity android:name=".BookMarkActivity"/>
         <activity android:name=".SubWayInfoActivity"/>
+        <activity android:name=".SubWayInfoSearchActivity"/>
     </application>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>

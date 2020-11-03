@@ -1,8 +1,10 @@
 package com.teamide.idecomobility;
 
-import android.app.ActionBar;
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,18 +12,14 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.odsay.odsayandroidsdk.API;
 import com.odsay.odsayandroidsdk.ODsayData;
 import com.odsay.odsayandroidsdk.ODsayService;
 import com.odsay.odsayandroidsdk.OnResultCallbackListener;
-
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import java.util.ArrayList;
 
@@ -50,6 +48,18 @@ public class BusInfosubActivity extends AppCompatActivity {
         busChangeId(busStID);
         Log.d("ad","local변환ID : "+localStId);
 
+        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.businfosubtoolbar);
+        setSupportActionBar(toolbar);
+        androidx.appcompat.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(Html.fromHtml("<font color='#ffffff'>정류소 세부정보 </font>"));
+        actionBar.setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        final Drawable upArrow = ContextCompat.getDrawable(this, R.drawable.abc_ic_ab_back_material);
+        upArrow.setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
+        getSupportActionBar().setHomeAsUpIndicator(upArrow);
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
 //        String url = "http://ws.bus.go.kr/api/rest/arrive/getLowArrInfoByStId?ServiceKey=idAKQNTIDrnSK5vmheOsFszfGqNfoydTlN08JVMaLchmHaKDSY0lWkjMtjiSfDGSa%2FVm7mVWhVX7WXEfF7OGgA%3D%3D&stId="+busStID;
 //        BusTime bustime = new BusTime(url);
 //        bustime.execute();  //BusTime api 불러오기 // for문 돌려서 데이터 넣어서 리스트 띄우기
@@ -67,12 +77,12 @@ public class BusInfosubActivity extends AppCompatActivity {
 //        String busSec = (String) busInfoArray.get("exps1_sec");
 //        busMin = String.valueOf(Integer.parseInt(busSec)/60);
 
-        Toolbar toolbar = findViewById(R.id.businfosubtoolbar);
-        setActionBar(toolbar);
-        ActionBar actionBar = getActionBar();
-        actionBar.setTitle("정류소 세부정보");
-        actionBar.setDisplayShowCustomEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
+//        Toolbar toolbar = findViewById(R.id.businfosubtoolbar);
+//        setActionBar(toolbar);
+//        ActionBar actionBar = getActionBar();
+//        actionBar.setTitle("정류소 세부정보");
+//        actionBar.setDisplayShowCustomEnabled(true);
+//        actionBar.setDisplayHomeAsUpEnabled(true);
 
         this.InitializeMovieData();
 
@@ -117,6 +127,7 @@ public class BusInfosubActivity extends AppCompatActivity {
                 try{
                     localStId = odsayData.getJson().getJSONObject("result").getString("localStationID");
                     Log.d("ad","local ID 함수내부: "+localStId);
+
                 }catch (Exception e){
                     e.printStackTrace();
                 }
