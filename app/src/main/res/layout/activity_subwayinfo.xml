@@ -41,7 +41,8 @@
             android:text="+"
             android:textAlignment="textEnd"
             android:textColor="@color/white"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:onClick="onClickedSubwayHelp"/>
 
     </LinearLayout>
 

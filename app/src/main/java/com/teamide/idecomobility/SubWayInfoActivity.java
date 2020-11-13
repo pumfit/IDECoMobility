@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -72,5 +73,10 @@ public class SubWayInfoActivity extends AppCompatActivity {
             }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onClickedSubwayHelp(View v){//콜택시 호출 버튼
+        final SubwayHelpDialog dialog = new SubwayHelpDialog(this);
+        dialog.show();
     }
 }
