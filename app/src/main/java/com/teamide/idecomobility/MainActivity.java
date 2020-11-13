@@ -69,15 +69,7 @@ public class MainActivity extends AppCompatActivity {
             checkRunTimePermission();
         }
 
-        gpsTracker = new GpsTracker(MainActivity.this);//현위치 GPS로 받아오기
-
-        double latitude = gpsTracker.getLatitude();
-        double longitude = gpsTracker.getLongitude();
-
-        String address = getCurrentAddress(latitude, longitude);
-        infoAddress.setStartAddress(new SearchAddress("현위치", address, "0", latitude, longitude));
-        infoAddress.setCurruntAddress(new SearchAddress("현위치", address, "0", latitude, longitude));
-        startText.setText(infoAddress.getCurruntAddress().getFullAdress());//현위치를 출발지로 지정
+        getCurrentAddress();
 
         startText.setOnClickListener( //출발지 EditText버튼 클릭시
                 new View.OnClickListener() {
@@ -97,10 +89,20 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
-        ;
 
     }
 
+    public void getCurrentAddress()//현 주소를 받아온다.
+    {
+        gpsTracker = new GpsTracker(MainActivity.this);//현위치 GPS로 받아오기
+
+        double latitude = gpsTracker.getLatitude();
+        double longitude = gpsTracker.getLongitude();
+
+        String address = getAddressName(latitude, longitude);
+        infoAddress.setStartAddress(new SearchAddress("현위치", address, "0", latitude, longitude));
+        infoAddress.setCurruntAddress(new SearchAddress("현위치", address, "0", latitude, longitude));
+    }
 
     public boolean checkLocationServicesStatus() { //GPS기능 사용가능한지 판단
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -154,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public String getCurrentAddress(double latitude, double longitude) {
+    public String getAddressName(double latitude, double longitude) {
 
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
         List<Address> addresses;

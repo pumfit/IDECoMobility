@@ -93,8 +93,8 @@ public class SubWayInfoSearchActivity extends FragmentActivity implements OnMapR
                 String subwayTitle = mAdapter.subwayData.get(position).getBusStationName();
                 String subwayStId = mAdapter.subwayData.get(position).getBusStationID();
                 Intent in = new Intent(getApplicationContext(), SubWayInfoActivity.class);
-                in.putExtra("bustitle", subwayTitle);
-                in.putExtra("busStId",subwayStId);
+                in.putExtra("stationtitle", subwayTitle);
+                in.putExtra("stId",subwayStId);
                 startActivity(in);
             }
         });
@@ -151,7 +151,8 @@ public class SubWayInfoSearchActivity extends FragmentActivity implements OnMapR
                     subwayDataList.clear();
                     for (int i = 0; i < count; i++) {
                         String location = station.getJSONObject(i).getString("stationName")+"역 "+station.getJSONObject(i).getString("laneName");
-                        String stID = station.getJSONObject(i).getString("stationID"); // odsay 추가!!!
+                        //String stName = station.getJSONObject(i).getString("stationName");
+                        String stID = station.getJSONObject(i).getString("stationName"); // odsay 추가!!!
                         Double busx = station.getJSONObject(i).getDouble("x");
                         Double busy = station.getJSONObject(i).getDouble("y");
                         addresslist.add(i, location);
