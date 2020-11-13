@@ -16,7 +16,6 @@ import androidx.annotation.NonNull;
 public class SubwayHelpDialog extends Dialog implements View.OnClickListener{
     private Button cancelButton;
     private Button callButton;
-    private TextView telNum;
     private Context context;
     String tel = "1577-1234";
 
@@ -49,8 +48,6 @@ public class SubwayHelpDialog extends Dialog implements View.OnClickListener{
 
         cancelButton = findViewById(R.id.button25);
         callButton = findViewById(R.id.button26);
-        telNum = findViewById(R.id.callNum);
-        telNum.setText(tel);
 
         cancelButton.setOnClickListener(this);
         callButton.setOnClickListener(this);
