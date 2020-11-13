@@ -24,17 +24,18 @@
             android:layout_gravity="center_vertical"
             android:layout_marginStart="12dp"
             android:text="Title"
-            android:textSize="18dp"
             android:textColor="@color/black"
+            android:textSize="18dp"
             android:textStyle="bold" />
 
         <Button
             android:id="@+id/dropButton"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="12dp"
-            android:background="@android:drawable/arrow_down_float" />
+            android:background="@drawable/ic_downarrow"
+            android:onClick="onClickedBusHelp" />
     </LinearLayout>
 
     <ImageView
@@ -43,8 +44,8 @@
         android:layout_height="300dp"
         android:layout_gravity="center"
         android:layout_marginTop="16dp"
-        android:visibility="gone"
         android:background="@drawable/ic_loading"
+        android:visibility="gone"
         app:srcCompat="@android:drawable/dark_header" />
 
 
