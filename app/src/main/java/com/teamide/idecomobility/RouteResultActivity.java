@@ -75,13 +75,14 @@ public class RouteResultActivity extends Activity {
                         String totalTime = path.getJSONObject(0).getJSONObject("info").getString("totalTime");
                         String payment = path.getJSONObject(0).getJSONObject("info").getString("payment");
                         Integer trafficCount = path.getJSONObject(0).getJSONArray("subPath").length();
+                        trafficDataList.add(0,new direction_data(R.drawable.ic_flag,null,"출발",null,null,null));
                         for (int i=0; i<trafficCount; i++){
                             Integer trafficType =path.getJSONObject(0).getJSONArray("subPath").getJSONObject(i).getInt("trafficType");
                             if (trafficType==3){ //도보
                                 Integer distance =path.getJSONObject(0).getJSONArray("subPath").getJSONObject(i).getInt("distance");
                                 Integer secTime =path.getJSONObject(0).getJSONArray("subPath").getJSONObject(i).getInt("sectionTime");
                                 //String array[]={trafficType.toString(),null,null,distance.toString()+"m 이동",secTime.toString()+"분 소요",null,"도보"};
-                                trafficDataList.add(i+1,new direction_data(R.drawable.ic_walk,"도보","도보로 이동",null,distance.toString()+"m 이동",secTime.toString()+"분 소요",null));
+                                trafficDataList.add(i+1,new direction_data(R.drawable.ic_walk,"도보","도보로 "+distance+"m 이동",null,secTime.toString()+"분 소요",null));
                             }else if (trafficType==2){ //버스
                                 String busstart = path.getJSONObject(0).getJSONArray("subPath").getJSONObject(i).getString("startName");
                                 String busend = path.getJSONObject(0).getJSONArray("subPath").getJSONObject(i).getString("endName");
@@ -89,36 +90,24 @@ public class RouteResultActivity extends Activity {
                                 String busNo = path.getJSONObject(0).getJSONArray("subPath").getJSONObject(i).getJSONArray("lane").getJSONObject(0).getString("busNo");
 //                                String array[]={trafficType.toString(),busstart,busend,null,secTime.toString()+"분 소요",null,busNo};
 //                                trafficDataList.add(array);
-                                trafficDataList.add(i+1,new direction_data(R.drawable.ic_bus_blue,busNo,busstart,busend,null,secTime.toString()+"분 소요",null));
+                                trafficDataList.add(i+1,new direction_data(R.drawable.ic_bus_blue,busNo,busstart,busend,secTime.toString()+"분 소요",null));
                             }else if (trafficType==1){ //지하철
                                 String subwaystart = path.getJSONObject(0).getJSONArray("subPath").getJSONObject(i).getString("startName");
                                 String subwayend = path.getJSONObject(0).getJSONArray("subPath").getJSONObject(i).getString("endName");
                                 Integer secTime = path.getJSONObject(0).getJSONArray("subPath").getJSONObject(i).getInt("sectionTime");
                                 Integer subwayCount = path.getJSONObject(0).getJSONArray("subPath").getJSONObject(i).getInt("stationCount");
                                 Integer subwayNo = path.getJSONObject(0).getJSONArray("subPath").getJSONObject(i).getJSONArray("lane").getJSONObject(0).getInt("subwayCode");
-//                                String array[]={trafficType.toString(),subwaystart,subwayend,null,secTime.toString()+"분 소요",subwayCount.toString()+"개역 이동",subwayNo.toString()+"호선"};
-//                                trafficDataList.add(array);
-                                trafficDataList.add(i+1,new direction_data(R.drawable.ic_train_blue,subwayNo.toString()+"호선",subwaystart,subwayend,null,secTime.toString()+"분 소요",subwayCount.toString()+"개역 이동"));
+
+                                trafficDataList.add(i+1,new direction_data(R.drawable.ic_train_blue,subwayNo.toString()+"호선",subwaystart,subwayend,secTime.toString()+"분 소요",subwayCount.toString()+"개역 이동"));
                             }
                         }
-                        //trafficDataList.add(trafficCount,);
-//                        for (int i=0; i<trafficCount; i++){
-//                            Log.d("ad","타입:"+trafficDataList.get(i)[0]+", 승차:"+trafficDataList.get(i)[1]+", 하차:"+trafficDataList.get(i)[2]+", 거리:"+trafficDataList.get(i)[3]+
-//                                    ", 시간:"+trafficDataList.get(i)[4]+", 역개수:"+trafficDataList.get(i)[5]+", 버스번호:"+trafficDataList.get(i)[6]);
-//                        }
+                        trafficDataList.add(trafficCount+1,new direction_data(R.drawable.ic_flag,null,"도착",null,null,null));
+
 
                         final ListView listView = findViewById(R.id.listView);
                         final directionAdapter mAdapter = new directionAdapter(getApplicationContext(),trafficDataList);
                         listView.setAdapter(mAdapter);
-//                        for (int i=0; i<trafficCount; i++){
-//                            if (trafficDataList.get(i)[0]=="1"){
-//                                Log.d("ad","이중배열Test: "+trafficDataList.get(i)[0]+", 지하철승차역:"+trafficDataList.get(i)[1]+", 지하철하차역:"+trafficDataList.get(i)[2]);
-//                            }else if (((trafficDataList.get(i))[0])=="2"){
-//                                Log.d("ad","이중배열Test: "+trafficDataList.get(i)[0]+", 승차정류장:"+trafficDataList.get(i)[1]+", 하차정류장:"+trafficDataList.get(i)[2]);
-//                            }else {
-//                                Log.d("ad","이중배열Test: "+trafficDataList.get(i)[0]+", 도보거리:"+trafficDataList.get(i)[1]+", 도보시간:"+trafficDataList.get(i)[2]);
-//                            }
-//                        }
+//
                     }
 
                 } catch (JSONException e) {

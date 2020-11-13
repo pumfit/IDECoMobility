@@ -6,17 +6,15 @@ public class direction_data {
     private String circle;
     private String startTraffic;
     private String endTraffic;
-    private String distance;
     private String moveTime;
     private String stationCount;
     private int img;
 
-    public direction_data(int img, String  circle, String startTraffic, String endTraffic, String distance, String moveTime, String stationCount){
+    public direction_data(int img, String  circle, String startTraffic, String endTraffic, String moveTime, String stationCount){
         this.img = img;
         this.circle = circle;
         this.startTraffic = startTraffic;
         this.endTraffic = endTraffic;
-        this.distance = distance;
         this.moveTime = moveTime;
         this.stationCount = stationCount;
     }
@@ -39,11 +37,6 @@ public class direction_data {
     public String getendTraffic()
     {
         return this.endTraffic;
-    }
-
-    public  String getdistance()
-    {
-        return this.distance;
     }
 
     public String getmoveTime()
