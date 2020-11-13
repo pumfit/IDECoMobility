@@ -2,7 +2,7 @@ package com.teamide.idecomobility;
 
 public class SubWayInfoData {
     private int icon;
-    private int infoImage;
+    private String infoImageUrl;
     private String title;
 
     public int getIcon() {
@@ -13,12 +13,12 @@ public class SubWayInfoData {
         this.icon = icon;
     }
 
-    public int getInfoImage() {
-        return infoImage;
+    public String getInfoImage() {
+        return infoImageUrl;
     }
 
-    public void setInfoImage(int infoImage) {
-        this.infoImage = infoImage;
+    public void setInfoImage(String infoImageUrl) {
+        this.infoImageUrl = infoImageUrl;
     }
 
     public String getTitle() {
@@ -29,9 +29,9 @@ public class SubWayInfoData {
         this.title = title;
     }
 
-    public SubWayInfoData(int icon, int infoImage, String title) {
+    public SubWayInfoData(int icon, String infoImageUrl, String title) {
         this.icon = icon;
-        this.infoImage = infoImage;
+        this.infoImageUrl = infoImageUrl;
         this.title = title;
     }
 

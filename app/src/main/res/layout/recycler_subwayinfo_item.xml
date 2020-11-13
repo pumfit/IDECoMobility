@@ -38,8 +38,10 @@
 
     <ImageView
         android:id="@+id/infoImageView"
-        android:layout_width="match_parent"
+        android:layout_width="365dp"
         android:layout_height="300dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
         android:visibility="gone"
         app:srcCompat="@android:drawable/dark_header" />
 
