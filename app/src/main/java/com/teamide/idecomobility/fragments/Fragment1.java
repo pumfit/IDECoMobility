@@ -28,10 +28,9 @@ public class Fragment1 extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_elevator,container,false);
-
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
 
-        list.add(new SubWayInfoData("1번출구 내부 엘리베이터"));
+        list.add(new SubWayInfoData(R.drawable.ic_elevator,R.drawable.ic_flag,"1번출구 내부 엘리베이터"));
         recyclerView.setHasFixedSize(true);
         adapter = new SubWayInfoAdapter(getActivity(), list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

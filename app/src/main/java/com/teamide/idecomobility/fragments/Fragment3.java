@@ -31,7 +31,7 @@ public class Fragment3 extends Fragment {
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
 
-        list.add(new SubWayInfoData("예제"));
+        list.add(new SubWayInfoData(R.drawable.ic_toilet,R.drawable.ic_flag,"7번 출구 장애인 화장실"));
         recyclerView.setHasFixedSize(true);
         adapter = new SubWayInfoAdapter(getActivity(), list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

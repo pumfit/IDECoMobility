@@ -33,7 +33,7 @@ public class SubWayInfoAdapter extends RecyclerView.Adapter<SubWayInfoAdapter.Ho
     @Override
     public void onBindViewHolder(final Holder holder, int position) {
         holder.icon.setImageResource(list.get(position).getIcon());
-        holder.icon.setImageResource(list.get(position).getInfoImage());
+        holder.infoImage.setImageResource(list.get(position).getInfoImage());
         holder.title.setText(list.get(position).getTitle());
         holder.dropButton.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {

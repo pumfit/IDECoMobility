@@ -31,7 +31,7 @@ public class Fragment4 extends Fragment {
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
 
-        list.add(new SubWayInfoData("예제"));
+        list.add(new SubWayInfoData(R.drawable.ic_wheel_help,R.drawable.ic_flag,"4-1"));
         recyclerView.setHasFixedSize(true);
         adapter = new SubWayInfoAdapter(getActivity(), list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
