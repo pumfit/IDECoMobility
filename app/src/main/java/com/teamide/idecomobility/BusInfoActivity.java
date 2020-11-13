@@ -1,6 +1,7 @@
 package com.teamide.idecomobility;
 
 import android.app.ActionBar;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -44,7 +45,6 @@ public class BusInfoActivity extends FragmentActivity implements OnMapReadyCallb
 
     private GoogleMap mMap;
     public InfoAddress infoAddress;
-
     public LinearLayout draglayout;
     public EditText editText;
 
@@ -52,7 +52,6 @@ public class BusInfoActivity extends FragmentActivity implements OnMapReadyCallb
     public ArrayList<String> addresslist = new ArrayList<>();
     public ArrayList<String> stlist = new ArrayList<>();
     public ODsayService odsayService;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -223,5 +222,3 @@ public class BusInfoActivity extends FragmentActivity implements OnMapReadyCallb
     }
 
 }
-
-

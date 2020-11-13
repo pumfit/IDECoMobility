@@ -33,16 +33,18 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginStart="12dp" />
+            android:layout_marginStart="12dp"
+            android:background="@android:drawable/arrow_down_float" />
     </LinearLayout>
 
     <ImageView
         android:id="@+id/infoImageView"
-        android:layout_width="365dp"
+        android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_gravity="center"
         android:layout_marginTop="16dp"
         android:visibility="gone"
+        android:background="@drawable/ic_loading"
         app:srcCompat="@android:drawable/dark_header" />
 
 
