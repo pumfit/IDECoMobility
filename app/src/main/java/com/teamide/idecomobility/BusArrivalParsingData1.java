@@ -3,18 +3,15 @@ package com.teamide.idecomobility;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.odsay.odsayandroidsdk.API;
 import com.odsay.odsayandroidsdk.ODsayData;
 import com.odsay.odsayandroidsdk.ODsayService;
 import com.odsay.odsayandroidsdk.OnResultCallbackListener;
 
-import org.xmlpull.v1.XmlPullParserFactory;
-
 public class BusArrivalParsingData1 extends AsyncTask<String, Void, String> {
 
-    String busStId, localStId;
+    public String busStId, localStId;
     public ODsayService odsayService;
     private Context context;
 
@@ -26,10 +23,7 @@ public class BusArrivalParsingData1 extends AsyncTask<String, Void, String> {
     @Override
     protected String doInBackground(String... strings) {
         Log.d("ad","ss1"+localStId);
-        return localStId;
-    }
-    @Override
-    protected void onPreExecute(){
+
         OnResultCallbackListener onResultCallbackListener = new OnResultCallbackListener() {
             @Override
             public void onSuccess(ODsayData odsayData, API api) {
@@ -47,5 +41,11 @@ public class BusArrivalParsingData1 extends AsyncTask<String, Void, String> {
             }
         };
         odsayService.requestBusStationInfo(busStId, onResultCallbackListener);
+
+        return localStId;
+    }
+    @Override
+    protected void onPreExecute(){
+
     }
 }

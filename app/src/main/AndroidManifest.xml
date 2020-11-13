@@ -30,6 +30,8 @@
         <activity android:name=".BookMarkActivity"/>
         <activity android:name=".SubWayInfoActivity"/>
         <activity android:name=".SubWayInfoSearchActivity"/>
+        <activity android:name=".SplashActivity"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
     </application>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>

@@ -46,7 +46,6 @@ public class BusInfosubActivity extends AppCompatActivity {
         titleText.setText(busTitle);
 
         busChangeId(busStID);
-        Log.d("ad","local변환ID : "+localStId);
 
         androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.businfosubtoolbar);
         setSupportActionBar(toolbar);
@@ -83,6 +82,8 @@ public class BusInfosubActivity extends AppCompatActivity {
 //        actionBar.setTitle("정류소 세부정보");
 //        actionBar.setDisplayShowCustomEnabled(true);
 //        actionBar.setDisplayHomeAsUpEnabled(true);
+
+
 
         this.InitializeMovieData();
 
@@ -127,6 +128,7 @@ public class BusInfosubActivity extends AppCompatActivity {
                 try{
                     localStId = odsayData.getJson().getJSONObject("result").getString("localStationID");
                     Log.d("ad","local ID 함수내부: "+localStId);
+
 
                 }catch (Exception e){
                     e.printStackTrace();
