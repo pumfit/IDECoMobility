@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/calltexitoolbar"
+        android:id="@+id/bustoolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorBlueMain"
@@ -32,10 +32,10 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/region"
+                android:id="@+id/num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="362"
+                android:text="###"
                 android:layout_gravity="center"
                 android:textColor="@color/black"
                 android:textSize="22dp" />

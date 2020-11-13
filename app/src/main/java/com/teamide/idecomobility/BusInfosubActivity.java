@@ -1,5 +1,7 @@
 package com.teamide.idecomobility;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -27,6 +29,8 @@ public class BusInfosubActivity extends AppCompatActivity {
 
     TextView titleText;
     String localStId, busNm, busMin;
+
+
     ArrayList<BusInfoSubData> busInfoDataList;
     public ODsayService oDsayService;
 
@@ -34,6 +38,7 @@ public class BusInfosubActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_businfosub);
+
 
         oDsayService = ODsayService.init(BusInfosubActivity.this, "nFVGyVxSTk6opjbmKKPCTDaEfNWyidhvs1HbmTtAf6U");
 
@@ -138,5 +143,10 @@ public class BusInfosubActivity extends AppCompatActivity {
             }
         };
         oDsayService.requestBusStationInfo(busStId, onResultCallbackListener);
+    }
+
+    public void onClickedBusHelp(View v){//콜택시 호출 버튼
+        final BusHelpDialog dialog = new BusHelpDialog(this);
+        dialog.show();
     }
 }
