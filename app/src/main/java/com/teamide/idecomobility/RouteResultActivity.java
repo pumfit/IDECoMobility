@@ -2,6 +2,7 @@ package com.teamide.idecomobility;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,6 +23,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class RouteResultActivity extends Activity {
 
@@ -35,9 +37,12 @@ public class RouteResultActivity extends Activity {
     public String img;
     public String localID;
     public String test1, test2, test3, test4;
+    String[] result;
 
 
     ArrayList<direction_data> resultDataList;
+    ArrayList<direction_data> trafficDataList = new ArrayList<>();
+    public ArrayList<String> addTrafficList = new ArrayList<>();
     ArrayList<String> searchPathData = new ArrayList<String>();
     ArrayList<String> busData = new ArrayList<String>();
 
@@ -69,9 +74,51 @@ public class RouteResultActivity extends Activity {
                         JSONArray path = odsayData.getJson().getJSONObject("result").getJSONArray("path");
                         String totalTime = path.getJSONObject(0).getJSONObject("info").getString("totalTime");
                         String payment = path.getJSONObject(0).getJSONObject("info").getString("payment");
-                        String startName = path.getJSONObject(0).getJSONArray("subPath").getJSONObject(3).getJSONArray("lane").getJSONObject(0).getString("busNo");
-                        String stationNm = path.getJSONObject(0).getJSONObject("info").getString("firstStartStation");
-                        Log.d("ad", "오딧세이 호출 searchType :" + searchType + " 총 걸리는 시간:" + totalTime + " 총 요금:" + payment + " 버스정류소:" + stationNm + " 버스번호" + startName);
+                        Integer trafficCount = path.getJSONObject(0).getJSONArray("subPath").length();
+                        for (int i=0; i<trafficCount; i++){
+                            Integer trafficType =path.getJSONObject(0).getJSONArray("subPath").getJSONObject(i).getInt("trafficType");
+                            if (trafficType==3){ //도보
+                                Integer distance =path.getJSONObject(0).getJSONArray("subPath").getJSONObject(i).getInt("distance");
+                                Integer secTime =path.getJSONObject(0).getJSONArray("subPath").getJSONObject(i).getInt("sectionTime");
+                                //String array[]={trafficType.toString(),null,null,distance.toString()+"m 이동",secTime.toString()+"분 소요",null,"도보"};
+                                trafficDataList.add(i+1,new direction_data(R.drawable.ic_walk,"도보","도보로 이동",null,distance.toString()+"m 이동",secTime.toString()+"분 소요",null));
+                            }else if (trafficType==2){ //버스
+                                String busstart = path.getJSONObject(0).getJSONArray("subPath").getJSONObject(i).getString("startName");
+                                String busend = path.getJSONObject(0).getJSONArray("subPath").getJSONObject(i).getString("endName");
+                                Integer secTime = path.getJSONObject(0).getJSONArray("subPath").getJSONObject(i).getInt("sectionTime");
+                                String busNo = path.getJSONObject(0).getJSONArray("subPath").getJSONObject(i).getJSONArray("lane").getJSONObject(0).getString("busNo");
+//                                String array[]={trafficType.toString(),busstart,busend,null,secTime.toString()+"분 소요",null,busNo};
+//                                trafficDataList.add(array);
+                                trafficDataList.add(i+1,new direction_data(R.drawable.ic_bus_blue,busNo,busstart,busend,null,secTime.toString()+"분 소요",null));
+                            }else if (trafficType==1){ //지하철
+                                String subwaystart = path.getJSONObject(0).getJSONArray("subPath").getJSONObject(i).getString("startName");
+                                String subwayend = path.getJSONObject(0).getJSONArray("subPath").getJSONObject(i).getString("endName");
+                                Integer secTime = path.getJSONObject(0).getJSONArray("subPath").getJSONObject(i).getInt("sectionTime");
+                                Integer subwayCount = path.getJSONObject(0).getJSONArray("subPath").getJSONObject(i).getInt("stationCount");
+                                Integer subwayNo = path.getJSONObject(0).getJSONArray("subPath").getJSONObject(i).getJSONArray("lane").getJSONObject(0).getInt("subwayCode");
+//                                String array[]={trafficType.toString(),subwaystart,subwayend,null,secTime.toString()+"분 소요",subwayCount.toString()+"개역 이동",subwayNo.toString()+"호선"};
+//                                trafficDataList.add(array);
+                                trafficDataList.add(i+1,new direction_data(R.drawable.ic_train_blue,subwayNo.toString()+"호선",subwaystart,subwayend,null,secTime.toString()+"분 소요",subwayCount.toString()+"개역 이동"));
+                            }
+                        }
+                        //trafficDataList.add(trafficCount,);
+//                        for (int i=0; i<trafficCount; i++){
+//                            Log.d("ad","타입:"+trafficDataList.get(i)[0]+", 승차:"+trafficDataList.get(i)[1]+", 하차:"+trafficDataList.get(i)[2]+", 거리:"+trafficDataList.get(i)[3]+
+//                                    ", 시간:"+trafficDataList.get(i)[4]+", 역개수:"+trafficDataList.get(i)[5]+", 버스번호:"+trafficDataList.get(i)[6]);
+//                        }
+
+                        final ListView listView = findViewById(R.id.listView);
+                        final directionAdapter mAdapter = new directionAdapter(getApplicationContext(),trafficDataList);
+                        listView.setAdapter(mAdapter);
+//                        for (int i=0; i<trafficCount; i++){
+//                            if (trafficDataList.get(i)[0]=="1"){
+//                                Log.d("ad","이중배열Test: "+trafficDataList.get(i)[0]+", 지하철승차역:"+trafficDataList.get(i)[1]+", 지하철하차역:"+trafficDataList.get(i)[2]);
+//                            }else if (((trafficDataList.get(i))[0])=="2"){
+//                                Log.d("ad","이중배열Test: "+trafficDataList.get(i)[0]+", 승차정류장:"+trafficDataList.get(i)[1]+", 하차정류장:"+trafficDataList.get(i)[2]);
+//                            }else {
+//                                Log.d("ad","이중배열Test: "+trafficDataList.get(i)[0]+", 도보거리:"+trafficDataList.get(i)[1]+", 도보시간:"+trafficDataList.get(i)[2]);
+//                            }
+//                        }
                     }
 
                 } catch (JSONException e) {
@@ -89,22 +136,35 @@ public class RouteResultActivity extends Activity {
                 }
             }
         };
+
         String url = "http://ws.bus.go.kr/api/rest/arrive/getLowArrInfoByStId?ServiceKey=idAKQNTIDrnSK5vmheOsFszfGqNfoydTlN08JVMaLchmHaKDSY0lWkjMtjiSfDGSa%2FVm7mVWhVX7WXEfF7OGgA%3D%3D&stId=112000001";
-        new BusTime(url).execute();
+        Log.d("ad","버스 데이터 호출 전 ");
+        BusTime bustime = new BusTime();
 
-        JSONParser jsonParser = new JSONParser();
-
-        JSONObject busjsonObject = null;
         try {
-            busjsonObject = (JSONObject) jsonParser.parse(jsonData.jsonbus);
-        } catch (ParseException e) {
+            result=bustime.execute(url).get();
+            busName=result[3];
+            busMin=result[2];
+            busNm=result[1];
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        JSONObject busInfoArray = (JSONObject) busjsonObject.get("inf");
-        busName = (String) busInfoArray.get("stNm");
-        busNm = (String) busInfoArray.get("rtNm");
-        String busSec = (String) busInfoArray.get("exps1_sec");
-        busMin = String.valueOf(Integer.parseInt(busSec) / 60);
+
+        JSONParser jsonParser = new JSONParser();
+//
+//        JSONObject busjsonObject = null;
+//        try {
+//            busjsonObject = (JSONObject) jsonParser.parse(jsonData.jsonbus);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        JSONObject busInfoArray = (JSONObject) busjsonObject.get("inf");
+//        busName = (String) busInfoArray.get("stNm");
+//        busNm = (String) busInfoArray.get("rtNm");
+//        String busSec = (String) busInfoArray.get("exps1_sec");
+//        busMin = String.valueOf(Integer.parseInt(busSec) / 60);
 
         JSONObject subwayjsonObject = null;
         try {
@@ -130,8 +190,6 @@ public class RouteResultActivity extends Activity {
         odsayService.requestSearchPubTransPath(sLongitude, sLatitude, eLongitude, eLatitude, "0", "0", "0", onResultCallbackListener);
         //odsayService.requestBusStationInfo(busName,onResultCallbackListener);
 
-        this.InitializeResultData(busName, busNm, busMin, subwayName, subwayMin);
-
         TextView startTextView = findViewById(R.id.start);
         TextView endTextView = findViewById(R.id.end);
 
@@ -139,7 +197,7 @@ public class RouteResultActivity extends Activity {
         endTextView.setText(infoAddress.getEndAddress().getMainAdress());
 
         ListView listView = (ListView) findViewById(R.id.listView);
-        final directionAdapter myAdapter = new directionAdapter(this, resultDataList);
+        final directionAdapter myAdapter = new directionAdapter(this, trafficDataList);
 
         listView.setAdapter(myAdapter);
 
@@ -147,22 +205,10 @@ public class RouteResultActivity extends Activity {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
                 Toast.makeText(getApplicationContext(),
-                        myAdapter.getItem(position).gettitle(),
+                        myAdapter.getItem(position).getstartTraffic(),
                         Toast.LENGTH_LONG).show();
             }
         });
-    }
-
-    public void InitializeResultData(String busName, String busNm, String busMin, String subwayName, String subwayMin) //data받아오기
-    {
-        resultDataList = new ArrayList<direction_data>();
-        //이부분을 case문으로 처리
-        resultDataList.add(new direction_data(R.drawable.ic_flag, "출발", "출발지", null, null, null));
-        resultDataList.add(new direction_data(R.drawable.ic_bus_blue, "버스", (String) busName, (String) busNm, null, busMin + "분 뒤 도착"));
-        resultDataList.add(new direction_data(R.drawable.ic_walk, "도보", "도보로 420m 이동", "태릉입구역 하차후 6번 출구 엘리베이터", null, null));
-        resultDataList.add(new direction_data(R.drawable.ic_train_blue, "지하철", subwayName + "역", "4-1, 6-1, 8-1", "1", "분 뒤 도착"));
-        resultDataList.add(new direction_data(R.drawable.ic_flag, "도착", "도착지", null, null, null));
-        Log.d("ad", "eighth");
     }
 
     public void callBackData(String[] result) {

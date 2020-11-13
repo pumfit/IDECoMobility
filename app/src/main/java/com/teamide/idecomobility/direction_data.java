@@ -4,19 +4,21 @@ import android.graphics.drawable.Drawable;
 
 public class direction_data {
     private String circle;
-    private String title;
-    private String busOrSub;
-    private String num;
-    private String minLeft;
+    private String startTraffic;
+    private String endTraffic;
+    private String distance;
+    private String moveTime;
+    private String stationCount;
     private int img;
 
-    public direction_data(int img, String  circle, String title, String busOrSub, String num, String minLeft){
+    public direction_data(int img, String  circle, String startTraffic, String endTraffic, String distance, String moveTime, String stationCount){
         this.img = img;
         this.circle = circle;
-        this.title = title;
-        this.busOrSub = busOrSub;
-        this.num = num;
-        this.minLeft = minLeft;
+        this.startTraffic = startTraffic;
+        this.endTraffic = endTraffic;
+        this.distance = distance;
+        this.moveTime = moveTime;
+        this.stationCount = stationCount;
     }
 
     public int getImg()
@@ -29,24 +31,28 @@ public class direction_data {
         return this.circle;
     }
 
-    public String gettitle()
+    public String getstartTraffic()
     {
-        return this.title;
+        return this.startTraffic;
     }
 
-    public String getbusOrSub()
+    public String getendTraffic()
     {
-        return this.busOrSub;
+        return this.endTraffic;
     }
 
-    public  String getnum()
+    public  String getdistance()
     {
-        return this.num;
+        return this.distance;
     }
 
-    public String getminLeft()
+    public String getmoveTime()
     {
-        return this.minLeft;
+        return this.moveTime;
     }
 
+    public String getstationCount()
+    {
+        return this.stationCount;
+    }
 }

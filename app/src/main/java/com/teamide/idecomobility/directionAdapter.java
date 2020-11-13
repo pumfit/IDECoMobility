@@ -44,17 +44,20 @@ public class directionAdapter extends BaseAdapter {
 
         ImageView img = (ImageView) view.findViewById(R.id.img);
         TextView shape = (TextView) view.findViewById(R.id.circle);
-        TextView title = (TextView)view.findViewById(R.id.title);
-        TextView vehicle = (TextView)view.findViewById(R.id.busOrSub);
-        TextView num = (TextView)view.findViewById(R.id.num);
-        TextView minLeft = (TextView)view.findViewById(R.id.minLeft);
+        TextView start = (TextView)view.findViewById(R.id.startTraffic);
+        TextView end = (TextView)view.findViewById(R.id.endTraffic);
+        TextView distance = (TextView)view.findViewById(R.id.distance);
+        TextView movetime = (TextView)view.findViewById(R.id.moveTime);
+        TextView stationNm = (TextView)view.findViewById(R.id.stationCount);
+
 
         img.setImageResource(sample.get(position).getImg());
         shape.setText(sample.get(position).getcircle());
-        title.setText(sample.get(position).gettitle());
-        vehicle.setText(sample.get(position).getbusOrSub());
-        num.setText(sample.get(position).getnum());
-        minLeft.setText(sample.get(position).getminLeft());
+        start.setText(sample.get(position).getstartTraffic());
+        end.setText(sample.get(position).getendTraffic());
+        distance.setText(sample.get(position).getdistance());
+        movetime.setText(sample.get(position).getmoveTime());
+        stationNm.setText(sample.get(position).getstationCount());
 
         return view;
     }

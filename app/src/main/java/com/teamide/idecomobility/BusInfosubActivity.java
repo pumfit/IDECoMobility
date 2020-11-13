@@ -45,8 +45,19 @@ public class BusInfosubActivity extends AppCompatActivity {
         Log.d("ad","받은 버정 변환전 id: "+busStID);
         titleText.setText(busTitle);
 
-        busChangeId(busStID);
-        Log.d("ad","local변환ID : "+localStId);
+        try{
+            BusArrivalParsingData1 task = new BusArrivalParsingData1(getApplicationContext(),busStID);
+            localStId=task.execute().get();
+            Log.d("ad","buslocal 로드 성공"+localStId);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        Log.d("ad","buslocal 로드 성공"+localStId);
+        //buslocal.execute();
+        //Log.d("ad","local변환최종ID : "+buslocal.execute());
+        //busChangeId(busStID);
+        //Log.d("ad","local변환ID : "+localStId);
 
         androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.businfosubtoolbar);
         setSupportActionBar(toolbar);
@@ -120,23 +131,4 @@ public class BusInfosubActivity extends AppCompatActivity {
         busInfoDataList.add(new BusInfoSubData("1156","분 뒤 도착"));
     }
 
-    public void busChangeId(String busStId){
-        OnResultCallbackListener onResultCallbackListener = new OnResultCallbackListener() {
-            @Override
-            public void onSuccess(ODsayData odsayData, API api) {
-                try{
-                    localStId = odsayData.getJson().getJSONObject("result").getString("localStationID");
-                    Log.d("ad","local ID 함수내부: "+localStId);
-
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-            }
-            @Override
-            public void onError(int i, String s, API api) {
-                Log.d("ad","에러코드"+s);
-            }
-        };
-        oDsayService.requestBusStationInfo(busStId, onResultCallbackListener);
-    }
 }

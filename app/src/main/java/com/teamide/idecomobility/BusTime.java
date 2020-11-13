@@ -11,20 +11,19 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class BusTime extends AsyncTask<String[], Void, String[]>{
-    private String url;
+public class BusTime extends AsyncTask<String, Void, String[]>{
     private XmlPullParserFactory xmlFactoryObject;
     private ProgressDialog pDialog;
 
-
-    public BusTime(String url){
-        this.url = url;
-    }
+//    public BusTime(String url){
+//        this.url = url;
+//    }
 
     @Override
-    protected String[] doInBackground(String[]... params) {
+    protected String[] doInBackground(String... params) {
         try {
-            URL url = new URL(this.url);
+            String urltext = (String) params[0];
+            URL url = new URL(urltext);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setReadTimeout(10000);
             connection.setConnectTimeout(15000);
@@ -68,20 +67,18 @@ public class BusTime extends AsyncTask<String[], Void, String[]>{
                         break;
 
                     case XmlPullParser.END_TAG:
-                        if (name.equals("stNm")) {
+                        if (name.equals("busRouteId")) { //get humidity
+                            result[0] = text;
+                            //Log.d("ad", "3st: " + result[0]);
+                        }else if (name.equals("exps1")) { //get temperature
+                            result[2] = text;
+                            //Log.d("ad","5st: "+result[2]);
+                        }else if (name.equals("rtNm")) { //get pressure
+                            result[1] = text;
+                            //Log.d("ad","4st: "+result[1]);
+                        } else if (name.equals("stNm")) {
                             result[3] = text;
-                            Log.d("ad","2st: "+result[3]);
-                        } else if (name.equals("busRouteId")) { //get humidity
-                            result[0] = myParser.getAttributeValue(null, "value1");
-                            Log.d("ad","3st: "+result[0]);
-
-                        } else if (name.equals("rtNm")) { //get pressure
-                            result[1] = myParser.getAttributeValue(null, "value2");
-                            Log.d("ad","4st: "+result[1]);
-
-                        } else if (name.equals("exps1")) { //get temperature
-                            result[2] = myParser.getAttributeValue(null, "value3");
-                            Log.d("ad","5st: "+result[2]);
+                            //Log.d("ad","2st: "+result[3]);
                         }
                         break;
                 }
