@@ -46,7 +46,6 @@ public class directionAdapter extends BaseAdapter {
         TextView shape = (TextView) view.findViewById(R.id.circle);
         TextView start = (TextView)view.findViewById(R.id.startTraffic);
         TextView end = (TextView)view.findViewById(R.id.endTraffic);
-        TextView distance = (TextView)view.findViewById(R.id.distance);
         TextView movetime = (TextView)view.findViewById(R.id.moveTime);
         TextView stationNm = (TextView)view.findViewById(R.id.stationCount);
 
@@ -55,7 +54,6 @@ public class directionAdapter extends BaseAdapter {
         shape.setText(sample.get(position).getcircle());
         start.setText(sample.get(position).getstartTraffic());
         end.setText(sample.get(position).getendTraffic());
-        distance.setText(sample.get(position).getdistance());
         movetime.setText(sample.get(position).getmoveTime());
         stationNm.setText(sample.get(position).getstationCount());
 
