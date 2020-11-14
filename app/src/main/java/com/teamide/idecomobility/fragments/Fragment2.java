@@ -33,8 +33,8 @@ public class Fragment2 extends Fragment {
 
         list.clear();
         list.add(new SubWayInfoData(R.drawable.ic_escalator,"http://indoormap.seoul.go.kr/app/openapi/seoulcity/handicapPOIInfo/78/stream","1호선 환승통로 에스컬레이터"));
-        list.add(new SubWayInfoData(R.drawable.ic_escalator,"http://indoormap.seoul.go.kr/app/openapi/seoulcity/handicapPOIInfo/78/stream","1호선 환승통로 계단,에스컬레이터"));
-        list.add(new SubWayInfoData(R.drawable.ic_escalator,"http://indoormap.seoul.go.kr/app/openapi/seoulcity/handicapPOIInfo/78/stream","1호선 B1 대합실 에스컬레이터"));
+        list.add(new SubWayInfoData(R.drawable.ic_escalator,"http://indoormap.seoul.go.kr/app/openapi/seoulcity/handicapPOIInfo/81/stream","1호선 환승통로 계단,에스컬레이터"));
+        list.add(new SubWayInfoData(R.drawable.ic_escalator,"http://indoormap.seoul.go.kr/app/openapi/seoulcity/handicapPOIInfo/187/stream","1호선 B1 대합실 에스컬레이터"));
         recyclerView.setHasFixedSize(true);
         adapter = new SubWayInfoAdapter(getActivity(), list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

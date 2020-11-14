@@ -45,8 +45,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
+
+        Intent intent = new Intent(this, SplashActivity.class);
+        startActivity(intent);
 
         selectedRecyclerView = findViewById(R.id.selectedlist);
         selectedRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
