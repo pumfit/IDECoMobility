@@ -88,8 +88,6 @@ public class BusInfosubActivity extends AppCompatActivity {
 //        actionBar.setDisplayShowCustomEnabled(true);
 //        actionBar.setDisplayHomeAsUpEnabled(true);
 
-        //this.InitializeMovieData();
-
         ListView listView = (ListView)findViewById(R.id.busInfoSublistView);
         final BusInfoSubAdapter mAdapter = new BusInfoSubAdapter(this,busInfoDataList);
 
@@ -115,14 +113,6 @@ public class BusInfosubActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-//    public void InitializeMovieData()
-//    {
-//        busInfoDataList = new ArrayList<BusInfoSubData>();
-//
-//        busInfoDataList.add(new BusInfoSubData(busNm,busMin+"분 뒤 도착"));
-//        busInfoDataList.add(new BusInfoSubData("4318","분 뒤 도착"));
-//        busInfoDataList.add(new BusInfoSubData("1156","분 뒤 도착"));
-//    }
 
     public void busChangeId(String busStId){
         OnResultCallbackListener onResultCallbackListener = new OnResultCallbackListener() {
@@ -140,8 +130,6 @@ public class BusInfosubActivity extends AppCompatActivity {
 
                     try {
                         busArrivalData=bustime.execute(url+localStId).get();
-                        //busName=result[3];
-                        //busNm=result[1];
 
                         for (int i=0; i<2; i++){
                             busNm = result.getJSONArray("lane").getJSONObject(i).getString("busNo");
