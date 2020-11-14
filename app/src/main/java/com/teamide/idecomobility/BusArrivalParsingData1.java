@@ -36,6 +36,7 @@ public class BusArrivalParsingData1 extends AsyncTask<String, Void, String> {
                 try{
                     localStId = odsayData.getJson().getJSONObject("result").getString("localStationID");
                     Log.d("ad","s"+localStId);
+
                 }catch (Exception e){
                     e.printStackTrace();
                 }

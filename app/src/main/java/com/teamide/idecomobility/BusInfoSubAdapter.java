@@ -54,6 +54,8 @@ public class BusInfoSubAdapter extends BaseAdapter {
         busNum.setText(busData.get(position).getBusNum());
         arrivalTime.setText(busData.get(position).getArrivalTime());
 
+        //busType 어떻게 표시할지 코드 추가 - busData.get(position).getBusType() 이용
+
         return view;
     }
 }

@@ -29,15 +29,18 @@ import javax.xml.parsers.ParserConfigurationException;
 public class BusArrivalParsingData2 extends AsyncTask<String, Void, Document> {
     String openUrl = "http://ws.bus.go.kr/api/rest/arrive/getArrInfoByRouteAll";
     Context text;
-    public BusArrivalParsingData2(Context context){
+    String localId;
+
+    public BusArrivalParsingData2(Context context, String localId){
         this.text = context;
+        this.localId = localId;
     }
     @Override
     protected Document doInBackground(String... strings) {
         URL url;
         Document doc = null;
         try{
-            url = new URL(openUrl+"?ServiceKey=idAKQNTIDrnSK5vmheOsFszfGqNfoydTlN08JVMaLchmHaKDSY0lWkjMtjiSfDGSa%2FVm7mVWhVX7WXEfF7OGgA%3D%3D"+"&busRouteId=100100118");
+            url = new URL(openUrl+"?ServiceKey=idAKQNTIDrnSK5vmheOsFszfGqNfoydTlN08JVMaLchmHaKDSY0lWkjMtjiSfDGSa%2FVm7mVWhVX7WXEfF7OGgA%3D%3D"+"&busRouteId="+localId);
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
             doc = db.parse(new InputSource(url.openStream()));

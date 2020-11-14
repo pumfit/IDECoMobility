@@ -67,16 +67,16 @@ public class BusTime extends AsyncTask<String, Void, String[]>{
                         break;
 
                     case XmlPullParser.END_TAG:
-                        if (name.equals("busRouteId")) { //get humidity
+                        if (name.equals("exps1")) { //get humidity
                             result[0] = text;
                             //Log.d("ad", "3st: " + result[0]);
-                        }else if (name.equals("exps1")) { //get temperature
+                        }else if (name.equals("exps2")) { //get temperature
                             result[2] = text;
                             //Log.d("ad","5st: "+result[2]);
-                        }else if (name.equals("rtNm")) { //get pressure
+                        }else if (name.equals("busType1")) { //get pressure
                             result[1] = text;
                             //Log.d("ad","4st: "+result[1]);
-                        } else if (name.equals("stNm")) {
+                        }else if (name.equals("busType2")) {
                             result[3] = text;
                             //Log.d("ad","2st: "+result[3]);
                         }

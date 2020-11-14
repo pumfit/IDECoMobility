@@ -40,13 +40,13 @@ public class RouteResultActivity extends Activity {
     String[] result;
 
 
-    ArrayList<direction_data> resultDataList;
+    //ArrayList<direction_data> resultDataList;
     ArrayList<direction_data> trafficDataList = new ArrayList<>();
-    public ArrayList<String> addTrafficList = new ArrayList<>();
-    ArrayList<String> searchPathData = new ArrayList<String>();
-    ArrayList<String> busData = new ArrayList<String>();
+    //public ArrayList<String> addTrafficList = new ArrayList<>();
+    //ArrayList<String> searchPathData = new ArrayList<String>();
+    //ArrayList<String> busData = new ArrayList<String>();
 
-    TransData jsonData = new TransData();
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,7 +98,7 @@ public class RouteResultActivity extends Activity {
                                 Integer subwayCount = path.getJSONObject(0).getJSONArray("subPath").getJSONObject(i).getInt("stationCount");
                                 Integer subwayNo = path.getJSONObject(0).getJSONArray("subPath").getJSONObject(i).getJSONArray("lane").getJSONObject(0).getInt("subwayCode");
 
-                                trafficDataList.add(i+1,new direction_data(R.drawable.ic_train_blue,subwayNo.toString()+"호선",subwaystart,subwayend,secTime.toString()+"분 소요",subwayCount.toString()+"개역 이동"));
+                                trafficDataList.add(i+1,new direction_data(R.drawable.ic_train_blue,subwayNo.toString()+"호선",subwaystart+"역",subwayend+"역",secTime.toString()+"분 소요",subwayCount.toString()+"개역 이동"));
                             }
                         }
                         trafficDataList.add(trafficCount+1,new direction_data(R.drawable.ic_flag,null,"도착",null,null,null));
@@ -155,25 +155,25 @@ public class RouteResultActivity extends Activity {
 //        String busSec = (String) busInfoArray.get("exps1_sec");
 //        busMin = String.valueOf(Integer.parseInt(busSec) / 60);
 
-        JSONObject subwayjsonObject = null;
-        try {
-            subwayjsonObject = (JSONObject) jsonParser.parse(jsonData.jsonsubway);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        JSONObject subwayInfoArray = (JSONObject) subwayjsonObject.get("inf");
-        subwayName = (String) subwayInfoArray.get("statnNm");
-        String subwaySec = (String) subwayInfoArray.get("barvlDt_sec");
-        subwayMin = String.valueOf(Integer.parseInt(subwaySec) / 60);
-
-        JSONObject imgjsonObject = null;
-        try {
-            imgjsonObject = (JSONObject) jsonParser.parse(jsonData.jsonimg);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        JSONObject ImgInfoArray = (JSONObject) imgjsonObject.get("inf");
-        img = (String) ImgInfoArray.get("storedName");
+//        JSONObject subwayjsonObject = null;
+//        try {
+//            subwayjsonObject = (JSONObject) jsonParser.parse(jsonData.jsonsubway);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        JSONObject subwayInfoArray = (JSONObject) subwayjsonObject.get("inf");
+//        subwayName = (String) subwayInfoArray.get("statnNm");
+//        String subwaySec = (String) subwayInfoArray.get("barvlDt_sec");
+//        subwayMin = String.valueOf(Integer.parseInt(subwaySec) / 60);
+//
+//        JSONObject imgjsonObject = null;
+//        try {
+//            imgjsonObject = (JSONObject) jsonParser.parse(jsonData.jsonimg);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        JSONObject ImgInfoArray = (JSONObject) imgjsonObject.get("inf");
+//        img = (String) ImgInfoArray.get("storedName");
 
         //API 파라미터 설정
         odsayService.requestSearchPubTransPath(sLongitude, sLatitude, eLongitude, eLatitude, "0", "0", "0", onResultCallbackListener);

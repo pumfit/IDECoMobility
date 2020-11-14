@@ -21,14 +21,18 @@ import com.odsay.odsayandroidsdk.ODsayData;
 import com.odsay.odsayandroidsdk.ODsayService;
 import com.odsay.odsayandroidsdk.OnResultCallbackListener;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class BusInfosubActivity extends AppCompatActivity {
 
     TextView titleText;
-    String localStId, busNm, busMin;
-    ArrayList<BusInfoSubData> busInfoDataList;
+    String localStId, busNm, busMin, busType;
+    ArrayList<BusInfoSubData> busInfoDataList = new ArrayList<>();
     public ODsayService oDsayService;
+    String[] busArrivalData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +88,7 @@ public class BusInfosubActivity extends AppCompatActivity {
 //        actionBar.setDisplayShowCustomEnabled(true);
 //        actionBar.setDisplayHomeAsUpEnabled(true);
 
-        this.InitializeMovieData();
+        //this.InitializeMovieData();
 
         ListView listView = (ListView)findViewById(R.id.busInfoSublistView);
         final BusInfoSubAdapter mAdapter = new BusInfoSubAdapter(this,busInfoDataList);
@@ -111,23 +115,52 @@ public class BusInfosubActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    public void InitializeMovieData()
-    {
-        busInfoDataList = new ArrayList<BusInfoSubData>();
-
-        busInfoDataList.add(new BusInfoSubData(busNm,busMin+"분 뒤 도착"));
-        busInfoDataList.add(new BusInfoSubData("4318","분 뒤 도착"));
-        busInfoDataList.add(new BusInfoSubData("1156","분 뒤 도착"));
-    }
+//    public void InitializeMovieData()
+//    {
+//        busInfoDataList = new ArrayList<BusInfoSubData>();
+//
+//        busInfoDataList.add(new BusInfoSubData(busNm,busMin+"분 뒤 도착"));
+//        busInfoDataList.add(new BusInfoSubData("4318","분 뒤 도착"));
+//        busInfoDataList.add(new BusInfoSubData("1156","분 뒤 도착"));
+//    }
 
     public void busChangeId(String busStId){
         OnResultCallbackListener onResultCallbackListener = new OnResultCallbackListener() {
             @Override
             public void onSuccess(ODsayData odsayData, API api) {
                 try{
-                    localStId = odsayData.getJson().getJSONObject("result").getString("localStationID");
+                    JSONObject result = odsayData.getJson().getJSONObject("result");
+                    localStId = result.getString("localStationID");
+                    Integer busCount = result.getJSONArray("lane").length();
                     Log.d("ad","local ID 함수내부: "+localStId);
+                    //BusArrivalParsingData2 busArrivalData = new BusArrivalParsingData2(getApplicationContext(),localStId);
+                    String url = "http://ws.bus.go.kr/api/rest/arrive/getLowArrInfoByStId?ServiceKey=idAKQNTIDrnSK5vmheOsFszfGqNfoydTlN08JVMaLchmHaKDSY0lWkjMtjiSfDGSa%2FVm7mVWhVX7WXEfF7OGgA%3D%3D&stId=";
+                    Log.d("ad","버스 데이터 호출 전 ");
+                    BusTime bustime = new BusTime();
 
+                    try {
+                        busArrivalData=bustime.execute(url+localStId).get();
+                        //busName=result[3];
+                        //busNm=result[1];
+
+                        for (int i=0; i<2; i++){
+                            busNm = result.getJSONArray("lane").getJSONObject(i).getString("busNo");
+                            Integer busArrivalMin=(Integer.parseInt(busArrivalData[(2*i)])/60);
+                            busMin=busArrivalMin.toString();
+                            busType = busArrivalData[(2*i)+1];
+                            busInfoDataList.add(i,new BusInfoSubData(busNm, busMin+"분 후 도착",busType));
+                        }
+                        Log.d("ad","실시간 "+busNm+"버스시간:"+busMin);
+
+                        final ListView listView = findViewById(R.id.busInfoSublistView);
+                        final BusInfoSubAdapter mAdapter = new BusInfoSubAdapter(getApplicationContext(),busInfoDataList);
+                        listView.setAdapter(mAdapter);
+
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -139,4 +172,5 @@ public class BusInfosubActivity extends AppCompatActivity {
         };
         oDsayService.requestBusStationInfo(busStId, onResultCallbackListener);
     }
+
 }
