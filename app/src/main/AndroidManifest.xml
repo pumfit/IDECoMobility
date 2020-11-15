@@ -14,12 +14,13 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDX8dROz3L3e1jMQ7tUE1CC094guImPlo8" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MainActivity"/>
         <activity android:name=".SearchActivity"/>
         <activity android:name=".SearchActivity2"/>
         <activity android:name=".BusInfoActivity"/>
@@ -30,8 +31,7 @@
         <activity android:name=".BookMarkActivity"/>
         <activity android:name=".SubWayInfoActivity"/>
         <activity android:name=".SubWayInfoSearchActivity"/>
-        <activity android:name=".SplashActivity"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+
     </application>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>

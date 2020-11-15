@@ -130,7 +130,6 @@ public class BusInfosubActivity extends AppCompatActivity {
 
                     try {
                         busArrivalData=bustime.execute(url+localStId).get();
-
                         for (int i=0; i<2; i++){
                             busNm = result.getJSONArray("lane").getJSONObject(i).getString("busNo");
                             Integer busArrivalMin=(Integer.parseInt(busArrivalData[(2*i)])/60);
