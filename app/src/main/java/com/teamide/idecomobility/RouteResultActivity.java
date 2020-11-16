@@ -39,7 +39,7 @@ public class RouteResultActivity extends Activity {
     public String test1, test2, test3, test4;
     String[] result;
 
-
+    private BusTime busParser;
     //ArrayList<direction_data> resultDataList;
     ArrayList<direction_data> trafficDataList = new ArrayList<>();
     //public ArrayList<String> addTrafficList = new ArrayList<>();
@@ -82,7 +82,7 @@ public class RouteResultActivity extends Activity {
                                 Integer distance =path.getJSONObject(0).getJSONArray("subPath").getJSONObject(i).getInt("distance");
                                 Integer secTime =path.getJSONObject(0).getJSONArray("subPath").getJSONObject(i).getInt("sectionTime");
                                 //String array[]={trafficType.toString(),null,null,distance.toString()+"m 이동",secTime.toString()+"분 소요",null,"도보"};
-                                trafficDataList.add(i+1,new direction_data(R.drawable.ic_walk,"도보","도보로 "+distance+"m 이동",null,secTime.toString()+"분 소요",null));
+                                trafficDataList.add(i+1,new direction_data(R.drawable.ic_walk,"도보","도보로 "+distance+"m 이동",null,secTime.toString()+"분 소요  ",null));
                             }else if (trafficType==2){ //버스
                                 String busstart = path.getJSONObject(0).getJSONArray("subPath").getJSONObject(i).getString("startName");
                                 String busend = path.getJSONObject(0).getJSONArray("subPath").getJSONObject(i).getString("endName");
@@ -90,7 +90,7 @@ public class RouteResultActivity extends Activity {
                                 String busNo = path.getJSONObject(0).getJSONArray("subPath").getJSONObject(i).getJSONArray("lane").getJSONObject(0).getString("busNo");
 //                                String array[]={trafficType.toString(),busstart,busend,null,secTime.toString()+"분 소요",null,busNo};
 //                                trafficDataList.add(array);
-                                trafficDataList.add(i+1,new direction_data(R.drawable.ic_bus_blue,busNo,busstart,busend,secTime.toString()+"분 소요",null));
+                                trafficDataList.add(i+1,new direction_data(R.drawable.ic_bus_blue,busNo,busstart,busend+"  ",secTime.toString()+"분 소요  ",null));
                             }else if (trafficType==1){ //지하철
                                 String subwaystart = path.getJSONObject(0).getJSONArray("subPath").getJSONObject(i).getString("startName");
                                 String subwayend = path.getJSONObject(0).getJSONArray("subPath").getJSONObject(i).getString("endName");
@@ -98,7 +98,7 @@ public class RouteResultActivity extends Activity {
                                 Integer subwayCount = path.getJSONObject(0).getJSONArray("subPath").getJSONObject(i).getInt("stationCount");
                                 Integer subwayNo = path.getJSONObject(0).getJSONArray("subPath").getJSONObject(i).getJSONArray("lane").getJSONObject(0).getInt("subwayCode");
 
-                                trafficDataList.add(i+1,new direction_data(R.drawable.ic_train_blue,subwayNo.toString()+"호선",subwaystart+"역",subwayend+"역",secTime.toString()+"분 소요",subwayCount.toString()+"개역 이동"));
+                                trafficDataList.add(i+1,new direction_data(R.drawable.ic_train_blue,subwayNo.toString()+"호선",subwaystart+"역",subwayend+"역  ",secTime.toString()+"분 소요  ",subwayCount.toString()+"개역 이동"));
                             }
                         }
                         trafficDataList.add(trafficCount+1,new direction_data(R.drawable.ic_flag,null,"도착",null,null,null));
@@ -126,22 +126,16 @@ public class RouteResultActivity extends Activity {
             }
         };
 
-        String url = "http://ws.bus.go.kr/api/rest/arrive/getLowArrInfoByStId?ServiceKey=idAKQNTIDrnSK5vmheOsFszfGqNfoydTlN08JVMaLchmHaKDSY0lWkjMtjiSfDGSa%2FVm7mVWhVX7WXEfF7OGgA%3D%3D&stId=112000001";
-        Log.d("ad","버스 데이터 호출 전 ");
-        BusTime bustime = new BusTime();
+//        String url = "http://ws.bus.go.kr/api/rest/arrive/getLowArrInfoByStId?ServiceKey=idAKQNTIDrnSK5vmheOsFszfGqNfoydTlN08JVMaLchmHaKDSY0lWkjMtjiSfDGSa%2FVm7mVWhVX7WXEfF7OGgA%3D%3D&stId=112000001";
+//        Log.d("ad","버스 데이터 호출 전 ");
+//        BusTime bustime = new BusTime();
+//        bustime.execute(url);
+        //busName=result[3];
+        //busMin=result[2];
+        //busNm=result[1];
 
-        try {
-            result=bustime.execute(url).get();
-            busName=result[3];
-            busMin=result[2];
-            busNm=result[1];
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
-        JSONParser jsonParser = new JSONParser();
+//        JSONParser jsonParser = new JSONParser();
 //
 //        JSONObject busjsonObject = null;
 //        try {

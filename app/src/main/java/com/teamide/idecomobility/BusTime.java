@@ -10,17 +10,17 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
-public class BusTime extends AsyncTask<String, Void, String[]>{
+public class BusTime extends AsyncTask<String, Void, ArrayList>{
     private XmlPullParserFactory xmlFactoryObject;
     private ProgressDialog pDialog;
 
-//    public BusTime(String url){
-//        this.url = url;
-//    }
+    String busName, busTime,busType = null;
+    ArrayList<BusInfoData> resultList = new ArrayList<>();
 
     @Override
-    protected String[] doInBackground(String... params) {
+    protected ArrayList doInBackground(String... params) {
         try {
             String urltext = (String) params[0];
             URL url = new URL(urltext);
@@ -37,10 +37,10 @@ public class BusTime extends AsyncTask<String, Void, String[]>{
 
             myParser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
             myParser.setInput(stream, null);
-            String[] result = parseXML(myParser);
+            ArrayList resultList = parseXML(myParser);
             stream.close();
 
-            return result;
+            return resultList;
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -49,42 +49,67 @@ public class BusTime extends AsyncTask<String, Void, String[]>{
         }
     }
 
-    private String[] parseXML(XmlPullParser myParser) {
+    private ArrayList parseXML(XmlPullParser myParser) {
         int event;
         String text = null;
-        String[] result = new String[4];
+        boolean inBusType = false;
+        boolean inBusNm = false;
+        boolean inBusName = false;
 
         try {
             event = myParser.getEventType();
+            int tagIdentifier = 0;
+
             while (event != XmlPullParser.END_DOCUMENT) {
-                String name = myParser.getName();
 
                 switch (event) {
-                    case XmlPullParser.START_TAG:
+                    case XmlPullParser.START_DOCUMENT:
                         break;
+                    case XmlPullParser.START_TAG:
+                        if(myParser.getName().equals("busType1"))
+                            inBusType = true;
+                        if (myParser.getName().equals("exps1"))
+                            inBusNm = true;
+                        if (myParser.getName().equals("rtNm"))
+                            inBusName = true;
+
+                        break;
+
+
+
                     case XmlPullParser.TEXT:
-                        text = myParser.getText();
+                        if(inBusType){
+                            busType = myParser.getText();
+                            inBusType = false;
+                            Log.d("ad","버스타입1="+busType);
+                        }
+                        if (inBusNm){
+                            busTime = myParser.getText();
+                            inBusNm = false;
+                            Log.d("ad","버스타임1="+busTime);
+                        }
+                        if (inBusName){
+                            //myParser.next();
+                            busName = myParser.getText();
+                            inBusName = false;
+                            Log.d("ad","버스이름1="+busName);
+                        }
+
                         break;
 
                     case XmlPullParser.END_TAG:
-                        if (name.equals("exps1")) { //get humidity
-                            result[0] = text;
-                            //Log.d("ad", "3st: " + result[0]);
-                        }else if (name.equals("exps2")) { //get temperature
-                            result[2] = text;
-                            //Log.d("ad","5st: "+result[2]);
-                        }else if (name.equals("busType1")) { //get pressure
-                            result[1] = text;
-                            //Log.d("ad","4st: "+result[1]);
-                        }else if (name.equals("busType2")) {
-                            result[3] = text;
-                            //Log.d("ad","2st: "+result[3]);
+                        if(myParser.getName().equals("itemList")){
+                            if (busName!=null && busTime!=null && busType!=null){
+                                Log.d("ad","이름"+busName+"시간"+busTime+"타입"+busType+"!!!!!!");
+                                resultList.add(new BusInfoData(busName,busTime,busType));
+                            }
                         }
                         break;
                 }
+
                 event = myParser.next();
             }
-            return result;
+            return resultList;
 
         } catch (Exception e) {
             e.printStackTrace();
