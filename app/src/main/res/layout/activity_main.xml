@@ -46,7 +46,7 @@
 
                     <TextView
                         android:id="@+id/textView1"
-                        android:layout_width="94dp"
+                        android:layout_width="50dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/start"
@@ -54,12 +54,6 @@
                         android:textColor="@color/black"
                         android:textSize="15dp"
                         android:textStyle="bold" />
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        >
 
                         <EditText
                             android:id="@+id/addressSearchEditText1"
@@ -74,25 +68,6 @@
                             android:hint=" 출발지를 검색해 주세요."
                             android:inputType="textPersonName" />
 
-                        <LinearLayout
-                            android:layout_width="60dp"
-                            android:layout_height="30dp"
-                            android:layout_marginLeft="270dp"
-                            android:layout_marginTop="11dp"
-                            android:background="#f3f3f3"
-                            />
-
-                        <Button
-                            android:id="@+id/button3"
-                            android:gravity="center"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_marginLeft="270dp"
-                            android:layout_marginTop="11dp"
-                            android:background="@drawable/ic_gps"/>
-
-
-                    </FrameLayout>
 
                 </LinearLayout>
 
