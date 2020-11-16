@@ -32,7 +32,8 @@ public class BusInfosubActivity extends AppCompatActivity {
     String localStId, busNm, busMin, busType;
     ArrayList<BusInfoSubData> busInfoDataList = new ArrayList<>();
     public ODsayService oDsayService;
-    String[] busArrivalData;
+    //String[] busArrivalData;
+    ArrayList<BusInfoData> resultList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,15 +130,16 @@ public class BusInfosubActivity extends AppCompatActivity {
                     BusTime bustime = new BusTime();
 
                     try {
-                        busArrivalData=bustime.execute(url+localStId).get();
-                        for (int i=0; i<2; i++){
-                            busNm = result.getJSONArray("lane").getJSONObject(i).getString("busNo");
-                            Integer busArrivalMin=(Integer.parseInt(busArrivalData[(2*i)])/60);
-                            busMin=busArrivalMin.toString();
-                            busType = busArrivalData[(2*i)+1];
+                        resultList=bustime.execute(url+localStId).get();
+                        for (int i=0; i<resultList.size(); i++){
+                            busNm = (resultList.get(i)).getBusName();
+                            Integer busArrivalMin=(Integer.parseInt((resultList.get(i)).getBusTime())/60);
+                            busMin=Integer.toString(busArrivalMin);
+                            //busMin=(resultList.get(i)).getBusTime();
+                            busType = (resultList.get(i)).getBusType();
                             busInfoDataList.add(i,new BusInfoSubData(busNm, busMin+"분 후 도착",busType));
+                            Log.d("ad","실시간 버스 정보 "+busNm+","+busMin+","+busType);
                         }
-                        Log.d("ad","실시간 "+busNm+"버스시간:"+busMin);
 
                         final ListView listView = findViewById(R.id.busInfoSublistView);
                         final BusInfoSubAdapter mAdapter = new BusInfoSubAdapter(getApplicationContext(),busInfoDataList);
