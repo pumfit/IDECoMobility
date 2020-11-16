@@ -134,10 +134,11 @@ public class BusInfosubActivity extends AppCompatActivity {
                         for (int i=0; i<resultList.size(); i++){
                             busNm = (resultList.get(i)).getBusName();
                             Integer busArrivalMin=(Integer.parseInt((resultList.get(i)).getBusTime())/60);
-                            busMin=Integer.toString(busArrivalMin);
-                            //busMin=(resultList.get(i)).getBusTime();
+                            if(busArrivalMin==0){
+                                busMin ="곧도착";
+                            }else {busMin = (Integer.toString(busArrivalMin))+"분 후 도착";}
                             busType = (resultList.get(i)).getBusType();
-                            busInfoDataList.add(i,new BusInfoSubData(busNm, busMin+"분 후 도착",busType));
+                            busInfoDataList.add(i,new BusInfoSubData(busNm, busMin,busType));
                             Log.d("ad","실시간 버스 정보 "+busNm+","+busMin+","+busType);
                         }
 
