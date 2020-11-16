@@ -124,7 +124,6 @@ public class BusInfosubActivity extends AppCompatActivity {
                     localStId = result.getString("localStationID");
                     Integer busCount = result.getJSONArray("lane").length();
                     Log.d("ad","local ID 함수내부: "+localStId);
-                    //BusArrivalParsingData2 busArrivalData = new BusArrivalParsingData2(getApplicationContext(),localStId);
                     String url = "http://ws.bus.go.kr/api/rest/arrive/getLowArrInfoByStId?ServiceKey=idAKQNTIDrnSK5vmheOsFszfGqNfoydTlN08JVMaLchmHaKDSY0lWkjMtjiSfDGSa%2FVm7mVWhVX7WXEfF7OGgA%3D%3D&stId=";
                     Log.d("ad","버스 데이터 호출 전 ");
                     BusTime bustime = new BusTime();
