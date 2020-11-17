@@ -26,7 +26,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-public class BusInfosubActivity extends AppCompatActivity {
+public class BusInfosubActivity extends AppCompatActivity implements BusInfoSubAdapter.ListBtnClickListener{
 
     TextView titleText;
     String localStId, busNm, busMin, busType;
@@ -90,7 +90,7 @@ public class BusInfosubActivity extends AppCompatActivity {
 //        actionBar.setDisplayHomeAsUpEnabled(true);
 
         ListView listView = (ListView)findViewById(R.id.busInfoSublistView);
-        final BusInfoSubAdapter mAdapter = new BusInfoSubAdapter(this,busInfoDataList);
+        final BusInfoSubAdapter mAdapter = new BusInfoSubAdapter(this, R.layout.businfosub_item,busInfoDataList,this);
 
         listView.setAdapter(mAdapter);
 
@@ -142,7 +142,7 @@ public class BusInfosubActivity extends AppCompatActivity {
                         }
 
                         final ListView listView = findViewById(R.id.busInfoSublistView);
-                        final BusInfoSubAdapter mAdapter = new BusInfoSubAdapter(getApplicationContext(),busInfoDataList);
+                        final BusInfoSubAdapter mAdapter = new BusInfoSubAdapter(BusInfosubActivity.this, R.layout.businfosub_item,busInfoDataList,BusInfosubActivity.this);
                         listView.setAdapter(mAdapter);
 
                     } catch (ExecutionException e) {
@@ -162,4 +162,8 @@ public class BusInfosubActivity extends AppCompatActivity {
         oDsayService.requestBusStationInfo(busStId, onResultCallbackListener);
     }
 
+    @Override
+    public void onListBtnClick(int position) {
+
+    }
 }

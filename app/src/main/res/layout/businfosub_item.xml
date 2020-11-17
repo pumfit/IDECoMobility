@@ -68,7 +68,6 @@
                 android:textStyle="bold"
                 android:textColor="@color/colorBlueMain"
                 android:backgroundTint="@color/white"
-                android:onClick="onClickedBusHelp"
                 android:elevation="10dp"/>
         </LinearLayout>
 
