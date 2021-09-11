@@ -17,13 +17,14 @@ import java.util.ArrayList;
 public class BusInfoParsingData extends AsyncTask<Object, Object, ArrayList<String>> {
 
     ArrayList<String> searchBusData = new ArrayList<String>();
+    private String serviceKey = "";
     ODsayService odsayService;
     String latitude;
     String longitude;
 
     BusInfoParsingData(Context context, String latitude, String longitude)
     {
-        odsayService = ODsayService.init(context, "nFVGyVxSTk6opjbmKKPCTDaEfNWyidhvs1HbmTtAf6U");
+        odsayService = ODsayService.init(context, serviceKey);
         this.latitude = latitude;
         this.longitude = longitude;
     }

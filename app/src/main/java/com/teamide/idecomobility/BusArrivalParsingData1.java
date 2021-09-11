@@ -13,10 +13,11 @@ public class BusArrivalParsingData1 extends AsyncTask<String, Void, String> {
 
     public String busStId, localStId;
     public ODsayService odsayService;
+    private String serviceKey = "";
     private Context context;
 
     public BusArrivalParsingData1(Context context, String busStId){
-        odsayService = ODsayService.init(context, "nFVGyVxSTk6opjbmKKPCTDaEfNWyidhvs1HbmTtAf6U");
+        odsayService = ODsayService.init(context, serviceKey);
         this.busStId = busStId;
     }
 

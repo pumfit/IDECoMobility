@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class SearchAddressAdapter extends RecyclerView.Adapter<SearchAddressAdapter.ViewHolder>{
 
-    public ArrayList<SearchAddress> myDataList = new ArrayList<SearchAddress>();
+    public ArrayList<SearchAddressData> myDataList = new ArrayList<SearchAddressData>();
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView mainAdress;
@@ -54,7 +54,7 @@ public class SearchAddressAdapter extends RecyclerView.Adapter<SearchAddressAdap
         }
     }
 
-    SearchAddressAdapter(ArrayList<SearchAddress> dataList)
+    SearchAddressAdapter(ArrayList<SearchAddressData> dataList)
     {
         myDataList = dataList;
     }

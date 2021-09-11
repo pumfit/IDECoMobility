@@ -19,12 +19,12 @@ import java.util.Arrays;
 
 public class BookMarkAdapter extends RecyclerView.Adapter<BookMarkAdapter.ViewHolder> {
 
-    private ArrayList<InfoAddress> mData = null;
+    private ArrayList<InfoAddressData> mData = null;
     private Boolean selectlist[];
     Context context;
     public Boolean isEdited = false;
 
-    public BookMarkAdapter(ArrayList<InfoAddress> list, Context context) {
+    public BookMarkAdapter(ArrayList<InfoAddressData> list, Context context) {
 
         mData = list;
         selectlist = new Boolean[mData.size()];
@@ -40,7 +40,7 @@ public class BookMarkAdapter extends RecyclerView.Adapter<BookMarkAdapter.ViewHo
         isEdited = edited;
     }
 
-    public ArrayList<InfoAddress> getListData() {
+    public ArrayList<InfoAddressData> getListData() {
         return mData;
     }
 

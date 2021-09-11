@@ -1,7 +1,6 @@
 package com.teamide.idecomobility;
 
 import android.content.Context;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +14,9 @@ public class directionAdapter extends BaseAdapter {
 
     Context mContext = null;
     LayoutInflater mLayoutInflater = null;
-    ArrayList<direction_data> sample;
+    ArrayList<DirectionData> sample;
 
-    public directionAdapter(Context context, ArrayList<direction_data> data) {
+    public directionAdapter(Context context, ArrayList<DirectionData> data) {
         mContext = context;
         sample = data;
         mLayoutInflater = LayoutInflater.from(mContext);
@@ -34,7 +33,7 @@ public class directionAdapter extends BaseAdapter {
     }
 
     @Override
-    public direction_data getItem(int position) {
+    public DirectionData getItem(int position) {
         return sample.get(position);
     }
 

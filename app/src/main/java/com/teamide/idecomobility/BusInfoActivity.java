@@ -1,7 +1,6 @@
 package com.teamide.idecomobility;
 
 import android.app.ActionBar;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -44,7 +43,7 @@ import java.util.Locale;
 public class BusInfoActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    public InfoAddress infoAddress;
+    public InfoAddressData infoAddressData;
     public LinearLayout draglayout;
     public EditText editText;
 
@@ -68,7 +67,7 @@ public class BusInfoActivity extends FragmentActivity implements OnMapReadyCallb
         busDataList.add(new BusStaionData(0,"결과없음","결과없음"));
 
         Intent intent = getIntent();
-        infoAddress = intent.getParcelableExtra("infoAddress");
+        infoAddressData = intent.getParcelableExtra("infoAddress");
 
         editText = findViewById(R.id.searcheditText);
         Toolbar toolbar = findViewById(R.id.businfotoolbar);
@@ -81,7 +80,7 @@ public class BusInfoActivity extends FragmentActivity implements OnMapReadyCallb
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        setAddressList(infoAddress.getCurruntAddress().getMainAdress());
+        setAddressList(infoAddressData.getCurruntAddress().getMainAdress());
 
         draglayout = (LinearLayout) findViewById(R.id.draglistView);
 
@@ -107,7 +106,7 @@ public class BusInfoActivity extends FragmentActivity implements OnMapReadyCallb
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        LatLng CLocation = new LatLng(infoAddress.getCurruntAddress().getLatitude(), infoAddress.getCurruntAddress().getLongitude()); //위경도 좌표를 나타내는 클래스
+        LatLng CLocation = new LatLng(infoAddressData.getCurruntAddress().getLatitude(), infoAddressData.getCurruntAddress().getLongitude()); //위경도 좌표를 나타내는 클래스
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(CLocation);
         mMap.addMarker(markerOptions);//마커를 맵 객체에 추가함
@@ -190,7 +189,7 @@ public class BusInfoActivity extends FragmentActivity implements OnMapReadyCallb
         try {
             if(searchAddress.equals("현위치"))
             {
-                addressList = geocoder.getFromLocation(infoAddress.getCurruntAddress().getLatitude(),infoAddress.getCurruntAddress().getLongitude(),5);
+                addressList = geocoder.getFromLocation(infoAddressData.getCurruntAddress().getLatitude(), infoAddressData.getCurruntAddress().getLongitude(),5);
             }
             else
             {
@@ -202,14 +201,13 @@ public class BusInfoActivity extends FragmentActivity implements OnMapReadyCallb
             e.printStackTrace();
         }
         try {
-            if (addressList.size() == 0)//검색결과가 없는 경우 알람 image를 띄움
+            if (addressList.size() == 0)//검색결과가 없는 경우 알람을 띄움
             {
                 Toast.makeText(getApplicationContext(), "검색 결과 없음", Toast.LENGTH_SHORT).show();
             } else {
                 Address ad = addressList.get(0);
                 addresslist.clear();
                 odsayService.requestPointSearch(String.valueOf(ad.getLongitude()), String.valueOf(ad.getLatitude()), "500", "1", onResultCallbackListener);
-                //odsayService.requestBusStationInfo(String.valueOf(-),onResultCallbackListener);
             }
         } catch (IndexOutOfBoundsException e) {
             e.getStackTrace();

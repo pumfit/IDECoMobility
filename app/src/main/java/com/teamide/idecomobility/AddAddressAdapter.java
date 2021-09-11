@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,9 +13,9 @@ import java.util.ArrayList;
 
 public class AddAddressAdapter extends RecyclerView.Adapter<AddAddressAdapter.ViewHolder> {
 
-    private ArrayList<SearchAddress> mData = null;
+    private ArrayList<SearchAddressData> mData = null;
 
-    public AddAddressAdapter(ArrayList<SearchAddress> list) {
+    public AddAddressAdapter(ArrayList<SearchAddressData> list) {
         mData = list;
     }
 
@@ -36,14 +35,6 @@ public class AddAddressAdapter extends RecyclerView.Adapter<AddAddressAdapter.Vi
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         String text = mData.get(position).getMainAdress();
         holder.textView1.setText(text);
-
-//        holder.deleteButton.setOnClickListener(new Button.OnClickListener() {
-//            public void onClick(View v) {
-//                mData.remove(position);
-//                notifyItemRemoved(position);
-//                notifyItemRangeChanged(position, getItemCount());
-//            }
-//        });
     }
 
     @Override
@@ -54,14 +45,10 @@ public class AddAddressAdapter extends RecyclerView.Adapter<AddAddressAdapter.Vi
     // 아이템 뷰를 저장하는 뷰홀더 클래스.
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView textView1;
-//        Button deleteButton;
 
         ViewHolder(View itemView) {
             super(itemView);
-
-            // 뷰 객체에 대한 참조. (hold strong reference)
             textView1 = itemView.findViewById(R.id.addressTextView);
-//            deleteButton = itemView.findViewById(R.id.deletebutton);
         }
     }
 

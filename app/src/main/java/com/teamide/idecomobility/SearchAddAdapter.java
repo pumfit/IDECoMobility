@@ -15,9 +15,9 @@ import java.util.ArrayList;
 
 public class SearchAddAdapter extends RecyclerView.Adapter<SearchAddAdapter.ViewHolder> {
 
-    private ArrayList<SearchAddress> mData = null;
+    private ArrayList<SearchAddressData> mData = null;
 
-    public SearchAddAdapter(ArrayList<SearchAddress> list) {
+    public SearchAddAdapter(ArrayList<SearchAddressData> list) {
         mData = list;
     }
 

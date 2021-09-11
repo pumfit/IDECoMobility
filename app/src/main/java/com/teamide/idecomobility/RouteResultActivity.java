@@ -2,7 +2,6 @@ package com.teamide.idecomobility;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,12 +17,8 @@ import com.odsay.odsayandroidsdk.OnResultCallbackListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 public class RouteResultActivity extends Activity {
 
@@ -41,7 +36,7 @@ public class RouteResultActivity extends Activity {
 
     private BusTime busParser;
     //ArrayList<direction_data> resultDataList;
-    ArrayList<direction_data> trafficDataList = new ArrayList<>();
+    ArrayList<DirectionData> trafficDataList = new ArrayList<>();
     //public ArrayList<String> addTrafficList = new ArrayList<>();
     //ArrayList<String> searchPathData = new ArrayList<String>();
     //ArrayList<String> busData = new ArrayList<String>();
@@ -53,15 +48,15 @@ public class RouteResultActivity extends Activity {
         setContentView(R.layout.activity_routeresult);
 
         Intent intent = getIntent();
-        InfoAddress infoAddress = intent.getParcelableExtra("infoAddress");
+        InfoAddressData infoAddressData = intent.getParcelableExtra("infoAddress");
         boolean[] services = intent.getBooleanArrayExtra("service");
 
-        sLatitude = Double.toString(infoAddress.getStartAddress().getLatitude());
-        sLongitude = Double.toString(infoAddress.getStartAddress().getLongitude());
-        eLatitude = Double.toString(infoAddress.getEndAddress().getLatitude());
-        eLongitude = Double.toString(infoAddress.getEndAddress().getLongitude());
+        sLatitude = Double.toString(infoAddressData.getStartAddress().getLatitude());
+        sLongitude = Double.toString(infoAddressData.getStartAddress().getLongitude());
+        eLatitude = Double.toString(infoAddressData.getEndAddress().getLatitude());
+        eLongitude = Double.toString(infoAddressData.getEndAddress().getLongitude());
 
-        ODsayService odsayService = ODsayService.init(RouteResultActivity.this, "nFVGyVxSTk6opjbmKKPCTDaEfNWyidhvs1HbmTtAf6U");
+        ODsayService odsayService = ODsayService.init(RouteResultActivity.this, "");
 
         OnResultCallbackListener onResultCallbackListener = new OnResultCallbackListener() {
             // 호출 성공 시 실행
@@ -75,14 +70,14 @@ public class RouteResultActivity extends Activity {
                         String totalTime = path.getJSONObject(0).getJSONObject("info").getString("totalTime");
                         String payment = path.getJSONObject(0).getJSONObject("info").getString("payment");
                         Integer trafficCount = path.getJSONObject(0).getJSONArray("subPath").length();
-                        trafficDataList.add(0,new direction_data(R.drawable.ic_flag,null,"출발",null,null,null));
+                        trafficDataList.add(0,new DirectionData(R.drawable.ic_flag,null,"출발",null,null,null));
                         for (int i=0; i<trafficCount; i++){
                             Integer trafficType =path.getJSONObject(0).getJSONArray("subPath").getJSONObject(i).getInt("trafficType");
                             if (trafficType==3){ //도보
                                 Integer distance =path.getJSONObject(0).getJSONArray("subPath").getJSONObject(i).getInt("distance");
                                 Integer secTime =path.getJSONObject(0).getJSONArray("subPath").getJSONObject(i).getInt("sectionTime");
                                 //String array[]={trafficType.toString(),null,null,distance.toString()+"m 이동",secTime.toString()+"분 소요",null,"도보"};
-                                trafficDataList.add(i+1,new direction_data(R.drawable.ic_walk,"도보","도보로 "+distance+"m 이동",null,secTime.toString()+"분 소요  ",null));
+                                trafficDataList.add(i+1,new DirectionData(R.drawable.ic_walk,"도보","도보로 "+distance+"m 이동",null,secTime.toString()+"분 소요  ",null));
                             }else if (trafficType==2){ //버스
                                 String busstart = path.getJSONObject(0).getJSONArray("subPath").getJSONObject(i).getString("startName");
                                 String busend = path.getJSONObject(0).getJSONArray("subPath").getJSONObject(i).getString("endName");
@@ -90,7 +85,7 @@ public class RouteResultActivity extends Activity {
                                 String busNo = path.getJSONObject(0).getJSONArray("subPath").getJSONObject(i).getJSONArray("lane").getJSONObject(0).getString("busNo");
 //                                String array[]={trafficType.toString(),busstart,busend,null,secTime.toString()+"분 소요",null,busNo};
 //                                trafficDataList.add(array);
-                                trafficDataList.add(i+1,new direction_data(R.drawable.ic_bus_blue,busNo,busstart,busend+"  ",secTime.toString()+"분 소요  ",null));
+                                trafficDataList.add(i+1,new DirectionData(R.drawable.ic_bus_blue,busNo,busstart,busend+"  ",secTime.toString()+"분 소요  ",null));
                             }else if (trafficType==1){ //지하철
                                 String subwaystart = path.getJSONObject(0).getJSONArray("subPath").getJSONObject(i).getString("startName");
                                 String subwayend = path.getJSONObject(0).getJSONArray("subPath").getJSONObject(i).getString("endName");
@@ -98,10 +93,10 @@ public class RouteResultActivity extends Activity {
                                 Integer subwayCount = path.getJSONObject(0).getJSONArray("subPath").getJSONObject(i).getInt("stationCount");
                                 Integer subwayNo = path.getJSONObject(0).getJSONArray("subPath").getJSONObject(i).getJSONArray("lane").getJSONObject(0).getInt("subwayCode");
 
-                                trafficDataList.add(i+1,new direction_data(R.drawable.ic_train_blue,subwayNo.toString()+"호선",subwaystart+"역",subwayend+"역  ",secTime.toString()+"분 소요  ",subwayCount.toString()+"개역 이동"));
+                                trafficDataList.add(i+1,new DirectionData(R.drawable.ic_train_blue,subwayNo.toString()+"호선",subwaystart+"역",subwayend+"역  ",secTime.toString()+"분 소요  ",subwayCount.toString()+"개역 이동"));
                             }
                         }
-                        trafficDataList.add(trafficCount+1,new direction_data(R.drawable.ic_flag,null,"도착",null,null,null));
+                        trafficDataList.add(trafficCount+1,new DirectionData(R.drawable.ic_flag,null,"도착",null,null,null));
 
 
                         final ListView listView = findViewById(R.id.listView);
@@ -176,8 +171,8 @@ public class RouteResultActivity extends Activity {
         TextView startTextView = findViewById(R.id.start);
         TextView endTextView = findViewById(R.id.end);
 
-        startTextView.setText(infoAddress.getStartAddress().getMainAdress());
-        endTextView.setText(infoAddress.getEndAddress().getMainAdress());
+        startTextView.setText(infoAddressData.getStartAddress().getMainAdress());
+        endTextView.setText(infoAddressData.getEndAddress().getMainAdress());
 
         ListView listView = (ListView) findViewById(R.id.listView);
         final directionAdapter myAdapter = new directionAdapter(this, trafficDataList);

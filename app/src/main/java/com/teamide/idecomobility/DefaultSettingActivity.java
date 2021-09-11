@@ -41,10 +41,10 @@ public class DefaultSettingActivity extends AppCompatActivity implements View.On
     String[] REQUIRED_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int PERMISSIONS_REQUEST_CODE = 100;//for GPS Tracking
-    InfoAddress infoAddress = new InfoAddress();//현위치,출발지,도착지 주소 정보
+    InfoAddressData infoAddressData = new InfoAddressData();//현위치,출발지,도착지 주소 정보
     private GpsTracker gpsTracker;
 
-    public ArrayList<SearchAddress> savelist = new ArrayList<>();
+    public ArrayList<SearchAddressData> savelist = new ArrayList<>();
     public ArrayList<String> fullNamelist,mainNamelist,lalist,lolist;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +86,7 @@ public class DefaultSettingActivity extends AppCompatActivity implements View.On
         double longitude = gpsTracker.getLongitude();
 
         String address = getCurrentAddress(latitude, longitude);
-        infoAddress.setCurruntAddress(new SearchAddress("현위치", address, "0", latitude, longitude));
+        infoAddressData.setCurruntAddress(new SearchAddressData("현위치", address, "0", latitude, longitude));
         addButton.setOnClickListener(this);
         recyclerView = findViewById(R.id.recycleradressList);
         recyclerView.setVisibility(View.GONE);
@@ -102,7 +102,7 @@ public class DefaultSettingActivity extends AppCompatActivity implements View.On
                     final AddAddressDialog dialog = new AddAddressDialog(this);
                     dialog.setDialogListener(new AddAddressDialog.CustomDialogListener() {
                         @Override
-                        public void onPositiveClicked(SearchAddress saveAddress) {
+                        public void onPositiveClicked(SearchAddressData saveAddress) {
                             savelist.add(saveAddress);
 
                             recyclerView = findViewById(R.id.recycleradressList);

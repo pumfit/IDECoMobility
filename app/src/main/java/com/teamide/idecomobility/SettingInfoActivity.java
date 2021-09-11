@@ -35,7 +35,7 @@ public class SettingInfoActivity extends AppCompatActivity {
     Button wheel, wheelLift, elevator, foot;
     public RadioGroup preferRadioButton;
     public RecyclerView recyclerView;
-    public ArrayList<SearchAddress> savelist;
+    public ArrayList<SearchAddressData> savelist;
     public ArrayList<String> fullNamelist, mainNamelist, lalist, lolist;
 
     @Override
@@ -128,8 +128,10 @@ public class SettingInfoActivity extends AppCompatActivity {
                     final AddAddressDialog dialog = new AddAddressDialog(this);
                     dialog.setDialogListener(new AddAddressDialog.CustomDialogListener() {
                         @Override
-                        public void onPositiveClicked(SearchAddress saveAddress) {
+                        public void onPositiveClicked(SearchAddressData saveAddress) {
                             savelist.add(saveAddress);
+                            AddmAddressAdapter adapter = new AddmAddressAdapter(savelist);
+                            recyclerView.setAdapter(adapter);
                         }
 
                         @Override
@@ -154,15 +156,15 @@ public class SettingInfoActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public ArrayList<SearchAddress> getAddressList() {
-        ArrayList<SearchAddress> savelist = new ArrayList<>();
+    public ArrayList<SearchAddressData> getAddressList() {
+        ArrayList<SearchAddressData> savelist = new ArrayList<>();
         ArrayList<String> full = getStringArrayPref("Addaddress1");
         ArrayList<String> main = getStringArrayPref("Addaddress2");
         ArrayList<String> lo = getStringArrayPref("Addaddress3");
         ArrayList<String> la = getStringArrayPref("Addaddress4");
         if (full.size() > 0) {
             for (int i = 0; i < full.size(); i++) {
-                savelist.add(new SearchAddress(main.get(i), full.get(i), "0km", Double.parseDouble(lo.get(i)), Double.parseDouble(la.get(i))));
+                savelist.add(new SearchAddressData(main.get(i), full.get(i), "0km", Double.parseDouble(lo.get(i)), Double.parseDouble(la.get(i))));
             }
         }
         return savelist;

@@ -32,16 +32,16 @@ public class BookMarkActivity extends AppCompatActivity {
 
     public TextView textView;
 
-    public ArrayList<InfoAddress> boolmarklist;
-    public ArrayList<InfoAddress> infoArrayList;
+    public ArrayList<InfoAddressData> boolmarklist;
+    public ArrayList<InfoAddressData> infoArrayList;
     public RecyclerView mRecyclerView;
     public RecyclerView.LayoutManager mLayoutManager;
 
     private BookMarkAdapter myAdapter;
     public AddBookMarkDialog dialog;
-    public SearchAddress startAddress;
-    public SearchAddress endAddress;
-    private InfoAddress saveAddress;//현위치,출발지,도착지 주소 정보
+    public SearchAddressData startAddress;
+    public SearchAddressData endAddress;
+    private InfoAddressData saveAddress;//현위치,출발지,도착지 주소 정보
 
     public Boolean onEdited = false;
 
@@ -67,10 +67,10 @@ public class BookMarkActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         textView = findViewById(R.id.textView);
-        boolmarklist = new ArrayList<InfoAddress>();
+        boolmarklist = new ArrayList<InfoAddressData>();
         dialog = new AddBookMarkDialog(this);
 
-        saveAddress = new InfoAddress();
+        saveAddress = new InfoAddressData();
 
         mRecyclerView = findViewById(R.id.addresslist);
         mRecyclerView.setHasFixedSize(true);//리사이클러뷰 받아오고 설정
@@ -130,7 +130,7 @@ public class BookMarkActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 200) { //from SearchActivity
             if (resultCode == RESULT_OK) {
-                SearchAddress startAllAdress = data.getParcelableExtra("startAllAddress");
+                SearchAddressData startAllAdress = data.getParcelableExtra("startAllAddress");
                 EditText s_editText = dialog.findViewById(R.id.editText);
                 EditText e_editText = dialog.findViewById(R.id.editText2);
 
@@ -139,7 +139,7 @@ public class BookMarkActivity extends AppCompatActivity {
             }
         } else if (requestCode == 201) {
             if (resultCode == RESULT_OK) { //from SearchActivity2
-                SearchAddress endAllAdress = data.getParcelableExtra("endAllAddress");
+                SearchAddressData endAllAdress = data.getParcelableExtra("endAllAddress");
                 EditText e_editText = dialog.findViewById(R.id.editText2);
                 if (saveAddress.getStartAddress().getMainAdress().equals(endAllAdress.getMainAdress())) {
                     Toast.makeText(getApplicationContext(), "출발지와 도착지는 같을 수 없습니다.", Toast.LENGTH_LONG).show();
@@ -205,10 +205,10 @@ public class BookMarkActivity extends AppCompatActivity {
     }
 
     public void onClickedDelete(View v) {
-        infoArrayList = new ArrayList<InfoAddress>();
+        infoArrayList = new ArrayList<InfoAddressData>();
         Boolean[] list = myAdapter.getSelectList();
-        ArrayList<InfoAddress> cList = myAdapter.getListData();
-        ArrayList<InfoAddress> mList = new ArrayList<InfoAddress>();
+        ArrayList<InfoAddressData> cList = myAdapter.getListData();
+        ArrayList<InfoAddressData> mList = new ArrayList<InfoAddressData>();
 
         for (int i = 0; i < cList.size(); i++) {
             if (list[i] == false) {
@@ -226,7 +226,7 @@ public class BookMarkActivity extends AppCompatActivity {
     }
 
     public void viewRecyclerView() {
-        infoArrayList = new ArrayList<InfoAddress>();
+        infoArrayList = new ArrayList<InfoAddressData>();
         Cursor cursor;//커서 생성
         cursor = db.rawQuery("SELECT * FROM bookmarks", null);
         while (cursor.moveToNext()) {
@@ -238,9 +238,9 @@ public class BookMarkActivity extends AppCompatActivity {
             String e_full = cursor.getString(6);
             Double e_la = Double.parseDouble(cursor.getString(7));
             Double e_lo = Double.parseDouble(cursor.getString(8));
-            startAddress = new SearchAddress(s_main, s_full, s_la, s_lo);
-            endAddress = new SearchAddress(e_main, e_full, e_la, e_lo);
-            infoArrayList.add(new InfoAddress(startAddress, startAddress, endAddress));
+            startAddress = new SearchAddressData(s_main, s_full, s_la, s_lo);
+            endAddress = new SearchAddressData(e_main, e_full, e_la, e_lo);
+            infoArrayList.add(new InfoAddressData(startAddress, startAddress, endAddress));
         }//리스트에 데이터베이스안에 들어 있는 데이터들을 추가함
         cursor.close();
         myAdapter = new BookMarkAdapter(infoArrayList, getApplicationContext());

@@ -25,16 +25,16 @@ import java.util.Locale;
 public class SearchActivity extends Activity { //출발지 검색시 실행되는 액티비티
 
     private GpsTracker gpsTracker;
-    public ArrayList<SearchAddress> dataList;
-    public ArrayList<SearchAddress> savelist;
+    public ArrayList<SearchAddressData> dataList;
+    public ArrayList<SearchAddressData> savelist;
     private SharedPreferences preferences;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        dataList = new ArrayList<SearchAddress>(); //역 GeoCoder를 통해 알아온 주소 결과들을 저장하는 배열리스트
-        savelist = new ArrayList<SearchAddress>();//저장해둔 리스트
+        dataList = new ArrayList<SearchAddressData>(); //역 GeoCoder를 통해 알아온 주소 결과들을 저장하는 배열리스트
+        savelist = new ArrayList<SearchAddressData>();//저장해둔 리스트
 
         preferences = getSharedPreferences("info", MODE_PRIVATE);
         savelist = getAddressList();
@@ -50,15 +50,15 @@ public class SearchActivity extends Activity { //출발지 검색시 실행되�
         view.setVisibility(View.GONE);
     }
 
-    public ArrayList<SearchAddress> getAddressList() {
-        ArrayList<SearchAddress> savelist = new ArrayList<>();
+    public ArrayList<SearchAddressData> getAddressList() {
+        ArrayList<SearchAddressData> savelist = new ArrayList<>();
         ArrayList<String> full = getStringArrayPref("Addaddress1");
         ArrayList<String> main = getStringArrayPref("Addaddress2");
         ArrayList<String> lo = getStringArrayPref("Addaddress3");
         ArrayList<String> la = getStringArrayPref("Addaddress4");
         if (full.size() > 0) {
             for (int i = 0; i < full.size(); i++) {
-                savelist.add(new SearchAddress(main.get(i), full.get(i), "0km", Double.parseDouble(lo.get(i)), Double.parseDouble(la.get(i))));
+                savelist.add(new SearchAddressData(main.get(i), full.get(i), "0km", Double.parseDouble(lo.get(i)), Double.parseDouble(la.get(i))));
             }
         }
         return savelist;
@@ -126,7 +126,7 @@ public class SearchActivity extends Activity { //출발지 검색시 실행되�
                     location.setLongitude(ad.getLongitude());
                     double distance = location.distanceTo(location2) / 1000;
                     Log.d("ad", String.valueOf(distance));
-                    dataList.add(new SearchAddress(startAddress, address, String.format("%.1f", distance) + "Km", location.getLatitude(), location.getLongitude()));
+                    dataList.add(new SearchAddressData(startAddress, address, String.format("%.1f", distance) + "Km", location.getLatitude(), location.getLongitude()));
                 }
             }
             RecyclerView recyclerView = (RecyclerView) findViewById(R.id.adressRecyclerView1);//RecyclerView 아이템 재등록

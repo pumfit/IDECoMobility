@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int PERMISSIONS_REQUEST_CODE = 100;//for GPS Tracking
 
-    InfoAddress infoAddress = new InfoAddress();//현위치,출발지,도착지 주소 정보
+    InfoAddressData infoAddressData = new InfoAddressData();//현위치,출발지,도착지 주소 정보
     boolean[] isServiceNeed = new boolean[4];//사용자 설정 boolean 휠체어 리프트,엘리베이터,저상버스,무장애 정류소
 
     private SharedPreferences.Editor editor;
@@ -59,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
         editor= preferences.edit(); //sharedPreferences를 제어할 editor를 선언
 
         recyclerView(); //recycler 리스트 생성 함수
-
         checkFirstRun();
 
         if (!checkLocationServicesStatus()) {//GPS 확인
@@ -72,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         getCurrentAddress();
+        startText.setText(infoAddressData.getCurruntAddress().getFullAdress());
 
         startText.setOnClickListener( //출발지 EditText버튼 클릭시
                 new View.OnClickListener() {
@@ -102,8 +102,8 @@ public class MainActivity extends AppCompatActivity {
         double longitude = gpsTracker.getLongitude();
 
         String address = getAddressName(latitude, longitude);
-        infoAddress.setStartAddress(new SearchAddress("현위치", address, "0", latitude, longitude));
-        infoAddress.setCurruntAddress(new SearchAddress("현위치", address, "0", latitude, longitude));
+        infoAddressData.setStartAddress(new SearchAddressData("현위치", address, "0", latitude, longitude));
+        infoAddressData.setCurruntAddress(new SearchAddressData("현위치", address, "0", latitude, longitude));
     }
 
     public boolean checkLocationServicesStatus() { //GPS기능 사용가능한지 판단
@@ -143,17 +143,17 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 100) { //from SearchActivity
             if (resultCode == RESULT_OK) {
-                SearchAddress startAllAdress = data.getParcelableExtra("startAllAddress");
-                infoAddress.setStartAddress(startAllAdress);
+                SearchAddressData startAllAdress = data.getParcelableExtra("startAllAddress");
+                infoAddressData.setStartAddress(startAllAdress);
                 EditText startText = (EditText) findViewById(R.id.addressSearchEditText1);
-                startText.setText(infoAddress.getStartAddress().getFullAdress());
+                startText.setText(infoAddressData.getStartAddress().getFullAdress());
             }
         } else if (requestCode == 101) {
             if (resultCode == RESULT_OK) { //from SearchActivity2
-                SearchAddress endAllAdress = data.getParcelableExtra("endAllAddress");
-                infoAddress.setEndAddress(endAllAdress);
+                SearchAddressData endAllAdress = data.getParcelableExtra("endAllAddress");
+                infoAddressData.setEndAddress(endAllAdress);
                 EditText endText = (EditText) findViewById(R.id.addressSearchEditText2);
-                endText.setText(infoAddress.getEndAddress().getFullAdress());
+                endText.setText(infoAddressData.getEndAddress().getFullAdress());
             }
         }
     }
@@ -189,14 +189,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickedSearch(View v) { //길찾기 버튼 클릭시 받아온 주소 정보들 보냄
         Intent in = new Intent(getApplicationContext(), RouteResultActivity.class);
-        in.putExtra("infoAddress", (Parcelable) infoAddress);
+        in.putExtra("infoAddress", (Parcelable) infoAddressData);
         in.putExtra("service", isServiceNeed);
         startActivity(in);
     }
 
     public void onClickedBusInfo(View v){ //버스버튼
         Intent in = new Intent(getApplicationContext(), BusInfoActivity.class);
-        in.putExtra("infoAddress", (Parcelable) infoAddress);
+        in.putExtra("infoAddress", (Parcelable) infoAddressData);
         startActivity(in);
     }
 
@@ -221,7 +221,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void onClickedSubWayInfo(View v){//지하철 정보 버튼
         Intent in = new Intent(getApplicationContext(), SubWayInfoSearchActivity.class);
-        in.putExtra("infoAddress", (Parcelable) infoAddress);
+        in.putExtra("infoAddress", (Parcelable) infoAddressData);
         startActivity(in);
     }
     public void onClickedBookMark(View v){//북마크 버튼

@@ -32,19 +32,19 @@ public class AddAddressDialog extends Dialog implements View.OnClickListener {
     private SearchView searchView;
     private TextView textView;
     private Context context;
-    public SearchAddress saveAddress;
+    public SearchAddressData saveAddress;
 
     private androidx.appcompat.widget.Toolbar toolbar;
     private CustomDialogListener customDialogListener;
 
-    public ArrayList<SearchAddress> dataList;
+    public ArrayList<SearchAddressData> dataList;
 
     public AddAddressDialog(Context context) {
         super(context);
         this.context = context;
     }
     interface CustomDialogListener{
-        void onPositiveClicked(SearchAddress saveAddress);
+        void onPositiveClicked(SearchAddressData saveAddress);
         void onNegativeClicked();
     }
 
@@ -73,7 +73,7 @@ public class AddAddressDialog extends Dialog implements View.OnClickListener {
         mPositiveButton.setOnClickListener(this);
         mNegativeButton.setOnClickListener(this);
 
-        dataList = new ArrayList<SearchAddress>();
+        dataList = new ArrayList<SearchAddressData>();
 
         GpsTracker gpsTracker = new GpsTracker(getContext());//현위치 GPS로 받아오기
 
@@ -85,7 +85,7 @@ public class AddAddressDialog extends Dialog implements View.OnClickListener {
 
         ArrayAdapter adapter = new ArrayAdapter(context, android.R.layout.simple_list_item_single_choice, list);
         listView.setChoiceMode(1);
-        dataList.add(new SearchAddress("",address,"0km",latitude,longitude));
+        dataList.add(new SearchAddressData("",address,"0km",latitude,longitude));
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -162,7 +162,7 @@ public class AddAddressDialog extends Dialog implements View.OnClickListener {
                     Location location = new Location("seaech location");
                     location.setLatitude(ad.getLatitude());
                     location.setLongitude(ad.getLongitude());
-                    dataList.add(new SearchAddress(s, address, 0 + "Km", location.getLatitude(), location.getLongitude()));
+                    dataList.add(new SearchAddressData(s, address, 0 + "Km", location.getLatitude(), location.getLongitude()));
                     list.add(address);
                 }
             }

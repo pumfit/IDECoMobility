@@ -20,7 +20,7 @@
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             app:titleTextColor="@color/white"
             app:title="경로안내"
-            app:titleMarginStart="150dp" />
+            app:titleMarginStart="164dp" />
 
         <LinearLayout
             android:layout_width="match_parent"

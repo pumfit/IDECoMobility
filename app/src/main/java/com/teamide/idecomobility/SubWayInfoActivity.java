@@ -18,6 +18,7 @@ public class SubWayInfoActivity extends AppCompatActivity {
 
     private ViewPager viewPager;
     private TabLayout tabLayout;
+    private String serviceKey = "";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +40,7 @@ public class SubWayInfoActivity extends AppCompatActivity {
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);//툴바 설정 끝
 
-        String url = "http://openapi.seoul.go.kr:8088/41585971726a6f6f313236436553466d/xml/subwayTourInfo/1/5/";
+        String url = "http://openapi.seoul.go.kr:8088/"+serviceKey+"/xml/subwayTourInfo/1/5/";
         SubwayTourParsingData subwayTourData = new SubwayTourParsingData(url,stID);
         subwayTourData.execute();  //BusTime api 불러오기 // for문 돌려서 데이터 넣어서 리스트 띄우기
         //JSONParser jsonParser = new JSONParser();

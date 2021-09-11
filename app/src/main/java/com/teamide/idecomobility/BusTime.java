@@ -12,11 +12,11 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class BusTime extends AsyncTask<String, Void, ArrayList>{
+public class BusTime extends AsyncTask<String, Void, ArrayList> {
     private XmlPullParserFactory xmlFactoryObject;
     private ProgressDialog pDialog;
 
-    String busName, busTime,busType = null;
+    String busName, busTime, busType = null;
     ArrayList<BusInfoData> resultList = new ArrayList<>();
 
     @Override
@@ -66,42 +66,34 @@ public class BusTime extends AsyncTask<String, Void, ArrayList>{
                     case XmlPullParser.START_DOCUMENT:
                         break;
                     case XmlPullParser.START_TAG:
-                        if(myParser.getName().equals("busType1"))
+                        if (myParser.getName().equals("busType1"))
                             inBusType = true;
                         if (myParser.getName().equals("exps1"))
                             inBusNm = true;
                         if (myParser.getName().equals("rtNm"))
                             inBusName = true;
-
                         break;
 
-
-
                     case XmlPullParser.TEXT:
-                        if(inBusType){
+                        if (inBusType) {
                             busType = myParser.getText();
                             inBusType = false;
-                            Log.d("ad","버스타입1="+busType);
                         }
-                        if (inBusNm){
+                        if (inBusNm) {
                             busTime = myParser.getText();
                             inBusNm = false;
-                            Log.d("ad","버스타임1="+busTime);
                         }
-                        if (inBusName){
+                        if (inBusName) {
                             //myParser.next();
                             busName = myParser.getText();
                             inBusName = false;
-                            Log.d("ad","버스이름1="+busName);
                         }
 
                         break;
-
                     case XmlPullParser.END_TAG:
-                        if(myParser.getName().equals("itemList")){
-                            if (busName!=null && busTime!=null && busType!=null){
-                                Log.d("ad","이름"+busName+"시간"+busTime+"타입"+busType+"!!!!!!");
-                                resultList.add(new BusInfoData(busName,busTime,busType));
+                        if (myParser.getName().equals("itemList")) {
+                            if (busName != null && busTime != null && busType != null) {
+                                resultList.add(new BusInfoData(busName, busTime, busType));
                             }
                         }
                         break;

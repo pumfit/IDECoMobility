@@ -13,9 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class FragmentAdapter extends RecyclerView.Adapter<FragmentAdapter.ViewHolder> {
-    private ArrayList<SearchAddress> mData = null;
+    private ArrayList<SearchAddressData> mData = null;
 
-    public FragmentAdapter(ArrayList<SearchAddress> list) {
+    public FragmentAdapter(ArrayList<SearchAddressData> list) {
         mData = list;
     }
 

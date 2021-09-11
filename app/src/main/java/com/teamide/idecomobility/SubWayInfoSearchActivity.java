@@ -41,7 +41,7 @@ import java.util.Locale;
 
 public class SubWayInfoSearchActivity extends FragmentActivity implements OnMapReadyCallback {
     private GoogleMap mMap;
-    public InfoAddress infoAddress;
+    public InfoAddressData infoAddressData;
 
     public LinearLayout draglayout;
     public EditText editText;
@@ -66,7 +66,7 @@ public class SubWayInfoSearchActivity extends FragmentActivity implements OnMapR
         subwayDataList.add(new BusStaionData(0,"결과없음","결과없음"));
 
         Intent intent = getIntent();
-        infoAddress = intent.getParcelableExtra("infoAddress");
+        infoAddressData = intent.getParcelableExtra("infoAddress");
 
         editText = findViewById(R.id.searcheditText);
         Toolbar toolbar = findViewById(R.id.businfotoolbar);
@@ -79,7 +79,7 @@ public class SubWayInfoSearchActivity extends FragmentActivity implements OnMapR
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        setAddressList(infoAddress.getCurruntAddress().getMainAdress());
+        setAddressList(infoAddressData.getCurruntAddress().getMainAdress());
 
         draglayout = (LinearLayout) findViewById(R.id.draglistView);
 
@@ -104,7 +104,7 @@ public class SubWayInfoSearchActivity extends FragmentActivity implements OnMapR
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        LatLng CLocation = new LatLng(infoAddress.getCurruntAddress().getLatitude(), infoAddress.getCurruntAddress().getLongitude()); //위경도 좌표를 나타내는 클래스
+        LatLng CLocation = new LatLng(infoAddressData.getCurruntAddress().getLatitude(), infoAddressData.getCurruntAddress().getLongitude()); //위경도 좌표를 나타내는 클래스
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(CLocation);
         mMap.addMarker(markerOptions);//마커를 맵 객체에 추가함
@@ -188,7 +188,7 @@ public class SubWayInfoSearchActivity extends FragmentActivity implements OnMapR
         try {
             if(searchAddress.equals("현위치"))
             {
-                addressList = geocoder.getFromLocation(infoAddress.getCurruntAddress().getLatitude(),infoAddress.getCurruntAddress().getLongitude(),5);
+                addressList = geocoder.getFromLocation(infoAddressData.getCurruntAddress().getLatitude(), infoAddressData.getCurruntAddress().getLongitude(),5);
             }
             else
             {

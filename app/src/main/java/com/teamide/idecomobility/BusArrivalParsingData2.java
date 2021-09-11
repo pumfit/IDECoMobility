@@ -2,8 +2,7 @@ package com.teamide.idecomobility;
 
 import android.content.Context;
 import android.os.AsyncTask;
-
-import com.google.android.gms.common.server.converter.StringToIntConverter;
+import android.util.Log;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -11,23 +10,19 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import android.util.Log;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 public class BusArrivalParsingData2 extends AsyncTask<String, Void, Document> {
+    private String serviceKey = "";
     String openUrl = "http://ws.bus.go.kr/api/rest/arrive/getArrInfoByRouteAll";
+
     Context text;
     String localId;
 
@@ -40,7 +35,8 @@ public class BusArrivalParsingData2 extends AsyncTask<String, Void, Document> {
         URL url;
         Document doc = null;
         try{
-            url = new URL(openUrl+"?ServiceKey=idAKQNTIDrnSK5vmheOsFszfGqNfoydTlN08JVMaLchmHaKDSY0lWkjMtjiSfDGSa%2FVm7mVWhVX7WXEfF7OGgA%3D%3D"+"&busRouteId="+localId);
+            url = new URL(openUrl+"?ServiceKey="+serviceKey +
+                    "chmHaKDSY0lWkjMtjiSfDGSa%2FVm7mVWhVX7WXEfF7OGgA%3D%3D"+"&busRouteId="+localId);
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
             doc = db.parse(new InputSource(url.openStream()));

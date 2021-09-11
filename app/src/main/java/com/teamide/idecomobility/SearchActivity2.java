@@ -25,16 +25,16 @@ import java.util.Locale;
 public class SearchActivity2 extends Activity {
 
     private GpsTracker gpsTracker;
-    public ArrayList<SearchAddress> dataList;
-    public ArrayList<SearchAddress> savelist;
+    public ArrayList<SearchAddressData> dataList;
+    public ArrayList<SearchAddressData> savelist;
     private SharedPreferences preferences;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search2);
 
-        dataList = new ArrayList<SearchAddress>();
-        savelist = new ArrayList<SearchAddress>();//저장해둔 리스트
+        dataList = new ArrayList<SearchAddressData>();
+        savelist = new ArrayList<SearchAddressData>();//저장해둔 리스트
 
         preferences = getSharedPreferences("info", MODE_PRIVATE);
         savelist = getAddressList();
@@ -50,15 +50,15 @@ public class SearchActivity2 extends Activity {
         view.setVisibility(View.GONE);
     }
 
-    public ArrayList<SearchAddress> getAddressList() {
-        ArrayList<SearchAddress> savelist = new ArrayList<>();
+    public ArrayList<SearchAddressData> getAddressList() {
+        ArrayList<SearchAddressData> savelist = new ArrayList<>();
         ArrayList<String> full = getStringArrayPref("Addaddress1");
         ArrayList<String> main = getStringArrayPref("Addaddress2");
         ArrayList<String> lo = getStringArrayPref("Addaddress3");
         ArrayList<String> la = getStringArrayPref("Addaddress4");
         if (full.size() > 0) {
             for (int i = 0; i < full.size(); i++) {
-                savelist.add(new SearchAddress(main.get(i), full.get(i), "0km", Double.parseDouble(lo.get(i)), Double.parseDouble(la.get(i))));
+                savelist.add(new SearchAddressData(main.get(i), full.get(i), "0km", Double.parseDouble(lo.get(i)), Double.parseDouble(la.get(i))));
             }
         }
         return savelist;
@@ -131,7 +131,7 @@ public class SearchActivity2 extends Activity {
                     location.setLongitude(ad.getLongitude());
                     double distance = location.distanceTo(location2)/1000;
                     Log.d("ad",String.valueOf(distance));
-                    dataList.add(new SearchAddress(startAdress,address,String.format("%.1f", distance)+"Km",location.getLatitude(),location.getLongitude()));//현재 위치와의 거리
+                    dataList.add(new SearchAddressData(startAdress,address,String.format("%.1f", distance)+"Km",location.getLatitude(),location.getLongitude()));//현재 위치와의 거리
                 }
             }
             RecyclerView recyclerView = (RecyclerView)findViewById(R.id.adressRecyclerView2);

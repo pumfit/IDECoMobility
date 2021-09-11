@@ -32,9 +32,11 @@
                 android:id="@+id/deletebutton"
                 android:layout_width="40dp"
                 android:layout_height="20dp"
-                android:background="@color/colorBlueMain"
+                android:background="#06FFFFFF"
+                android:layout_gravity="center"
                 android:text="X"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                style="?android:borderlessButtonStyle"/>
         </LinearLayout>
 
         <TextView
@@ -42,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="15dp"
-            android:layout_marginVertical="5dp"
+            android:layout_marginTop="3dp"
             android:text="TextView"
             android:textColor="@color/white"
             android:textSize="12dp" />

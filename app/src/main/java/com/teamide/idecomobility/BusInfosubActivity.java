@@ -32,6 +32,7 @@ public class BusInfosubActivity extends AppCompatActivity implements BusInfoSubA
     String localStId, busNm, busMin, busType;
     ArrayList<BusInfoSubData> busInfoDataList = new ArrayList<>();
     public ODsayService oDsayService;
+    private String serviceKey = "";
     //String[] busArrivalData;
     ArrayList<BusInfoData> resultList = new ArrayList<>();
 
@@ -40,7 +41,7 @@ public class BusInfosubActivity extends AppCompatActivity implements BusInfoSubA
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_businfosub);
 
-        oDsayService = ODsayService.init(BusInfosubActivity.this, "nFVGyVxSTk6opjbmKKPCTDaEfNWyidhvs1HbmTtAf6U");
+        oDsayService = ODsayService.init(BusInfosubActivity.this,serviceKey );
 
         titleText = findViewById(R.id.busTitleTextView);
 
